@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/drawable-v24/bottom_navigation_select_text_style.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/drawable-v24/progress_style.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/drawable/icon_resize.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/drawable/item_checklist_background.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/drawable/item_checklist_disabled_background.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/layout/fragment_checklist.xml" value="0.25" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/layout/fragment_gold.xml" value="0.2046875" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/layout/item_checklist.xml" value="0.2046875" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/menu/main_menu.xml" value="0.2046875" />
+        <entry key="..\:/Users/zerat/AndroidStudioProjects/LostArkAssistantHomework/app/src/main/res/menu/main_tab.xml" value="0.2046875" />
       </map>
     </option>
   </component>
