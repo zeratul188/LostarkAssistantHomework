@@ -10,7 +10,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:id="@+id/imgIcon"
-        android:src="@drawable/hwid1"
+        android:src="@drawable/hw1"
         android:layout_gravity="center"
         android:layout_marginRight="10dp"/>
     <TextView
