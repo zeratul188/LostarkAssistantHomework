@@ -1,6 +1,5 @@
 package com.lostark.lostarkassistanthomework.checklist
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
-import com.lostark.lostarkassistanthomework.checklist.objects.ShareChecklist
+import com.lostark.lostarkassistanthomework.checklist.rooms.Family
+import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
-import com.lostark.lostarkassistanthomework.dbs.sys.LoadDBAdapter
 
 class ChecklistFragment : Fragment() {
     lateinit var txtAll: TextView
@@ -24,8 +23,10 @@ class ChecklistFragment : Fragment() {
     lateinit var weekAdapter: DayRecyclerAdapter
 
     lateinit var familyDBAdapter: FamilyDBAdapter
-    lateinit var dayFamilys: ArrayList<ShareChecklist>
-    lateinit var weekFamilys: ArrayList<ShareChecklist>
+    lateinit var dayFamilys: ArrayList<Family>
+    lateinit var weekFamilys: ArrayList<Family>
+
+    lateinit var familyDB: FamilyDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,20 +41,51 @@ class ChecklistFragment : Fragment() {
         weekListView = view.findViewById(R.id.weekListView)
 
         familyDBAdapter = FamilyDBAdapter(requireContext())
+        familyDB = FamilyDatabase.getInstance(requireContext())!!
 
-        familyDBAdapter.open()
-        dayFamilys = familyDBAdapter.getItems("일일")
-        weekFamilys = familyDBAdapter.getItems("주간")
-        familyDBAdapter.close()
+        dayFamilys = ArrayList()
+        weekFamilys = ArrayList()
 
-        dayAdapter = DayRecyclerAdapter(dayFamilys)
+        val saveFamilyData = familyDB.familyDao().getAll()
+        if (saveFamilyData.isEmpty()) {
+            familyDBAdapter.open()
+            initFamilys(familyDBAdapter.getItems("일일"), "일일")
+            initFamilys(familyDBAdapter.getItems("주간"), "주간")
+            familyDBAdapter.close()
+        } else {
+            asyncFamilyData(saveFamilyData)
+        }
+
+        dayAdapter = DayRecyclerAdapter(dayFamilys, requireContext(), familyDB)
         dayListView.adapter = dayAdapter
         dayListView.addItemDecoration(RecyclerViewDecoration(10))
 
-        weekAdapter = DayRecyclerAdapter(weekFamilys)
+        weekAdapter = DayRecyclerAdapter(weekFamilys, requireContext(), familyDB)
         weekListView.adapter = weekAdapter
         weekListView.addItemDecoration(RecyclerViewDecoration(10))
 
         return view
+    }
+
+    fun initFamilys(list: ArrayList<Family>, type: String) {
+        list.forEach { item ->
+            familyDB.familyDao().insertAll(item)
+            if (type == "일일") {
+                dayFamilys.add(item)
+            } else {
+                weekFamilys.add(item)
+            }
+            println("added file(name : ${item.name})")
+        }
+    }
+
+    fun asyncFamilyData(list: List<Family>) {
+        list.forEach { item ->
+            if (item.type == "일일") {
+                dayFamilys.add(item)
+            } else {
+                weekFamilys.add(item)
+            }
+        }
     }
 }

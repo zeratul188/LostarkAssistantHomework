@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         layoutFrame = findViewById(R.id.layoutFrame)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-        val checklistFragment : ChecklistFragment = ChecklistFragment()
-        val goldFragment : GoldFragment = GoldFragment()
+        val checklistFragment = ChecklistFragment()
+        val goldFragment = GoldFragment()
 
         supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, checklistFragment).commit()
         bottomNavigationView.setOnItemSelectedListener {
