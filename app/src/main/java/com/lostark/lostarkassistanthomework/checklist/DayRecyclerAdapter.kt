@@ -15,7 +15,7 @@ import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 class DayRecyclerAdapter(private val items : ArrayList<Family>, private val context: Context, private val db: FamilyDatabase) : RecyclerView.Adapter<DayRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_checklist, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_family_checklist, parent, false)
         return DayRecyclerAdapter.ViewHolder(view)
     }
 

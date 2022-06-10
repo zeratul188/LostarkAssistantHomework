@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".AddActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="캐릭터 이름"
+        android:textSize="14dp"
+        android:textColor="@color/main_font"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtName"
+        android:textSize="14dp"
+        android:textColor="@color/main_font"
+        android:hint="1~12글자"
+        android:maxLength="12"
+        android:background="@drawable/edit_style"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:textColorHint="@color/disabled_font"/>
+    <View
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <android.widget.Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAdd"
+        android:background="@drawable/button_style"
+        android:text="추가"
+        android:textSize="14dp"
+        android:textColor="@color/main_font"
+        style="?android:attr/borderlessButtonStyle"/>
+</LinearLayout>

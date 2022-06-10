@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
@@ -58,11 +59,13 @@ class ChecklistFragment : Fragment() {
 
         dayAdapter = DayRecyclerAdapter(dayFamilys, requireContext(), familyDB)
         dayListView.adapter = dayAdapter
-        dayListView.addItemDecoration(RecyclerViewDecoration(10))
+        dayListView.layoutManager = GridLayoutManager(requireContext(), 2)
+        dayListView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
         weekAdapter = DayRecyclerAdapter(weekFamilys, requireContext(), familyDB)
         weekListView.adapter = weekAdapter
-        weekListView.addItemDecoration(RecyclerViewDecoration(10))
+        weekListView.layoutManager = GridLayoutManager(requireContext(), 2)
+        weekListView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
         return view
     }

@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/toolBar"
         android:minHeight="?attr/actionBarSize"
+        app:menu="@menu/main_menu"
         android:background="?attr/colorPrimary"/>
     <FrameLayout
         android:layout_width="match_parent"
