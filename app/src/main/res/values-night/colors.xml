@@ -17,9 +17,10 @@
     <color name="progress">#75ED6D</color>
     <color name="line_style">#444444</color>
     <color name="disabled">#FF8888</color>
-    <color name="button">#444444</color>
+    <color name="button">#3f3f3f</color>
     <color name="button_clicked">#666666</color>
-    <color name="edit_background">#3a3a3a</color>
+    <color name="edit_background">#3f3f3f</color>
+    <color name="checkbox">#aaaaaa</color>
 
     <!-- Font Colors -->
     <color name="main_font">#FFFFFF</color>
