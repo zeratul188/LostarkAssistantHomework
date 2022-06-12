@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.MeasuredViewPager
 import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 
 class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val context: Context, private val activity: FragmentActivity) : RecyclerView.Adapter<ChracterRecylerAdapter.ViewHolder>() {
@@ -44,7 +48,7 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
         lateinit var txtJob: TextView
         lateinit var btnSetting: ImageButton
         lateinit var bottomNavigationView: BottomNavigationView
-        lateinit var pagerMain: MeasuredViewPager
+        lateinit var pagerMain: ViewPager
 
         fun bind(item: Homework, context: Context) {
             imgJob = view.findViewById(R.id.imgJob)
@@ -64,13 +68,28 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
             txtLevel.text = "Lv.${item.level}"
             txtJob.text = item.job
 
-            val fragments = ArrayList<Fragment>()
-            val dayFragment = DayHomeworkFragment(item)
-            val weekFragment = WeekHomeworkFragment(item)
-            fragments.add(dayFragment)
-            fragments.add(weekFragment)
-            val fm = activity.supportFragmentManager
-            val pagerAdapter = HomeworkPagerAdapter(fragments, fm)
+            val lists = ArrayList<ArrayList<Checklist>>()
+            lists.add(ArrayList())
+            lists.add(ArrayList())
+            
+            var daynames = item.daylist.split(",")
+            var daynows = item.daynows.split(",")
+            var daymaxs = item.daymaxs.split(",")
+            var dayicons = item.dayicons.split(",")
+            var dayends = item.dayends.split(",")
+            for (i in 0..(daynames.size-1)) {
+                lists[0].add(Checklist(daynames[i], daynows[i].toInt(), daymaxs[i].toInt(), dayicons[i], dayends[i]))
+            }
+            var names = item.weeklist.split(",")
+            var nows = item.weeknows.split(",")
+            var maxs = item.weekmaxs.split(",")
+            var icons = item.weekicons.split(",")
+            var ends = item.weekends.split(",")
+            for (i in 0..(names.size-1)) {
+                lists[1].add(Checklist(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+            }
+
+            val pagerAdapter = HomeworkPagerAdapter(lists, item)
             pagerMain.adapter = pagerAdapter
 
             pagerMain.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
@@ -80,10 +99,10 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
                     positionOffsetPixels: Int
                 ) {
                     bottomNavigationView.menu.getItem(position).setChecked(true)
+                    resized(position)
                 }
 
                 override fun onPageSelected(position: Int) {
-
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
@@ -101,6 +120,17 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
                     }
                 }
                 return@setOnItemSelectedListener true
+            }
+        }
+
+        fun resized(position: Int) {
+            val view = pagerMain[position]
+            if (view != null) {
+                view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                //val width = view.measuredWidth
+                val height = view.measuredHeight
+                val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
+                pagerMain.layoutParams = params
             }
         }
     }

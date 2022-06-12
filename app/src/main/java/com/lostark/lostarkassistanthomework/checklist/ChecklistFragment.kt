@@ -82,7 +82,7 @@ class ChecklistFragment : Fragment() {
         chracterListView = view.findViewById(R.id.chracterListView)
         chracterAdapter = ChracterRecylerAdapter(homeworks, requireContext(), requireActivity())
         chracterListView.adapter = chracterAdapter
-        chracterListView.addItemDecoration(RecyclerViewDecoration(0, 20))
+        chracterListView.addItemDecoration(RecyclerViewDecoration(0, 30))
 
         /*chracterListView.setOnTouchListener { v, event ->
             //scrollView.requestDisallowInterceptTouchEvent(false)
