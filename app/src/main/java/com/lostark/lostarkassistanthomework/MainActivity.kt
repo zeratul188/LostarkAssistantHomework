@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var layoutFrame : FrameLayout
     lateinit var bottomNavigationView : BottomNavigationView
 
+    val checklistFragment = ChecklistFragment()
+    val goldFragment = GoldFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,9 +34,6 @@ class MainActivity : AppCompatActivity() {
         layoutFrame = findViewById(R.id.layoutFrame)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
 
-        val checklistFragment = ChecklistFragment()
-        val goldFragment = GoldFragment()
-
         supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, checklistFragment).commit()
         bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
@@ -42,6 +42,12 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnItemSelectedListener true
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checklistFragment.resume()
+        println("Page is refreshed")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,6 +59,10 @@ class MainActivity : AppCompatActivity() {
         when (item!!.itemId) {
             R.id.action_add -> {
                 val intent = Intent(this, AddActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.action_setting -> {
+                val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
             }
         }

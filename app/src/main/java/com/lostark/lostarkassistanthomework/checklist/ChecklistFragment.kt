@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
+import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
+import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
 
 class ChecklistFragment : Fragment() {
@@ -28,6 +30,11 @@ class ChecklistFragment : Fragment() {
     lateinit var weekFamilys: ArrayList<Family>
 
     lateinit var familyDB: FamilyDatabase
+
+    lateinit var chracterListView: RecyclerView
+    lateinit var chracterAdapter: ChracterRecylerAdapter
+    var homeworks: ArrayList<Homework> = ArrayList()
+    lateinit var homeworkDB: HomeworkDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +54,9 @@ class ChecklistFragment : Fragment() {
         dayFamilys = ArrayList()
         weekFamilys = ArrayList()
 
+        dayAdapter = DayRecyclerAdapter(dayFamilys, requireContext(), familyDB)
+        weekAdapter = DayRecyclerAdapter(weekFamilys, requireContext(), familyDB)
+
         val saveFamilyData = familyDB.familyDao().getAll()
         if (saveFamilyData.isEmpty()) {
             familyDBAdapter.open()
@@ -57,15 +67,19 @@ class ChecklistFragment : Fragment() {
             asyncFamilyData(saveFamilyData)
         }
 
-        dayAdapter = DayRecyclerAdapter(dayFamilys, requireContext(), familyDB)
         dayListView.adapter = dayAdapter
         dayListView.layoutManager = GridLayoutManager(requireContext(), 2)
         dayListView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
-        weekAdapter = DayRecyclerAdapter(weekFamilys, requireContext(), familyDB)
         weekListView.adapter = weekAdapter
         weekListView.layoutManager = GridLayoutManager(requireContext(), 2)
         weekListView.addItemDecoration(RecyclerViewDecoration(10, 10))
+
+        homeworkDB = HomeworkDatabase.getInstance(requireContext())!!
+        chracterListView = view.findViewById(R.id.chracterListView)
+        chracterAdapter = ChracterRecylerAdapter(homeworks, requireContext())
+        chracterListView.adapter = chracterAdapter
+        chracterListView.addItemDecoration(RecyclerViewDecoration(0, 20))
 
         return view
     }
@@ -90,5 +104,28 @@ class ChecklistFragment : Fragment() {
                 weekFamilys.add(item)
             }
         }
+    }
+
+    fun asyncChracterData(list: List<Homework>) {
+        list.forEach { item ->
+            homeworks.add(item)
+        }
+    }
+
+    fun resume() {
+        homeworks.clear()
+        dayFamilys.clear()
+        weekFamilys.clear()
+        val saveFamilyData = familyDB.familyDao().getAll()
+        if (!saveFamilyData.isEmpty()) {
+            asyncFamilyData(saveFamilyData)
+        }
+        val saveChracterData = homeworkDB.homeworkDao().getAll()
+        if (!saveChracterData.isEmpty()) {
+            asyncChracterData(saveChracterData)
+        }
+        dayAdapter.notifyDataSetChanged()
+        weekAdapter.notifyDataSetChanged()
+        chracterAdapter.notifyDataSetChanged()
     }
 }

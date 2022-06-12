@@ -47,6 +47,7 @@ class AutoFragment : Fragment() {
         val handler = ChracterHandler()
 
         btnSearch.setOnClickListener {
+            chracters.clear()
             loadingDialog.show()
             val thread = CloringThread(edtName, requireContext(), loadingDialog, chracters, handler)
             thread.start()
@@ -108,9 +109,9 @@ class CloringThread(
                 if (jobs.indexOf(job) != -1) {
                     chracters.add(Chracter(name, level, server, job, false))
                 }
-
             }
         }
+        chracters.sort()
         loadingDialog.dismiss()
         var message = Message.obtain()
         message.what = 1

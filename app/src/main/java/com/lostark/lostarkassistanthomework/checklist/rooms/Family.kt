@@ -1,6 +1,5 @@
 package com.lostark.lostarkassistanthomework.checklist.rooms
 
-import android.graphics.drawable.Drawable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

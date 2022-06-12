@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.objects.Chracter
@@ -24,9 +25,11 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
             if (item.isChecked) {
                 item.isChecked = false
                 holder.chkCheck.isChecked = false
+                holder.layoutBackground.setBackgroundResource(R.drawable.unselected_style)
             } else {
                 item.isChecked = true
                 holder.chkCheck.isChecked = true
+                holder.layoutBackground.setBackgroundResource(R.drawable.selected_style)
             }
             notifyDataSetChanged()
         }
@@ -46,6 +49,7 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
         lateinit var txtLevel: TextView
         lateinit var txtJob: TextView
         lateinit var chkCheck: CheckBox
+        lateinit var layoutBackground: LinearLayout
         fun bind(listener: View.OnClickListener, item: Chracter, context: Context) {
             imgJob = view.findViewById(R.id.imgJob)
             txtName = view.findViewById(R.id.txtName)
@@ -53,6 +57,7 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
             txtLevel = view.findViewById(R.id.txtLevel)
             txtJob = view.findViewById(R.id.txtJob)
             chkCheck = view.findViewById(R.id.chkCheck)
+            layoutBackground = view.findViewById(R.id.layoutBackground)
 
             val jobs = context.resources.getStringArray(R.array.job)
             val pos = jobs.indexOf(item.job)+1;
@@ -62,14 +67,21 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
             txtLevel.text = "Lv.${item.level.toString()}"
             txtJob.text = item.job
             chkCheck.isChecked = item.isChecked
+            if (chkCheck.isChecked) {
+                layoutBackground.setBackgroundResource(R.drawable.selected_style)
+            } else {
+                layoutBackground.setBackgroundResource(R.drawable.unselected_style)
+            }
 
             chkCheck.setOnClickListener {
                 if (item.isChecked) {
                     item.isChecked = false
                     chkCheck.isChecked = false
+                    layoutBackground.setBackgroundResource(R.drawable.unselected_style)
                 } else {
                     item.isChecked = true
                     chkCheck.isChecked = true
+                    layoutBackground.setBackgroundResource(R.drawable.selected_style)
                 }
             }
 

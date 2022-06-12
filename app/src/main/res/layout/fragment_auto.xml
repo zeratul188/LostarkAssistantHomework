@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnSearch"
         android:background="@drawable/button_style"
-        android:text="찾기"
+        android:text="캐릭터 정보 불러오기"
         android:textSize="14dp"
         android:textColor="@color/main_font"
         android:layout_marginBottom="10dp"
