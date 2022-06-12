@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ class ChecklistFragment : Fragment() {
     lateinit var progressAll: ProgressBar
     lateinit var dayListView: RecyclerView
     lateinit var weekListView: RecyclerView
+    lateinit var scrollView: NestedScrollView
 
     lateinit var dayAdapter: DayRecyclerAdapter
     lateinit var weekAdapter: DayRecyclerAdapter
@@ -47,6 +49,7 @@ class ChecklistFragment : Fragment() {
         progressAll = view.findViewById(R.id.progressAll)
         dayListView = view.findViewById(R.id.dayListView)
         weekListView = view.findViewById(R.id.weekListView)
+        scrollView = view.findViewById(R.id.scrollView)
 
         familyDBAdapter = FamilyDBAdapter(requireContext())
         familyDB = FamilyDatabase.getInstance(requireContext())!!
@@ -77,9 +80,15 @@ class ChecklistFragment : Fragment() {
 
         homeworkDB = HomeworkDatabase.getInstance(requireContext())!!
         chracterListView = view.findViewById(R.id.chracterListView)
-        chracterAdapter = ChracterRecylerAdapter(homeworks, requireContext())
+        chracterAdapter = ChracterRecylerAdapter(homeworks, requireContext(), requireActivity())
         chracterListView.adapter = chracterAdapter
         chracterListView.addItemDecoration(RecyclerViewDecoration(0, 20))
+
+        /*chracterListView.setOnTouchListener { v, event ->
+            //scrollView.requestDisallowInterceptTouchEvent(false)
+            println("reoighnoernhgoierngoierngioerngioerngoierngoireno print")
+            return@setOnTouchListener false
+        }*/
 
         return view
     }
@@ -117,13 +126,9 @@ class ChecklistFragment : Fragment() {
         dayFamilys.clear()
         weekFamilys.clear()
         val saveFamilyData = familyDB.familyDao().getAll()
-        if (!saveFamilyData.isEmpty()) {
-            asyncFamilyData(saveFamilyData)
-        }
+        asyncFamilyData(saveFamilyData)
         val saveChracterData = homeworkDB.homeworkDao().getAll()
-        if (!saveChracterData.isEmpty()) {
-            asyncChracterData(saveChracterData)
-        }
+        asyncChracterData(saveChracterData)
         dayAdapter.notifyDataSetChanged()
         weekAdapter.notifyDataSetChanged()
         chracterAdapter.notifyDataSetChanged()

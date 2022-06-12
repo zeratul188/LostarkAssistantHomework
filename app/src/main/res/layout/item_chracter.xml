@@ -80,8 +80,8 @@
         app:itemIconTint="@drawable/bottom_navigation_select_text_style"
         app:itemTextColor="@drawable/bottom_navigation_select_text_style"
         android:id="@+id/bottomNavigationView"/>
-    <androidx.viewpager.widget.ViewPager
+    <com.lostark.lostarkassistanthomework.MeasuredViewPager
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:id="@+id/pagerMain"/>
 </LinearLayout>
