@@ -73,7 +73,7 @@ class HomeworkRecylerAdapter(private val items: ArrayList<Checklist>, private va
             notifyDataSetChanged()
         }
         holder.apply {
-            bind(listener, item, context)
+            bind(listener, item, context, homework)
             itemView.tag = item
         }
     }
@@ -88,7 +88,7 @@ class HomeworkRecylerAdapter(private val items: ArrayList<Checklist>, private va
         lateinit var txtCount: TextView
         lateinit var txtEnd: TextView
         lateinit var layoutBackground: LinearLayout
-        fun bind(listener: View.OnClickListener, item: Checklist, context: Context) {
+        fun bind(listener: View.OnClickListener, item: Checklist, context: Context, homework: Homework) {
             imgIcon = view.findViewById(R.id.imgIcon)
             progressRest = view.findViewById(R.id.progressRest)
             txtName = view.findViewById(R.id.txtName)
@@ -104,6 +104,27 @@ class HomeworkRecylerAdapter(private val items: ArrayList<Checklist>, private va
                 layoutBackground.setBackgroundResource(R.drawable.item_checklist_disabled_background)
             } else {
                 layoutBackground.setBackgroundResource(R.drawable.item_checklist_background)
+            }
+
+            when (item.name) {
+                "카오스 던전" -> {
+                    progressRest.visibility = View.VISIBLE
+                    progressRest.progress = homework.dungeonrest
+                    progressRest.max = 100
+                }
+                "가디언 토벌" -> {
+                    progressRest.visibility = View.VISIBLE
+                    progressRest.progress = homework.bossrest
+                    progressRest.max = 100
+                }
+                "에포나 의뢰" -> {
+                    progressRest.visibility = View.VISIBLE
+                    progressRest.progress = homework.questrest
+                    progressRest.max = 100
+                }
+                else -> {
+                    progressRest.visibility = View.GONE
+                }
             }
 
             view.setOnClickListener(listener)

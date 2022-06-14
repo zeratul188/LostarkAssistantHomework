@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         toolBar = findViewById(R.id.toolBar)
-        toolBar.setTitle("로스트아크 어시스턴트 체크")
+        toolBar.setTitle("LAA 체크리스트")
         toolBar.setTitleTextColor(resources.getColor(R.color.main_font))
         //toolBar.setNavigationIcon(R.drawable.icon_resize)
         setSupportActionBar(toolBar)

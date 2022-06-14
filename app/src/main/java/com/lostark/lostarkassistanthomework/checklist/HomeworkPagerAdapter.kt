@@ -30,7 +30,7 @@ class HomeworkPagerAdapter(private val checklists: ArrayList<ArrayList<Checklist
         }
         val homeworkAdapter = HomeworkRecylerAdapter(checklists[position], App.context(), homework, homeworkDB, type)
         listView.adapter = homeworkAdapter
-        listView.addItemDecoration(RecyclerViewDecoration(0, 10))
+        listView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
         heights[position] = view.height
 
