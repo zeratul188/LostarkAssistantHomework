@@ -47,7 +47,7 @@
                     android:id="@+id/txtName"
                     android:text="숙제 이름"
                     android:textColor="@color/main_font"
-                    android:layout_marginBottom="-4dp"
+                    android:layout_marginBottom="-2dp"
                     android:textSize="16dp"/>
                 <LinearLayout
                     android:layout_width="wrap_content"

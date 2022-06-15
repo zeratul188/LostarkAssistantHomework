@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".AddActivity">
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -14,69 +13,75 @@
         android:id="@+id/toolBar"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="캐릭터 이름"
-        android:textSize="14dp"
-        android:textColor="@color/main_font"/>
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtName"
-        android:textSize="14dp"
-        android:textColor="@color/main_font"
-        android:hint="1~12글자"
-        android:maxLength="12"
-        android:background="@drawable/edit_style"
+        android:layout_height="match_parent"
         android:padding="10dp"
-        android:layout_marginTop="5dp"
-        android:textColorHint="@color/disabled_font"/>
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rgAuto"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal">
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rdoAuto"
-            android:text="자동"
-            android:button="@null"
-            android:gravity="center"
-            android:textColor="@color/main_font"
-            android:checked="true"
-            android:background="@drawable/group_radio_style"
-            android:textSize="16dp"/>
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:text="캐릭터 이름"
+            android:textSize="14dp"
+            android:textColor="@color/main_font"/>
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rdoSelf"
-            android:text="직접 입력"
-            android:button="@null"
-            android:gravity="center"
+            android:id="@+id/edtName"
+            android:textSize="14dp"
             android:textColor="@color/main_font"
-            android:background="@drawable/group_radio_style"
-            android:textSize="16dp"/>
-    </RadioGroup>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/layoutFrame"/>
-    <android.widget.Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnAdd"
-        android:background="@drawable/button_style"
-        android:text="추가"
-        android:textSize="14dp"
-        android:textColor="@color/main_font"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        style="?android:attr/borderlessButtonStyle"/>
+            android:hint="1~12글자"
+            android:maxLength="12"
+            android:background="@drawable/edit_style"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/disabled_font"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rgAuto"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/rdoAuto"
+                android:text="자동"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@color/main_font"
+                android:checked="true"
+                android:background="@drawable/group_radio_style"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/rdoSelf"
+                android:text="직접 입력"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@color/main_font"
+                android:background="@drawable/group_radio_style"
+                android:textSize="16dp"/>
+        </RadioGroup>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/layoutFrame"/>
+        <android.widget.Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAdd"
+            android:background="@drawable/button_style"
+            android:text="추가"
+            android:textSize="14dp"
+            android:textColor="@color/main_font"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            style="?android:attr/borderlessButtonStyle"/>
+    </LinearLayout>
 </LinearLayout>

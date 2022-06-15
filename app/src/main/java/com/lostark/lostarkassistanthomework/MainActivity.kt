@@ -11,8 +11,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lostark.lostarkassistanthomework.checklist.ChecklistFragment
 import com.lostark.lostarkassistanthomework.gold.GoldFragment
 
-var progress : Int = 0
-
 class MainActivity : AppCompatActivity() {
     lateinit var toolBar : Toolbar
     lateinit var layoutFrame : FrameLayout
@@ -64,6 +62,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_setting -> {
                 val intent = Intent(this, SettingActivity::class.java)
                 startActivity(intent)
+            }
+            R.id.action_refresh -> {
+                checklistFragment.syncData()
             }
         }
 

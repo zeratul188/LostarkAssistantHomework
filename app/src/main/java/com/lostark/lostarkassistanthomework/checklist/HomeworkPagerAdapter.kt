@@ -11,8 +11,12 @@ import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 
-class HomeworkPagerAdapter(private val checklists: ArrayList<ArrayList<Checklist>>, private val homework: Homework) :
-    PagerAdapter() {
+class HomeworkPagerAdapter(
+    private val checklists: ArrayList<ArrayList<Checklist>>,
+    private val homework: Homework,
+    private val holder: ChracterRecylerAdapter.ViewHolder,
+    private val fragment: ChecklistFragment
+) : PagerAdapter() {
 
     lateinit var listView: RecyclerView
     var homeworkDB: HomeworkDatabase = HomeworkDatabase.getInstance(App.context())!!
@@ -28,7 +32,7 @@ class HomeworkPagerAdapter(private val checklists: ArrayList<ArrayList<Checklist
             0 -> type = "일일"
             1 -> type = "주간"
         }
-        val homeworkAdapter = HomeworkRecylerAdapter(checklists[position], App.context(), homework, homeworkDB, type)
+        val homeworkAdapter = HomeworkRecylerAdapter(checklists[position], App.context(), homework, homeworkDB, type, holder, fragment)
         listView.adapter = homeworkAdapter
         listView.addItemDecoration(RecyclerViewDecoration(10, 10))
 

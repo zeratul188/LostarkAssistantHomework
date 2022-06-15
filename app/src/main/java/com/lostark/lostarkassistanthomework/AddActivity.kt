@@ -2,6 +2,7 @@ package com.lostark.lostarkassistanthomework
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
@@ -29,6 +30,7 @@ class AddActivity : AppCompatActivity() {
         toolBar.setTitleTextColor(resources.getColor(R.color.main_font))
         //toolBar.setNavigationIcon(R.drawable.icon_resize)
         setSupportActionBar(toolBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         edtName = findViewById(R.id.edtName)
         btnAdd = findViewById(R.id.btnAdd)
@@ -103,19 +105,74 @@ class AddActivity : AppCompatActivity() {
                                 }
                             }
                             homeworkDBAdapter.close()
-                            val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0)
+                            val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0)
                             homeworkDB.homeworkDao().insertAll(homework)
-                            println("${item.name} is inserted")
                         }
                     }
                     finish()
                 }
                 R.id.rdoSelf -> {
-
+                    val preset = selfFragment.getPreset()
+                    var daylist = ""
+                    var daynows = ""
+                    var daymaxs = ""
+                    var dayicons = ""
+                    var dayends = ""
+                    var weeklist = ""
+                    var weeknows = ""
+                    var weekmaxs = ""
+                    var weekicons = ""
+                    var weekends = ""
+                    homeworkDBAdapter.open()
+                    val savedFrameHomeworks = homeworkDBAdapter.getItems()
+                    if (!savedFrameHomeworks.isEmpty()) {
+                        savedFrameHomeworks.forEach { frameHomework ->
+                            if (frameHomework.type == "일일") {
+                                if (preset.level >= frameHomework.min) {
+                                    if (daylist != "") daylist += ","
+                                    if (daynows != "") daynows += ","
+                                    if (daymaxs != "") daymaxs += ","
+                                    if (dayicons != "") dayicons += ","
+                                    if (dayends != "") dayends += ","
+                                    daylist += frameHomework.name
+                                    daynows += "0"
+                                    daymaxs += frameHomework.max
+                                    dayicons += frameHomework.icon
+                                    dayends += frameHomework.end
+                                }
+                            } else {
+                                if (preset.level >= frameHomework.min) {
+                                    if (weeklist != "") weeklist += ","
+                                    if (weeknows != "") weeknows += ","
+                                    if (weekmaxs != "") weekmaxs += ","
+                                    if (weekicons != "") weekicons += ","
+                                    if (weekends != "") weekends += ","
+                                    weeklist += frameHomework.name
+                                    weeknows += "0"
+                                    weekmaxs += frameHomework.max
+                                    weekicons += frameHomework.icon
+                                    weekends += frameHomework.end
+                                }
+                            }
+                        }
+                    }
+                    homeworkDBAdapter.close()
+                    val homework = Homework(0, edtName.text.toString(), preset.level, preset.server, preset.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0)
+                    homeworkDB.homeworkDao().insertAll(homework)
+                    finish()
                 }
             }
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

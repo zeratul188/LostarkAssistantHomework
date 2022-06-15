@@ -22,5 +22,19 @@ data class Homework (
     var weekends: String,
     var dungeonrest: Int,
     var bossrest: Int,
-    var questrest: Int
-)
+    var questrest: Int,
+    var dungeonlost: Int,
+    var bosslost: Int,
+    var questlost: Int
+): Comparable<Homework> {
+    override fun compareTo(other: Homework): Int {
+        if (level < other.level) {
+            return 1
+        } else if (level == other.level) {
+            return 0
+        } else {
+            return -1
+        }
+    }
+
+}

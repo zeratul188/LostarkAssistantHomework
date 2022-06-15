@@ -14,7 +14,15 @@ import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 
-class HomeworkRecylerAdapter(private val items: ArrayList<Checklist>, private val context: Context, private val homework: Homework, private val db: HomeworkDatabase, private val type: String) : RecyclerView.Adapter<HomeworkRecylerAdapter.ViewHolder>() {
+class HomeworkRecylerAdapter(
+    private val items: ArrayList<Checklist>,
+    private val context: Context,
+    private val homework: Homework,
+    private val db: HomeworkDatabase,
+    private val type: String,
+    private val old_holder: ChracterRecylerAdapter.ViewHolder,
+    private val fragment: ChecklistFragment
+) : RecyclerView.Adapter<HomeworkRecylerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -70,6 +78,16 @@ class HomeworkRecylerAdapter(private val items: ArrayList<Checklist>, private va
                 homework.weekends = ends
             }
             db.homeworkDao().update(homework)
+            if (type == "일일") {
+                var progress = 0
+                var max = 0
+                items.forEach { item ->
+                    progress += item.now
+                    max += item.max
+                }
+                old_holder.syncProgress(progress, max)
+            }
+            fragment.syncProgress()
             notifyDataSetChanged()
         }
         holder.apply {

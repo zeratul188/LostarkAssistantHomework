@@ -24,4 +24,15 @@
         <item>리퍼</item>
         <item>도화가</item>
     </string-array>
+
+    <string-array name="servers">
+        <item>루페온</item>
+        <item>카마인</item>
+        <item>카제로스</item>
+        <item>카단</item>
+        <item>아브렐슈드</item>
+        <item>실리안</item>
+        <item>아만</item>
+        <item>니나브</item>
+    </string-array>
 </resources>

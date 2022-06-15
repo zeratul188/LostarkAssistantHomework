@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.get
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -21,11 +18,16 @@ import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 
-class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val context: Context, private val activity: FragmentActivity) : RecyclerView.Adapter<ChracterRecylerAdapter.ViewHolder>() {
+class ChracterRecylerAdapter(
+    private val items: ArrayList<Homework>,
+    private val context: Context,
+    private val activity: FragmentActivity,
+    private val fragment: ChecklistFragment
+) : RecyclerView.Adapter<ChracterRecylerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chracter, parent, false)
-        return ChracterRecylerAdapter.ViewHolder(view, activity)
+        return ChracterRecylerAdapter.ViewHolder(view, activity, fragment)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,7 +41,7 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
 
     override fun getItemCount(): Int = items.size
 
-    class ViewHolder(v : View, private val activity: FragmentActivity) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(v : View, private val activity: FragmentActivity, private val fragment: ChecklistFragment) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         lateinit var imgJob: ImageView
         lateinit var txtServer: TextView
@@ -49,6 +51,8 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
         lateinit var btnSetting: ImageButton
         lateinit var bottomNavigationView: BottomNavigationView
         lateinit var pagerMain: ViewPager
+        lateinit var txtProgress: TextView
+        lateinit var progressHomework: ProgressBar
 
         fun bind(item: Homework, context: Context) {
             imgJob = view.findViewById(R.id.imgJob)
@@ -59,6 +63,8 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
             btnSetting = view.findViewById(R.id.btnSetting)
             bottomNavigationView = view.findViewById(R.id.bottomNavigationView)
             pagerMain = view.findViewById(R.id.pagerMain)
+            txtProgress = view.findViewById(R.id.txtProgress)
+            progressHomework = view.findViewById(R.id.progressHomework)
 
             val jobs = context.resources.getStringArray(R.array.job)
             val pos = jobs.indexOf(item.job)+1;
@@ -89,7 +95,17 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
                 lists[1].add(Checklist(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
             }
 
-            val pagerAdapter = HomeworkPagerAdapter(lists, item)
+            var max = 0
+            var progress = 0
+            lists[0].forEach { item ->
+                max += item.max
+                progress += item.now
+            }
+            progressHomework.max = max
+            progressHomework.progress = progress
+            txtProgress.text = "${(progress.toDouble()/max.toDouble()*100).toInt()}"
+
+            val pagerAdapter = HomeworkPagerAdapter(lists, item, this, fragment)
             pagerMain.adapter = pagerAdapter
 
             pagerMain.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
@@ -110,6 +126,10 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
                 }
             })
 
+            btnSetting.setOnClickListener {
+                Toast.makeText(App.context(), "${item.name}'s Setting", Toast.LENGTH_SHORT).show()
+            }
+
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.action_day -> {
@@ -121,6 +141,12 @@ class ChracterRecylerAdapter(private val items: ArrayList<Homework>, private val
                 }
                 return@setOnItemSelectedListener true
             }
+        }
+
+        fun syncProgress(progress: Int, max: Int) {
+            progressHomework.max = max
+            progressHomework.progress = progress
+            txtProgress.text = "${(progress.toDouble()/max.toDouble()*100).toInt()}"
         }
 
         fun resized(position: Int) {
