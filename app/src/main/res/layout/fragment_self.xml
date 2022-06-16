@@ -33,6 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
+        android:background="@drawable/background_spinner"
+        android:popupBackground="@color/background"
+        android:layout_marginTop="5dp"
         android:id="@+id/sprServers"/>
     <TextView
         android:layout_width="wrap_content"
@@ -45,5 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
+        android:background="@drawable/background_spinner"
+        android:popupBackground="@color/background"
+        android:layout_marginTop="5dp"
         android:id="@+id/sprJobs"/>
 </LinearLayout>

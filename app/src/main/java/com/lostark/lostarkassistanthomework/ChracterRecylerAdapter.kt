@@ -11,12 +11,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.objects.Chracter
 
-class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val context: Context) :
-    RecyclerView.Adapter<ChracterRecylerAdapter.ViewHolder>() {
+class ChracterRecylerAdapter(
+    private val list: ArrayList<Chracter>,
+    private val context: Context,
+    private val txtContent: TextView
+) : RecyclerView.Adapter<ChracterRecylerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chracter_list, parent, false)
-        return ChracterRecylerAdapter.ViewHolder(view)
+        return ChracterRecylerAdapter.ViewHolder(view, list, txtContent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,6 +34,13 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
                 holder.chkCheck.isChecked = true
                 holder.layoutBackground.setBackgroundResource(R.drawable.selected_style)
             }
+            var count = 0
+            list.forEach { it ->
+                if (it.isChecked) {
+                    count++
+                }
+            }
+            txtContent.text = "총 ${list.size}개 중 ${count}개의 캐릭터를 선택하였습니다"
             notifyDataSetChanged()
         }
         holder.apply {
@@ -41,7 +51,7 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(v : View, private val list: ArrayList<Chracter>, private val txtContent: TextView) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         lateinit var imgJob: ImageView
         lateinit var txtName: TextView
@@ -83,6 +93,13 @@ class ChracterRecylerAdapter(private val list: ArrayList<Chracter>, private val 
                     chkCheck.isChecked = true
                     layoutBackground.setBackgroundResource(R.drawable.selected_style)
                 }
+                var count = 0
+                list.forEach { it ->
+                    if (it.isChecked) {
+                        count++
+                    }
+                }
+                txtContent.text = "총 ${list.size}개 중 ${count}개의 캐릭터를 선택하였습니다"
             }
 
             view.setOnClickListener(listener)

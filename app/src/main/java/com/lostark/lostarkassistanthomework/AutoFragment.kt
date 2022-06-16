@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
+import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.objects.Chracter
 import org.jsoup.Jsoup
 
@@ -60,7 +61,7 @@ class AutoFragment : Fragment() {
             thread.start()
         }
 
-        chracterAdapter = ChracterRecylerAdapter(chracters, requireContext())
+        chracterAdapter = ChracterRecylerAdapter(chracters, requireContext(), txtContent)
         listAuto.adapter = chracterAdapter
         listAuto.addItemDecoration(RecyclerViewDecoration(0, 10))
 
@@ -78,10 +79,10 @@ class AutoFragment : Fragment() {
                     chracterAdapter.notifyDataSetChanged()
                 }
                 ERRORED -> {
-                    txtContent.text = "정보를 불러오는데 문제가 발생하였습니다."
+                    txtContent.text = "정보를 불러오는데 문제가 발생하였습니다.\n\n- 인터넷 연결을 확인해주세요."
                 }
                 EMPTYED -> {
-                    txtContent.text = "검색결과가 없습니다. 문제 발생 시 아래 방법을 시도하십시오\n\n- 캐릭터 이름을 다시 정확히 입력해주십시오.\n- 로스트아크 점검 시간을 피해주십시오."
+                    txtContent.text = "검색결과가 없습니다. 문제 발생 시 아래 방법을 시도하십시오\n\n- 캐릭터 이름을 다시 정확히 입력해주십시오.\n- 로스트아크 점검 시간을 피해주십시오.\n- 인터넷 연결을 확인해주세요.\n- 이미 모든 캐릭터를 추가하였습니다."
                 }
                 else -> {
 
@@ -99,6 +100,8 @@ class CloringThread(
     private val handler: Handler
 ) : Thread() {
     override fun run() {
+        val homeworkDB = HomeworkDatabase.getInstance(App.context())!!
+        val datas = homeworkDB.homeworkDao().getAll()
         try {
             var doc = Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/"+edtName.text.toString()).get()
 
@@ -123,7 +126,15 @@ class CloringThread(
                     println("================================================================")*/
                     val jobs = context.resources.getStringArray(R.array.job)
                     if (jobs.indexOf(job) != -1) {
-                        chracters.add(Chracter(name, level, server, job, false))
+                        var isOverlap = false
+                        datas.forEach { data ->
+                            if (data.name == name) {
+                                isOverlap = true
+                            }
+                        }
+                        if (!isOverlap) {
+                            chracters.add(Chracter(name, level, server, job, false))
+                        }
                     }
                 }
             }

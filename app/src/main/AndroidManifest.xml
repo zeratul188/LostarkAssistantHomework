@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LostArkAssistantHomework">
         <activity
+            android:name=".checklist.EditActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingActivity"
             android:exported="false" />
         <activity

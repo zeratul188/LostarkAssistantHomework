@@ -125,7 +125,6 @@ class ChecklistFragment : Fragment() {
             } else {
                 weekFamilys.add(item)
             }
-            println("added file(name : ${item.name})")
         }
     }
 

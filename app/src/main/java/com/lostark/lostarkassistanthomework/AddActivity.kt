@@ -112,6 +112,18 @@ class AddActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.rdoSelf -> {
+                    if (edtName.text.toString() == "") {
+                        val toast = CustomToast(App.context())
+                        toast.createToast("캐릭터 이름을 입력해주세요.", false)
+                        toast.show()
+                        return@setOnClickListener
+                    }
+                    if (isOverlap(edtName.text.toString())) {
+                        val toast = CustomToast(App.context())
+                        toast.createToast("이미 ${edtName.text.toString()}의 캐릭터가 추가되어 있습니다.", false)
+                        toast.show()
+                        return@setOnClickListener
+                    }
                     val preset = selfFragment.getPreset()
                     var daylist = ""
                     var daynows = ""
@@ -164,6 +176,17 @@ class AddActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    fun isOverlap(name: String): Boolean {
+        var isOverlap = false
+        val datas = homeworkDB.homeworkDao().getAll()
+        datas.forEach { data ->
+            if (data.name == name) {
+                isOverlap = true
+            }
+        }
+        return isOverlap
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

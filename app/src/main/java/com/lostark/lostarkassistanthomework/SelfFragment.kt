@@ -38,7 +38,10 @@ class SelfFragment : Fragment() {
     }
 
     fun getPreset(): InputPreset {
-        val level = edtLevel.text.toString().toDouble()
+        var level = 0.0
+        if (edtLevel.text.toString() != "") {
+            level = edtLevel.text.toString().toDouble()
+        }
         val job = sprJobs.selectedItem.toString()
         val server = sprServers.selectedItem.toString()
         return InputPreset(level, job, server)
