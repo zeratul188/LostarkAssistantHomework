@@ -21,6 +21,10 @@
     <color name="button_clicked">#bbbbbb</color>
     <color name="edit_background">#f0f0f0</color>
     <color name="checkbox">#888888</color>
+    <color name="important">#cc4444</color>
+    <color name="important_clicked">#AA2222</color>
+    <color name="ok">#53C64B</color>
+    <color name="ok_clicked">#529E4D</color>
 
     <!-- Font Colors -->
     <color name="main_font">#000000</color>

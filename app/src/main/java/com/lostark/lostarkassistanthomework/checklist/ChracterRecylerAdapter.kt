@@ -1,19 +1,16 @@
 package com.lostark.lostarkassistanthomework.checklist
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
-import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.lostark.lostarkassistanthomework.App
-import com.lostark.lostarkassistanthomework.MeasuredViewPager
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
@@ -127,7 +124,9 @@ class ChracterRecylerAdapter(
             })
 
             btnSetting.setOnClickListener {
-                Toast.makeText(App.context(), "${item.name}'s Setting", Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, EditActivity::class.java)
+                intent.putExtra("homework", item)
+                context.startActivity(intent)
             }
 
             bottomNavigationView.setOnItemSelectedListener {

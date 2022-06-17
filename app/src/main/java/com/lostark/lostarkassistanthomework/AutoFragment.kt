@@ -21,6 +21,7 @@ import org.jsoup.Jsoup
 class AutoFragment : Fragment() {
     lateinit var listAuto: RecyclerView
     lateinit var btnSearch: Button
+    lateinit var btnAll: Button
     lateinit var edtName: EditText
     lateinit var txtContent: TextView
 
@@ -45,6 +46,7 @@ class AutoFragment : Fragment() {
         listAuto = view.findViewById(R.id.listAuto)
         btnSearch = view.findViewById(R.id.btnSearch)
         txtContent = view.findViewById(R.id.txtContent)
+        btnAll = view.findViewById(R.id.btnAll)
 
         val loadingDialog = LoadingDialog(requireContext())
         loadingDialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
@@ -59,6 +61,13 @@ class AutoFragment : Fragment() {
             txtContent.visibility = View.VISIBLE
             val thread = CloringThread(edtName, requireContext(), loadingDialog, chracters, handler)
             thread.start()
+        }
+
+        btnAll.setOnClickListener {
+            chracters.forEach { chracter ->
+                chracter.isChecked = true
+            }
+            chracterAdapter.notifyDataSetChanged()
         }
 
         chracterAdapter = ChracterRecylerAdapter(chracters, requireContext(), txtContent)

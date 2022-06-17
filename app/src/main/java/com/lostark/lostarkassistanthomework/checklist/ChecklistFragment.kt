@@ -196,21 +196,25 @@ class CloringThread(
     override fun run() {
         try {
             homeworks.forEach { homework ->
-                var doc = Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/${homework.name}").get()
-                var level_element = doc.select("#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info2 > div.level-info2__expedition > span:nth-child(2)")
-                var level_str = level_element.text()
-                level_str = level_str.replace("Lv.", "")
-                level_str = level_str.replace(",", "")
-                var level = level_str.toDouble()
-                var server_element = doc.select("#lostark-wrapper > div > main > div > div.profile-character-info > span.profile-character-info__server")
-                var server = server_element.text()
-                server = server.replace("@", "")
-                var job_element = doc.select("#lostark-wrapper > div > main > div > div.profile-character-info > img")
-                var job = job_element.attr("alt")
-                homework.level = level
-                homework.server = server
-                homework.job = job
-                homeworkDB.homeworkDao().update(homework)
+                if (homework.auto) {
+                    var doc = Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/${homework.name}").get()
+                    var level_element = doc.select("#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info2 > div.level-info2__expedition > span:nth-child(2)")
+                    if (level_element.text() != "") {
+                        var level_str = level_element.text()
+                        level_str = level_str.replace("Lv.", "")
+                        level_str = level_str.replace(",", "")
+                        var level = level_str.toDouble()
+                        var server_element = doc.select("#lostark-wrapper > div > main > div > div.profile-character-info > span.profile-character-info__server")
+                        var server = server_element.text()
+                        server = server.replace("@", "")
+                        var job_element = doc.select("#lostark-wrapper > div > main > div > div.profile-character-info > img")
+                        var job = job_element.attr("alt")
+                        homework.level = level
+                        homework.server = server
+                        homework.job = job
+                        homeworkDB.homeworkDao().update(homework)
+                    }
+                }
             }
             loadingDialog.dismiss()
             var message = Message.obtain()

@@ -105,7 +105,7 @@ class AddActivity : AppCompatActivity() {
                                 }
                             }
                             homeworkDBAdapter.close()
-                            val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0)
+                            val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, true)
                             homeworkDB.homeworkDao().insertAll(homework)
                         }
                     }
@@ -169,7 +169,7 @@ class AddActivity : AppCompatActivity() {
                         }
                     }
                     homeworkDBAdapter.close()
-                    val homework = Homework(0, edtName.text.toString(), preset.level, preset.server, preset.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0)
+                    val homework = Homework(0, edtName.text.toString(), preset.level, preset.server, preset.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, true)
                     homeworkDB.homeworkDao().insertAll(homework)
                     finish()
                 }
