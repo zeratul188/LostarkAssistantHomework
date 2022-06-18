@@ -35,4 +35,11 @@
         <item>아만</item>
         <item>니나브</item>
     </string-array>
+
+    <string-array name="ends">
+        <item>회</item>
+        <item>관문</item>
+        <item>개</item>
+        <item>마리</item>
+    </string-array>
 </resources>

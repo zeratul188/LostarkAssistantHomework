@@ -9,10 +9,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Design Colors -->
-    <color name="background">#FFFFFF</color>
+    <color name="background">#fafafa</color>
     <color name="complete_background">#cccccc</color>
     <color name="stroke">#80aaaaaa</color>
-    <color name="actionbar">#FFFFFF</color>
+    <color name="actionbar">#fafafa</color>
     <color name="progress_background">#CCCCCC</color>
     <color name="progress">#4E9A49</color>
     <color name="line_style">#dddddd</color>

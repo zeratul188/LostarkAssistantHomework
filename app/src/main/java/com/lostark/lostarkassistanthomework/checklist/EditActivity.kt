@@ -84,6 +84,41 @@ class EditActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        val pagerAdapter = EditPagerAdapter(homework)
+        pagerMain.adapter = pagerAdapter
+
+        pagerMain.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                bottomNavigationView.menu.getItem(position).setChecked(true)
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
+
+        bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.action_day -> {
+                    pagerMain.setCurrentItem(0)
+                }
+                R.id.action_week -> {
+                    pagerMain.setCurrentItem(1)
+                }
+                R.id.action_rest -> {
+                    pagerMain.setCurrentItem(2)
+                }
+            }
+            return@setOnItemSelectedListener true
+        }
+
         btnSearch.setOnClickListener {
             val loadingDialog = LoadingDialog(this)
             loadingDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
