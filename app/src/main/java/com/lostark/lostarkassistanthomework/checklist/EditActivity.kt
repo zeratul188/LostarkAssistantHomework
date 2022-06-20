@@ -84,7 +84,7 @@ class EditActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
-        val pagerAdapter = EditPagerAdapter(homework)
+        val pagerAdapter = EditPagerAdapter(homework, EditActivity@this, supportFragmentManager)
         pagerMain.adapter = pagerAdapter
 
         pagerMain.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
@@ -162,6 +162,19 @@ class EditActivity : AppCompatActivity() {
             homework.server = sprServers.selectedItem.toString()
             homework.job = sprJobs.selectedItem.toString()
             homework.auto = swtAuto.isChecked
+            homework.dungeonrest = pagerAdapter.dungeon
+            homework.bossrest = pagerAdapter.boss
+            homework.questrest = pagerAdapter.quest
+            homework.daylist = pagerAdapter.getNames("일일")
+            homework.daynows = pagerAdapter.getNows("일일")
+            homework.daymaxs = pagerAdapter.getMaxs("일일")
+            homework.dayicons = pagerAdapter.getIcons("일일")
+            homework.dayends = pagerAdapter.getEnds("일일")
+            homework.weeklist = pagerAdapter.getNames("주간")
+            homework.weeknows = pagerAdapter.getNows("주간")
+            homework.weekmaxs = pagerAdapter.getMaxs("주간")
+            homework.weekicons = pagerAdapter.getIcons("주간")
+            homework.weekends = pagerAdapter.getEnds("주간")
             homeworkDB.homeworkDao().update(homework)
             toast.createToast("${homework.name}의 정보를 수정하였습니다.", false)
             toast.show()

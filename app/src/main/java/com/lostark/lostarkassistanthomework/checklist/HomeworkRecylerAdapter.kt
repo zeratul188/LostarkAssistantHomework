@@ -127,18 +127,18 @@ class HomeworkRecylerAdapter(
             when (item.name) {
                 "카오스 던전" -> {
                     progressRest.visibility = View.VISIBLE
-                    progressRest.progress = homework.dungeonrest
                     progressRest.max = 100
+                    progressRest.progress = homework.dungeonrest
                 }
                 "가디언 토벌" -> {
                     progressRest.visibility = View.VISIBLE
-                    progressRest.progress = homework.bossrest
                     progressRest.max = 100
+                    progressRest.progress = homework.bossrest
                 }
                 "에포나 의뢰" -> {
                     progressRest.visibility = View.VISIBLE
-                    progressRest.progress = homework.questrest
                     progressRest.max = 100
+                    progressRest.progress = homework.questrest
                 }
                 else -> {
                     progressRest.visibility = View.GONE

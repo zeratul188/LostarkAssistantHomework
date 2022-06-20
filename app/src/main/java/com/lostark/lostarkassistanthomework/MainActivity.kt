@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var layoutFrame : FrameLayout
     lateinit var bottomNavigationView : BottomNavigationView
 
-    val checklistFragment = ChecklistFragment()
-    val goldFragment = GoldFragment()
+    private val checklistFragment = ChecklistFragment()
+    private val goldFragment = GoldFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checklistFragment.resume()
-        println("Page is refreshed")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

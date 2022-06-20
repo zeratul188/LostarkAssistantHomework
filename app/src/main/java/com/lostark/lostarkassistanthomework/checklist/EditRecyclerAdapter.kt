@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.lostark.lostarkassistanthomework.App
+import com.lostark.lostarkassistanthomework.CheckDialog
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
@@ -26,15 +28,34 @@ class EditRecyclerAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+        val pos = position
         val listener = View.OnClickListener {
-            val customToast = CustomToast(context)
-            customToast.createToast("${item.name}의 숙제를 삭제하였습니다.", false)
-            customToast.show()
-            items.removeAt(position)
-            notifyDataSetChanged()
+            val checkDialog = CheckDialog(context)
+            checkDialog.setData("${item.name}의 숙제를 삭제하시겠습니까?", "삭제", true)
+            checkDialog.setOnClickListener(object : CheckDialog.OnDialogClickListener {
+                override fun onClicked() {
+                    val customToast = CustomToast(App.context())
+                    customToast.createToast("${item.name}의 숙제를 삭제하였습니다.", false)
+                    customToast.show()
+                    items.removeAt(pos)
+                    notifyDataSetChanged()
+                }
+            })
+            checkDialog.show(true)
+        }
+        val icon_listener = View.OnClickListener {
+            val iconDialog = IconSelectDialog(context)
+            iconDialog.setOnClickListener(object : IconSelectDialog.OnDialogClickListener {
+                override fun onClicked() {
+                    val icon = iconDialog.getResult()
+                    item.icon = icon.icon
+                    notifyDataSetChanged()
+                }
+            })
+            iconDialog.show(true)
         }
         holder.apply {
-            bind(item, context, homework, listener)
+            bind(item, context, homework, listener, icon_listener)
             itemView.tag = item
         }
     }
@@ -50,9 +71,9 @@ class EditRecyclerAdapter(
         lateinit var edtNow: EditText
         lateinit var edtMax: EditText
         lateinit var sprEnd: Spinner
-        lateinit var btnDelete: Button
+        lateinit var btnDelete: ImageButton
 
-        fun bind(item: EditData, context: Context, homework: Homework, listener: View.OnClickListener) {
+        fun bind(item: EditData, context: Context, homework: Homework, listener: View.OnClickListener, icon_listener: View.OnClickListener) {
             imgIcon = view.findViewById(R.id.imgIcon)
             edtName = view.findViewById(R.id.edtName)
             edtNow = view.findViewById(R.id.edtNow)
@@ -73,6 +94,7 @@ class EditRecyclerAdapter(
             edtMax.setText(item.max.toString())
 
             btnDelete.setOnClickListener(listener)
+            imgIcon.setOnClickListener(icon_listener)
         }
     }
 }

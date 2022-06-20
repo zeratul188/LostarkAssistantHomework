@@ -73,7 +73,7 @@ class AddActivity : AppCompatActivity() {
                             var weekends = ""
                             homeworkDBAdapter.open()
                             val savedFrameHomeworks = homeworkDBAdapter.getItems()
-                            if (!savedFrameHomeworks.isEmpty()) {
+                            if (savedFrameHomeworks.isNotEmpty()) {
                                 savedFrameHomeworks.forEach { frameHomework ->
                                     if (frameHomework.type == "일일") {
                                         if (item.level >= frameHomework.min) {
