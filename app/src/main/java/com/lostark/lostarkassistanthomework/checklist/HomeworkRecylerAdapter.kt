@@ -46,6 +46,44 @@ class HomeworkRecylerAdapter(
             } else {
                 holder.layoutBackground.setBackgroundResource(R.drawable.item_checklist_background)
             }
+
+            
+            
+            when (item.name) {
+                "카오스 던전" -> {
+                    if (item.now != 0) {
+                        if (homework.dungeonrest >= 20) {
+                            homework.dungeonrest -= 20
+                            homework.dungeonlost += 20
+                        }
+                    } else {
+                        homework.dungeonrest += homework.dungeonlost
+                        homework.dungeonlost = 0
+                    }
+                }
+                "가디언 토벌" -> {
+                    if (item.now != 0) {
+                        if (homework.bossrest >= 20) {
+                            homework.bossrest -= 20
+                            homework.bosslost += 20
+                        }
+                    } else {
+                        homework.bossrest += homework.bosslost
+                        homework.bosslost = 0
+                    }
+                }
+                "에포나 의뢰" -> {
+                    if (item.now != 0) {
+                        if (homework.questrest >= 20) {
+                            homework.questrest -= 20
+                            homework.questlost += 20
+                        }
+                    } else {
+                        homework.questrest += homework.questlost
+                        homework.questlost = 0
+                    }
+                }
+            }
             
             var names = ""
             var nows = ""

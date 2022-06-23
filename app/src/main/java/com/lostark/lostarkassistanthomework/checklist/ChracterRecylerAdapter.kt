@@ -81,7 +81,9 @@ class ChracterRecylerAdapter(
             var dayicons = item.dayicons.split(",")
             var dayends = item.dayends.split(",")
             for (i in 0..(daynames.size-1)) {
-                lists[0].add(Checklist(daynames[i], daynows[i].toInt(), daymaxs[i].toInt(), dayicons[i], dayends[i]))
+                if (daynows[i] != "" && daymaxs[i] != "") {
+                    lists[0].add(Checklist(daynames[i], daynows[i].toInt(), daymaxs[i].toInt(), dayicons[i], dayends[i]))
+                }
             }
             var names = item.weeklist.split(",")
             var nows = item.weeknows.split(",")
@@ -89,7 +91,9 @@ class ChracterRecylerAdapter(
             var icons = item.weekicons.split(",")
             var ends = item.weekends.split(",")
             for (i in 0..(names.size-1)) {
-                lists[1].add(Checklist(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+                if (nows[i] != "" && maxs[i] != "") {
+                    lists[1].add(Checklist(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+                }
             }
 
             var max = 0

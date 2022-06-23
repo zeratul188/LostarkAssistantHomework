@@ -1,12 +1,16 @@
 package com.lostark.lostarkassistanthomework.checklist
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.button.MaterialButton
@@ -16,17 +20,26 @@ import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.objects.EditData
 
-class EditPagerAdapter(private val homework: Homework, private val context: Context, private val fm: FragmentManager) : PagerAdapter() {
+class EditPagerAdapter(
+    private val homework: Homework,
+    private val context: Context,
+    private val fm: FragmentManager
+) : PagerAdapter(), EditRecyclerAdapter.OnStartDragListener {
     //var homeworkDB: HomeworkDatabase = HomeworkDatabase.getInstance(App.context())!!
     lateinit var dayAdapter: EditRecyclerAdapter
     lateinit var weekAdapter: EditRecyclerAdapter
 
     private val days = ArrayList<EditData>()
     private val weeks = ArrayList<EditData>()
+    lateinit var dayHelper : ItemTouchHelper
+    lateinit var weekHelper : ItemTouchHelper
 
     var dungeon = 0
     var boss = 0
     var quest = 0
+    var lostDungeon =  0
+    var lostBoss = 0
+    var lostQuest = 0
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         var view: View? = null
@@ -90,6 +103,8 @@ class EditPagerAdapter(private val homework: Homework, private val context: Cont
                 })
                 addDialog.show(fm, "addDialog")
             }
+
+            val callback = EditItemTouchHelperCallback()
             
             when (position) {
                 0 -> {
@@ -99,9 +114,14 @@ class EditPagerAdapter(private val homework: Homework, private val context: Cont
                     val icons = homework.dayicons.split(",")
                     val ends = homework.dayends.split(",")
                     for (i in names.indices) {
-                        days.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+                        if (nows[i] != "" && maxs[i] != "") {
+                            days.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+                        }
                     }
-                    dayAdapter = EditRecyclerAdapter(days, context, homework)
+                    dayAdapter = EditRecyclerAdapter(days, context, homework, this)
+                    callback.setOnItemMoveListener(dayAdapter)
+                    dayHelper = ItemTouchHelper(callback)
+                    dayHelper.attachToRecyclerView(listView)
                     listView.adapter = dayAdapter
                 }
                 1 -> {
@@ -111,9 +131,14 @@ class EditPagerAdapter(private val homework: Homework, private val context: Cont
                     val icons = homework.weekicons.split(",")
                     val ends = homework.weekends.split(",")
                     for (i in names.indices) {
-                        weeks.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+                        if (nows[i] != "" && maxs[i] != "") {
+                            weeks.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+                        }
                     }
-                    weekAdapter = EditRecyclerAdapter(weeks, context, homework)
+                    weekAdapter = EditRecyclerAdapter(weeks, context, homework, this)
+                    callback.setOnItemMoveListener(weekAdapter)
+                    weekHelper = ItemTouchHelper(callback)
+                    weekHelper.attachToRecyclerView(listView)
                     listView.adapter = weekAdapter
                 }
             }
@@ -126,6 +151,9 @@ class EditPagerAdapter(private val homework: Homework, private val context: Cont
             val seekBoss = view.findViewById<SeekBar>(R.id.seekBoss)
             val txtQuest = view.findViewById<TextView>(R.id.txtQuest)
             val seekQuest = view.findViewById<SeekBar>(R.id.seekQuest)
+            val edtDungeon = view.findViewById<EditText>(R.id.edtDungeon)
+            val edtBoss = view.findViewById<EditText>(R.id.edtBoss)
+            val edtQuest = view.findViewById<EditText>(R.id.edtQuest)
 
             txtDungeon.text = homework.dungeonrest.toString()
             txtBoss.text = homework.bossrest.toString()
@@ -137,6 +165,97 @@ class EditPagerAdapter(private val homework: Homework, private val context: Cont
             dungeon = homework.dungeonrest
             boss = homework.bossrest
             quest = homework.questrest
+            
+            lostDungeon =  homework.dungeonlost
+            lostBoss = homework.bosslost
+            lostQuest = homework.questlost
+            edtDungeon.setText(lostDungeon.toString())
+            edtBoss.setText(lostBoss.toString())
+            edtQuest.setText(lostQuest.toString())
+            
+            edtDungeon.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                    
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    lostDungeon = if (edtDungeon.text.toString() == "") {
+                        0
+                    } else {
+                        if (edtDungeon.text.toString().toInt() > 100) {
+                            edtDungeon.setText("100")
+                            100
+                        } else {
+                            edtDungeon.text.toString().toInt()
+                        }
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    
+                }
+            })
+            
+            edtBoss.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                    
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    lostBoss = if (edtBoss.text.toString() == "") {
+                        0
+                    } else {
+                        if (edtBoss.text.toString().toInt() > 100) {
+                            edtBoss.setText("100")
+                            100
+                        } else {
+                            edtBoss.text.toString().toInt()
+                        }
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    
+                }
+            })
+            
+            edtQuest.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                    
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    lostQuest = if (edtQuest.text.toString() == "") {
+                        0
+                    } else {
+                        if (edtQuest.text.toString().toInt() > 100) {
+                            edtQuest.setText("100")
+                            100
+                        } else {
+                            edtQuest.text.toString().toInt()
+                        }
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    
+                }
+            })
 
             seekDungeon.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
@@ -294,6 +413,11 @@ class EditPagerAdapter(private val homework: Homework, private val context: Cont
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
+    }
+
+    override fun onStartDrag(holder: EditRecyclerAdapter.ViewHolder) {
+        dayHelper.startDrag(holder)
+        weekHelper.startDrag(holder)
     }
 
 }

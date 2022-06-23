@@ -1,10 +1,15 @@
 package com.lostark.lostarkassistanthomework.checklist
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.MotionEventCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.CheckDialog
@@ -13,13 +18,20 @@ import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.objects.EditData
+import java.util.*
+import kotlin.collections.ArrayList
 
 class EditRecyclerAdapter(
     private val items: ArrayList<EditData>,
     private val context: Context,
-    private val homework: Homework
-) : RecyclerView.Adapter<EditRecyclerAdapter.ViewHolder>() {
+    private val homework: Homework,
+    private val startDragListener: OnStartDragListener
+) : RecyclerView.Adapter<EditRecyclerAdapter.ViewHolder>(), EditItemTouchHelperCallback.OnItemMoveListener {
     val homeworkDB = HomeworkDatabase.getInstance(context)!!
+
+    interface OnStartDragListener {
+        fun onStartDrag(holder: ViewHolder)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_edit, parent, false)
@@ -43,7 +55,7 @@ class EditRecyclerAdapter(
             })
             checkDialog.show(true)
         }
-        val icon_listener = View.OnClickListener {
+        val iconListener = View.OnClickListener {
             val iconDialog = IconSelectDialog(context)
             iconDialog.setOnClickListener(object : IconSelectDialog.OnDialogClickListener {
                 override fun onClicked() {
@@ -54,9 +66,86 @@ class EditRecyclerAdapter(
             })
             iconDialog.show(true)
         }
+        val touchListener = View.OnTouchListener { v, event ->
+            if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                startDragListener.onStartDrag(holder)
+            }
+            return@OnTouchListener false
+        }
         holder.apply {
-            bind(item, context, homework, listener, icon_listener)
+            bind(item, context, listener, iconListener, touchListener)
             itemView.tag = item
+        }
+        holder.edtName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                item.name = holder.edtName.text.toString()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+        holder.edtNow.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (holder.edtNow.text.toString() == "") {
+                    item.now = 0
+                } else {
+                    var value = holder.edtNow.text.toString().toInt()
+                    if (value > item.max) {
+                        value = item.max
+                    }
+                    item.now = value
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+        holder.edtMax.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (holder.edtMax.text.toString() == "") {
+                    item.max = 1
+                } else {
+                    var value = holder.edtMax.text.toString().toInt()
+                    if (value == 0) {
+                        holder.edtMax.setText("1")
+                        value = 1
+                    }
+                    item.max = value
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+        holder.sprEnd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val ends = context.resources.getStringArray(R.array.ends)
+                item.end = ends[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
     }
 
@@ -72,14 +161,22 @@ class EditRecyclerAdapter(
         lateinit var edtMax: EditText
         lateinit var sprEnd: Spinner
         lateinit var btnDelete: ImageButton
+        lateinit var imgHandle: ImageView
 
-        fun bind(item: EditData, context: Context, homework: Homework, listener: View.OnClickListener, icon_listener: View.OnClickListener) {
+        fun bind(
+            item: EditData,
+            context: Context,
+            listener: View.OnClickListener,
+            iconListener: View.OnClickListener,
+            touchListener: View.OnTouchListener
+        ) {
             imgIcon = view.findViewById(R.id.imgIcon)
             edtName = view.findViewById(R.id.edtName)
             edtNow = view.findViewById(R.id.edtNow)
             edtMax = view.findViewById(R.id.edtMax)
             sprEnd = view.findViewById(R.id.sprEnd)
             btnDelete = view.findViewById(R.id.btnDelete)
+            imgHandle = view.findViewById(R.id.imgHandle)
 
             val ends = context.resources.getStringArray(R.array.ends)
             val endAdapter = ArrayAdapter(context, R.layout.txt_item_end, ends)
@@ -94,7 +191,13 @@ class EditRecyclerAdapter(
             edtMax.setText(item.max.toString())
 
             btnDelete.setOnClickListener(listener)
-            imgIcon.setOnClickListener(icon_listener)
+            imgIcon.setOnClickListener(iconListener)
+            imgHandle.setOnTouchListener(touchListener)
         }
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        Collections.swap(items, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 }

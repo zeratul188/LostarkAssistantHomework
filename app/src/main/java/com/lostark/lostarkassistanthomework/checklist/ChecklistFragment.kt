@@ -57,10 +57,14 @@ class ChecklistFragment : Fragment() {
             val nows = homework.daynows.split(",")
             val maxs = homework.daymaxs.split(",")
             nows.forEach { now ->
-                progress += now.toInt()
+                if (now != "") {
+                    progress += now.toInt()
+                }
             }
             maxs.forEach { max ->
-                max_progress += max.toInt()
+                if (max != "") {
+                    max_progress += max.toInt()
+                }
             }
         }
         progressAll.max = max_progress
@@ -115,6 +119,11 @@ class ChecklistFragment : Fragment() {
         chracterListView.addItemDecoration(RecyclerViewDecoration(0, 30))
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resume()
     }
 
     fun initFamilys(list: ArrayList<Family>, type: String) {

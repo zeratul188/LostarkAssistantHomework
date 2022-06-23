@@ -165,6 +165,9 @@ class EditActivity : AppCompatActivity() {
             homework.dungeonrest = pagerAdapter.dungeon
             homework.bossrest = pagerAdapter.boss
             homework.questrest = pagerAdapter.quest
+            homework.dungeonlost = pagerAdapter.lostDungeon
+            homework.bosslost = pagerAdapter.lostBoss
+            homework.questlost = pagerAdapter.lostQuest
             homework.daylist = pagerAdapter.getNames("일일")
             homework.daynows = pagerAdapter.getNows("일일")
             homework.daymaxs = pagerAdapter.getMaxs("일일")
