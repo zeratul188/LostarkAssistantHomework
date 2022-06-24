@@ -26,8 +26,8 @@ class EditPagerAdapter(
     private val fm: FragmentManager
 ) : PagerAdapter(), EditRecyclerAdapter.OnStartDragListener {
     //var homeworkDB: HomeworkDatabase = HomeworkDatabase.getInstance(App.context())!!
-    lateinit var dayAdapter: EditRecyclerAdapter
-    lateinit var weekAdapter: EditRecyclerAdapter
+    var dayAdapter: EditRecyclerAdapter
+    var weekAdapter: EditRecyclerAdapter
 
     private val days = ArrayList<EditData>()
     private val weeks = ArrayList<EditData>()
@@ -40,6 +40,40 @@ class EditPagerAdapter(
     var lostDungeon =  0
     var lostBoss = 0
     var lostQuest = 0
+
+    init {
+        dungeon = homework.dungeonrest
+        boss = homework.bossrest
+        quest = homework.questrest
+
+        lostDungeon =  homework.dungeonlost
+        lostBoss = homework.bosslost
+        lostQuest = homework.questlost
+
+        val names = homework.daylist.split(",")
+        val nows = homework.daynows.split(",")
+        val maxs = homework.daymaxs.split(",")
+        val icons = homework.dayicons.split(",")
+        val ends = homework.dayends.split(",")
+        for (i in names.indices) {
+            if (nows[i] != "" && maxs[i] != "") {
+                days.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
+            }
+        }
+        dayAdapter = EditRecyclerAdapter(days, context, homework, this)
+
+        val names2 = homework.weeklist.split(",")
+        val nows2 = homework.weeknows.split(",")
+        val maxs2 = homework.weekmaxs.split(",")
+        val icons2 = homework.weekicons.split(",")
+        val ends2 = homework.weekends.split(",")
+        for (i in names2.indices) {
+            if (nows2[i] != "" && maxs2[i] != "") {
+                weeks.add(EditData(names2[i], nows2[i].toInt(), maxs2[i].toInt(), icons2[i], ends2[i]))
+            }
+        }
+        weekAdapter = EditRecyclerAdapter(weeks, context, homework, this)
+    }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         var view: View? = null
@@ -77,6 +111,7 @@ class EditPagerAdapter(
                                         customToast.createToast("${data.name} 숙제를 추가하였습니다.", false)
                                         addDialog.dialogDismiss()
                                     }
+                                    dayAdapter.notifyDataSetChanged()
                                 }
                                 1 -> {
                                     weeks.forEach { week ->
@@ -91,10 +126,10 @@ class EditPagerAdapter(
                                         customToast.createToast("${data.name} 숙제를 추가하였습니다.", false)
                                         addDialog.dialogDismiss()
                                     }
+                                    weekAdapter.notifyDataSetChanged()
+                                    printList(weeks)
                                 }
                             }
-                            dayAdapter.notifyDataSetChanged()
-                            weekAdapter.notifyDataSetChanged()
                         } else {
                             customToast.createToast("이름이 비어있습니다.", false)
                         }
@@ -108,34 +143,12 @@ class EditPagerAdapter(
             
             when (position) {
                 0 -> {
-                    val names = homework.daylist.split(",")
-                    val nows = homework.daynows.split(",")
-                    val maxs = homework.daymaxs.split(",")
-                    val icons = homework.dayicons.split(",")
-                    val ends = homework.dayends.split(",")
-                    for (i in names.indices) {
-                        if (nows[i] != "" && maxs[i] != "") {
-                            days.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
-                        }
-                    }
-                    dayAdapter = EditRecyclerAdapter(days, context, homework, this)
                     callback.setOnItemMoveListener(dayAdapter)
                     dayHelper = ItemTouchHelper(callback)
                     dayHelper.attachToRecyclerView(listView)
                     listView.adapter = dayAdapter
                 }
                 1 -> {
-                    val names = homework.weeklist.split(",")
-                    val nows = homework.weeknows.split(",")
-                    val maxs = homework.weekmaxs.split(",")
-                    val icons = homework.weekicons.split(",")
-                    val ends = homework.weekends.split(",")
-                    for (i in names.indices) {
-                        if (nows[i] != "" && maxs[i] != "") {
-                            weeks.add(EditData(names[i], nows[i].toInt(), maxs[i].toInt(), icons[i], ends[i]))
-                        }
-                    }
-                    weekAdapter = EditRecyclerAdapter(weeks, context, homework, this)
                     callback.setOnItemMoveListener(weekAdapter)
                     weekHelper = ItemTouchHelper(callback)
                     weekHelper.attachToRecyclerView(listView)
@@ -409,6 +422,14 @@ class EditPagerAdapter(
             }
         }
         return result
+    }
+
+    fun printList(list: ArrayList<EditData>) {
+        println("======================================")
+        list.forEach { item ->
+            println(item.name)
+        }
+        println("======================================")
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {

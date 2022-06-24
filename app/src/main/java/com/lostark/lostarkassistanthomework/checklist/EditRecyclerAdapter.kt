@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.core.view.MotionEventCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.internal.TextWatcherAdapter
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.CheckDialog
 import com.lostark.lostarkassistanthomework.CustomToast
@@ -27,7 +28,6 @@ class EditRecyclerAdapter(
     private val homework: Homework,
     private val startDragListener: OnStartDragListener
 ) : RecyclerView.Adapter<EditRecyclerAdapter.ViewHolder>(), EditItemTouchHelperCallback.OnItemMoveListener {
-    val homeworkDB = HomeworkDatabase.getInstance(context)!!
 
     interface OnStartDragListener {
         fun onStartDrag(holder: ViewHolder)
@@ -35,7 +35,9 @@ class EditRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_edit, parent, false)
-        return ViewHolder(view)
+        val holder = ViewHolder(view)
+        holder.clearFocus()
+        return holder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -76,77 +78,6 @@ class EditRecyclerAdapter(
             bind(item, context, listener, iconListener, touchListener)
             itemView.tag = item
         }
-        holder.edtName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                item.name = holder.edtName.text.toString()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-        holder.edtNow.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (holder.edtNow.text.toString() == "") {
-                    item.now = 0
-                } else {
-                    var value = holder.edtNow.text.toString().toInt()
-                    if (value > item.max) {
-                        value = item.max
-                    }
-                    item.now = value
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-        holder.edtMax.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (holder.edtMax.text.toString() == "") {
-                    item.max = 1
-                } else {
-                    var value = holder.edtMax.text.toString().toInt()
-                    if (value == 0) {
-                        holder.edtMax.setText("1")
-                        value = 1
-                    }
-                    item.max = value
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-        holder.sprEnd.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val ends = context.resources.getStringArray(R.array.ends)
-                item.end = ends[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
     }
 
     fun getItems(): ArrayList<EditData> = items
@@ -155,13 +86,29 @@ class EditRecyclerAdapter(
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private val view = v
-        lateinit var imgIcon: ImageView
-        lateinit var edtName: EditText
-        lateinit var edtNow: EditText
-        lateinit var edtMax: EditText
-        lateinit var sprEnd: Spinner
-        lateinit var btnDelete: ImageButton
-        lateinit var imgHandle: ImageView
+        var imgIcon: ImageView
+        var edtName: EditText
+        var edtNow: EditText
+        var edtMax: EditText
+        var sprEnd: Spinner
+        var btnDelete: ImageButton
+        var imgHandle: ImageView
+
+        init {
+            imgIcon = view.findViewById(R.id.imgIcon)
+            edtName = view.findViewById(R.id.edtName)
+            edtNow = view.findViewById(R.id.edtNow)
+            edtMax = view.findViewById(R.id.edtMax)
+            sprEnd = view.findViewById(R.id.sprEnd)
+            btnDelete = view.findViewById(R.id.btnDelete)
+            imgHandle = view.findViewById(R.id.imgHandle)
+        }
+
+        fun clearFocus() {
+            edtName.clearFocus()
+            edtNow.clearFocus()
+            edtMax.clearFocus()
+        }
 
         fun bind(
             item: EditData,
@@ -170,13 +117,7 @@ class EditRecyclerAdapter(
             iconListener: View.OnClickListener,
             touchListener: View.OnTouchListener
         ) {
-            imgIcon = view.findViewById(R.id.imgIcon)
-            edtName = view.findViewById(R.id.edtName)
-            edtNow = view.findViewById(R.id.edtNow)
-            edtMax = view.findViewById(R.id.edtMax)
-            sprEnd = view.findViewById(R.id.sprEnd)
-            btnDelete = view.findViewById(R.id.btnDelete)
-            imgHandle = view.findViewById(R.id.imgHandle)
+
 
             val ends = context.resources.getStringArray(R.array.ends)
             val endAdapter = ArrayAdapter(context, R.layout.txt_item_end, ends)
@@ -185,6 +126,7 @@ class EditRecyclerAdapter(
             if (pos != -1) {
                 sprEnd.setSelection(pos)
             }
+
             imgIcon.setImageResource(context.resources.getIdentifier(item.icon, "drawable", context.packageName))
             edtName.setText(item.name)
             edtNow.setText(item.now.toString())
@@ -193,6 +135,97 @@ class EditRecyclerAdapter(
             btnDelete.setOnClickListener(listener)
             imgIcon.setOnClickListener(iconListener)
             imgHandle.setOnTouchListener(touchListener)
+            edtName.addTextChangedListener(NameTextWatcher(item))
+            edtNow.addTextChangedListener(NowTextWatcher(item))
+            edtMax.addTextChangedListener(MaxTextWatcher(item))
+            sprEnd.onItemSelectedListener = EndTextWatcher(item)
+        }
+        /*
+        fun printList(item: EditData, pos : Int) {
+            println("------------------------------------------")
+            println("Position : ${pos}")
+            println("Name : ${item.name}")
+            println("Icon : ${item.icon}")
+            println("------------------------------------------")
+        }
+         */
+
+        inner class NameTextWatcher(private val item: EditData) : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (edtName.hasFocus()) {
+                    item.name = s.toString()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        }
+        inner class NowTextWatcher(private val item: EditData) : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (edtNow.hasFocus()) {
+                    if (s.toString() == "") {
+                        item.now = 0
+                    } else {
+                        var value = s.toString().toInt()
+                        if (value > item.max) {
+                            value = item.max
+                        }
+                        item.now = value
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        }
+        inner class MaxTextWatcher(private val item: EditData) : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (edtMax.hasFocus()) {
+                    if (s.toString() == "") {
+                        item.max = 1
+                    } else {
+                        var value = s.toString().toInt()
+                        if (value == 0) {
+                            edtMax.setText("1")
+                            value = 1
+                        }
+                        item.max = value
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        }
+        inner class EndTextWatcher(private val item: EditData) : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val ends = App.context().resources.getStringArray(R.array.ends)
+                item.end = ends[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
         }
     }
 
