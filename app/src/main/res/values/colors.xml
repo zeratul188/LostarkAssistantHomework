@@ -10,6 +10,7 @@
 
     <!-- Design Colors -->
     <color name="background">#fafafa</color>
+    <color name="inner_background">#f2f2f2</color>
     <color name="complete_background">#cccccc</color>
     <color name="stroke">#80aaaaaa</color>
     <color name="actionbar">#fafafa</color>

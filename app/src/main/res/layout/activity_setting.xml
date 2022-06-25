@@ -13,15 +13,72 @@
         android:id="@+id/toolBar"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"/>
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:orientation="vertical">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnDelete"
-            android:text="delete"/>
-    </LinearLayout>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="캐릭터"
+                android:textSize="14dp"
+                android:textColor="@color/main_font"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_setting_block"
+                android:orientation="vertical">
+                <android.widget.Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/btnDelete"
+                    android:background="@drawable/button_setting_style_top"
+                    android:text="모든 캐릭터 삭제"
+                    android:textSize="14dp"
+                    android:drawableLeft="@drawable/ic_baseline_delete_sweep_24"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textAlignment="textStart"
+                    android:drawablePadding="20dp"
+                    android:textColor="@color/main_font"
+                    style="?android:attr/borderlessButtonStyle"/>
+                <android.widget.Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/btnFamilyInit"
+                    android:background="@drawable/button_setting_style"
+                    android:text="원정대 숙제 초기값으로 설정"
+                    android:textSize="14dp"
+                    android:drawableLeft="@drawable/ic_baseline_undo_30"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textAlignment="textStart"
+                    android:drawablePadding="20dp"
+                    android:textColor="@color/main_font"
+                    style="?android:attr/borderlessButtonStyle"/>
+                <android.widget.Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/btnReset"
+                    android:background="@drawable/button_setting_style_bottom"
+                    android:text="수동 초기화"
+                    android:textSize="14dp"
+                    android:drawableLeft="@drawable/ic_baseline_refresh_30"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textAlignment="textStart"
+                    android:drawablePadding="20dp"
+                    android:textColor="@color/main_font"
+                    style="?android:attr/borderlessButtonStyle"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
