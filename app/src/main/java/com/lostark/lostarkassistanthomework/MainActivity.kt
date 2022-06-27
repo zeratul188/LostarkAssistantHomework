@@ -1,11 +1,13 @@
 package com.lostark.lostarkassistanthomework
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lostark.lostarkassistanthomework.checklist.ChecklistFragment
@@ -45,6 +47,22 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checklistFragment.resume()
+        val mode = App.prefs.getInt("darkmode", 2)
+        when (mode) {
+            0 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            1 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            2 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

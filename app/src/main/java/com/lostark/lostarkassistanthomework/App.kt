@@ -10,8 +10,14 @@ class App : Application() {
 
     companion object {
         var instance :App? = null
+        lateinit var prefs: PreferenceUtil
         fun context(): Context {
             return instance!!.applicationContext
         }
+    }
+
+    override fun onCreate() {
+        prefs = PreferenceUtil(applicationContext)
+        super.onCreate()
     }
 }

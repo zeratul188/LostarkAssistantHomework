@@ -1,18 +1,25 @@
 package com.lostark.lostarkassistanthomework
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.Toast
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
+import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
 
 class SettingActivity : AppCompatActivity() {
     lateinit var btnDelete: Button
     lateinit var btnFamilyInit: Button
     lateinit var btnReset: Button
+
+    lateinit var sprTheme: Spinner
+    lateinit var txtVersion: TextView
 
     lateinit var toolBar: Toolbar
 
@@ -37,13 +44,84 @@ class SettingActivity : AppCompatActivity() {
         btnDelete = findViewById(R.id.btnDelete)
         btnFamilyInit = findViewById(R.id.btnFamilyInit)
         btnReset = findViewById(R.id.btnReset)
+        sprTheme = findViewById(R.id.sprTheme)
+        txtVersion = findViewById(R.id.txtVersion)
+
+        txtVersion.text = BuildConfig.VERSION_NAME
+        val modes = resources.getStringArray(R.array.darkmode)
+        val modeAdapter = ArrayAdapter(this, R.layout.txt_item_job, modes)
+        sprTheme.adapter = modeAdapter
+        val mode = App.prefs.getInt("darkmode", 2)
+        sprTheme.setSelection(mode)
+        when (mode) {
+            0 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            1 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            2 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+                }
+            }
+        }
+        sprTheme.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (position) {
+                    0 -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                    1 -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                    2 -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
+                        }
+                    }
+                }
+                App.prefs.setInt("darkmode", position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
 
         btnFamilyInit.setOnClickListener {
             val checkDialog = CheckDialog(this)
             checkDialog.setData("원정대 체크리스트를 초기값으로 설정하시겠습니까?", "초기화", true)
             checkDialog.setOnClickListener(object : CheckDialog.OnDialogClickListener {
                 override fun onClicked() {
-
+                    val familyDB = FamilyDatabase.getInstance(App.context())!!
+                    val familys: ArrayList<Family> = familyDB.familyDao().getAll() as ArrayList<Family>
+                    familys.forEach { family ->
+                        familyDB.familyDao().delete(family)
+                    }
+                    familys.clear()
+                    val familyDBAdapter = FamilyDBAdapter(App.context())
+                    familyDBAdapter.open()
+                    val days = familyDBAdapter.getItems("일일")
+                    val weeks = familyDBAdapter.getItems("주간")
+                    days.forEach { day ->
+                        familyDB.familyDao().insertAll(day)
+                        familys.add(day)
+                    }
+                    weeks.forEach { week ->
+                        familyDB.familyDao().insertAll(week)
+                        familys.add(week)
+                    }
+                    familyDBAdapter.close()
                     val customToast = CustomToast(App.context())
                     customToast.createToast("원정대 체크리스트를 초기값으로 설정되었습니다.", false)
                     customToast.show()

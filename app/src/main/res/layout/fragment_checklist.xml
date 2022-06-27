@@ -53,47 +53,71 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="일일 원정대 콘텐츠"
-                    android:textSize="16dp"
-                    android:textColor="@color/main_font"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-                        android:nestedScrollingEnabled="false"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:spanCount="2"
-                        android:id="@+id/dayListView"/>
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="원정대 체크리스트"
+                        android:textSize="16dp"
+                        android:textColor="@color/main_font"
+                        android:layout_gravity="center"/>
+                    <ImageButton
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:id="@+id/btnSetting"
+                        android:src="@drawable/ic_baseline_settings_mini_16"
+                        android:background="#00000000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_gravity="center"/>
                 </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="주간 원정대 콘텐츠"
-                    android:textSize="16dp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/main_font"/>
-                <LinearLayout
+                <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-                        android:nestedScrollingEnabled="false"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:spanCount="2"
-                        android:id="@+id/weekListView"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content">
+                    <TableRow>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="일일"
+                            android:textSize="14dp"
+                            android:textColor="@color/main_font"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="주간"
+                            android:textSize="14dp"
+                            android:textColor="@color/main_font"/>
+                    </TableRow>
+                    <TableRow>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                android:id="@+id/dayListView"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"
+                                android:nestedScrollingEnabled="false"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                android:id="@+id/weekListView"/>
+                        </LinearLayout>
+                    </TableRow>
+                </TableLayout>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

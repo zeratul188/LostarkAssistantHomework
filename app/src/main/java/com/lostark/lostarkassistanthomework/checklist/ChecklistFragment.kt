@@ -1,6 +1,7 @@
 package com.lostark.lostarkassistanthomework.checklist
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
@@ -33,6 +35,7 @@ class ChecklistFragment : Fragment() {
     lateinit var dayListView: RecyclerView
     lateinit var weekListView: RecyclerView
     lateinit var scrollView: NestedScrollView
+    lateinit var btnSetting: ImageButton
 
     lateinit var dayAdapter: DayRecyclerAdapter
     lateinit var weekAdapter: DayRecyclerAdapter
@@ -84,6 +87,12 @@ class ChecklistFragment : Fragment() {
         dayListView = view.findViewById(R.id.dayListView)
         weekListView = view.findViewById(R.id.weekListView)
         scrollView = view.findViewById(R.id.scrollView)
+        btnSetting = view.findViewById(R.id.btnSetting)
+
+        btnSetting.setOnClickListener {
+            val intent = Intent(context, FamilyEditActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
 
         familyDBAdapter = FamilyDBAdapter(requireContext())
         familyDB = FamilyDatabase.getInstance(requireContext())!!
@@ -105,11 +114,11 @@ class ChecklistFragment : Fragment() {
         }
 
         dayListView.adapter = dayAdapter
-        dayListView.layoutManager = GridLayoutManager(requireContext(), 2)
+        //dayListView.layoutManager = GridLayoutManager(requireContext(), 2)
         dayListView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
         weekListView.adapter = weekAdapter
-        weekListView.layoutManager = GridLayoutManager(requireContext(), 2)
+        //weekListView.layoutManager = GridLayoutManager(requireContext(), 2)
         weekListView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
         homeworkDB = HomeworkDatabase.getInstance(requireContext())!!
