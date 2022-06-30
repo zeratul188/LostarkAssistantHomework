@@ -38,9 +38,11 @@
 
     <string-array name="ends">
         <item>회</item>
+        <item>번</item>
         <item>관문</item>
         <item>개</item>
         <item>마리</item>
+        <item>명</item>
     </string-array>
 
     <string-array name="darkmode">

@@ -181,6 +181,8 @@ class ChecklistFragment : Fragment() {
         val saveChracterData = homeworkDB.homeworkDao().getAll()
         asyncChracterData(saveChracterData)
         homeworks.sort();
+        dayFamilys.sort()
+        weekFamilys.sort()
         syncProgress()
         dayAdapter.notifyDataSetChanged()
         weekAdapter.notifyDataSetChanged()

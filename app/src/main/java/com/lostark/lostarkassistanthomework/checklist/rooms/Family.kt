@@ -13,4 +13,14 @@ data class Family (
     var end: String,
     var position: Int,
     var type: String
-)
+): Comparable<Family> {
+    override fun compareTo(other: Family): Int {
+        if (position > other.position) {
+            return 1
+        } else if (position == other.position) {
+            return 0
+        } else {
+            return -1
+        }
+    }
+}
