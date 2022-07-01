@@ -2,6 +2,7 @@ package com.lostark.lostarkassistanthomework.checklist.rooms
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.lostark.lostarkassistanthomework.App
 import java.io.Serializable
 
 @Entity(tableName = "homework")
@@ -27,15 +28,27 @@ data class Homework (
     var dungeonlost: Int,
     var bosslost: Int,
     var questlost: Int,
-    var auto: Boolean
+    var auto: Boolean,
+    var position: Int
 ): Comparable<Homework>, Serializable {
     override fun compareTo(other: Homework): Int {
-        if (level < other.level) {
-            return 1
-        } else if (level == other.level) {
-            return 0
+        val isLevel = App.prefs.isBoolean("change", true)
+        if (isLevel) {
+            if (level < other.level) {
+                return 1
+            } else if (level == other.level) {
+                return 0
+            } else {
+                return -1
+            }
         } else {
-            return -1
+            if (position > other.position) {
+                return 1
+            } else if (position == other.position) {
+                return 0
+            } else {
+                return -1
+            }
         }
     }
 

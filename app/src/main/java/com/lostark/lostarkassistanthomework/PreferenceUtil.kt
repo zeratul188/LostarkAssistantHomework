@@ -21,4 +21,12 @@ class PreferenceUtil(context: Context) {
     fun setInt(key: String, value: Int) {
         prefs.edit().putInt(key, value).apply()
     }
+
+    fun setBoolean(key: String, value: Boolean) {
+        prefs.edit().putBoolean(key, value).apply()
+    }
+
+    fun isBoolean(key: String, defValue: Boolean): Boolean {
+        return prefs.getBoolean(key, defValue)
+    }
 }

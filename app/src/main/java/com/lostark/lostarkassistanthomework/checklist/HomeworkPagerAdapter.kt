@@ -3,8 +3,11 @@ package com.lostark.lostarkassistanthomework.checklist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
@@ -15,7 +18,8 @@ class HomeworkPagerAdapter(
     private val checklists: ArrayList<ArrayList<Checklist>>,
     private val homework: Homework,
     private val holder: ChracterRecylerAdapter.ViewHolder,
-    private val fragment: ChecklistFragment
+    private val fragment: ChecklistFragment,
+    private val viewPager: ViewPager
 ) : PagerAdapter() {
 
     lateinit var listView: RecyclerView
@@ -38,6 +42,9 @@ class HomeworkPagerAdapter(
 
         heights[position] = view.height
 
+        if (position == 0) {
+            resized(view)
+        }
         container.addView(view)
         return view
     }
@@ -52,6 +59,16 @@ class HomeworkPagerAdapter(
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
+    }
+
+    private fun resized(view: View) {
+        if (view != null) {
+            view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            //val width = view.measuredWidth
+            val height = view.measuredHeight
+            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height)
+            viewPager.layoutParams = params
+        }
     }
 
 }

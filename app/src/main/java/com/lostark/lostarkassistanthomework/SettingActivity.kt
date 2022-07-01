@@ -1,5 +1,6 @@
 package com.lostark.lostarkassistanthomework
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,7 @@ class SettingActivity : AppCompatActivity() {
     lateinit var btnDelete: Button
     lateinit var btnFamilyInit: Button
     lateinit var btnReset: Button
+    lateinit var btnChangePosition: Button
 
     lateinit var sprTheme: Spinner
     lateinit var txtVersion: TextView
@@ -44,6 +46,7 @@ class SettingActivity : AppCompatActivity() {
         btnDelete = findViewById(R.id.btnDelete)
         btnFamilyInit = findViewById(R.id.btnFamilyInit)
         btnReset = findViewById(R.id.btnReset)
+        btnChangePosition = findViewById(R.id.btnChangePosition)
         sprTheme = findViewById(R.id.sprTheme)
         txtVersion = findViewById(R.id.txtVersion)
 
@@ -96,6 +99,11 @@ class SettingActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
+        }
+
+        btnChangePosition.setOnClickListener {
+            val intent = Intent(this, ChangePositionActivity::class.java)
+            startActivity(intent)
         }
 
         btnFamilyInit.setOnClickListener {

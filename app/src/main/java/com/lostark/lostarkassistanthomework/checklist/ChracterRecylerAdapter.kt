@@ -24,7 +24,7 @@ class ChracterRecylerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chracter, parent, false)
-        return ChracterRecylerAdapter.ViewHolder(view, activity, fragment)
+        return ViewHolder(view, activity, fragment)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,6 +34,10 @@ class ChracterRecylerAdapter(
             bind(item, context)
             itemView.tag = item
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     override fun getItemCount(): Int = items.size
@@ -106,7 +110,7 @@ class ChracterRecylerAdapter(
             progressHomework.progress = progress
             txtProgress.text = "${(progress.toDouble()/max.toDouble()*100).toInt()}"
 
-            val pagerAdapter = HomeworkPagerAdapter(lists, item, this, fragment)
+            val pagerAdapter = HomeworkPagerAdapter(lists, item, this, fragment, pagerMain)
             pagerMain.adapter = pagerAdapter
 
             pagerMain.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
@@ -120,6 +124,7 @@ class ChracterRecylerAdapter(
                 }
 
                 override fun onPageSelected(position: Int) {
+
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
@@ -136,10 +141,10 @@ class ChracterRecylerAdapter(
             bottomNavigationView.setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.action_day -> {
-                        pagerMain.setCurrentItem(0)
+                        pagerMain.currentItem = 0
                     }
                     R.id.action_week -> {
-                        pagerMain.setCurrentItem(1)
+                        pagerMain.currentItem = 1
                     }
                 }
                 return@setOnItemSelectedListener true
