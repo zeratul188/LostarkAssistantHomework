@@ -1,5 +1,8 @@
 package com.lostark.lostarkassistanthomework
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lostark.lostarkassistanthomework.checklist.ChecklistFragment
 import com.lostark.lostarkassistanthomework.gold.GoldFragment
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var toolBar : Toolbar
@@ -41,6 +45,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.action_gold -> supportFragmentManager.beginTransaction().replace(R.id.layoutFrame, goldFragment).commit()
             }
             return@setOnItemSelectedListener true
+        }
+
+        val manager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+        if (manager != null) {
+            //cancelManager(manager)
+            resetManager(manager)
         }
     }
 
@@ -86,5 +96,36 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun resetManager(manager: AlarmManager) {
+        val intent = Intent(this, ResetReceiver::class.java)
+        val pIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val calendar = Calendar.getInstance()
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= 6) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        calendar.set(Calendar.HOUR_OF_DAY, 6)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+
+        if (manager != null) {
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
+        }
+    }
+
+    fun cancelManager(manager: AlarmManager) {
+        val intent = Intent(this, ResetReceiver::class.java)
+        val pIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        manager?.cancel(pIntent)
     }
 }

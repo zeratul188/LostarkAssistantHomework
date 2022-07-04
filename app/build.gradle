@@ -70,4 +70,5 @@ dependencies {
 
     implementation 'de.hdodenhof:circleimageview:3.1.0' //Circle ImageView
     implementation 'org.jsoup:jsoup:1.13.1' //JSOUP (크롤링)
+    implementation 'androidx.work:work-runtime-ktx:2.7.1' //PendingIntent 때문
 }
