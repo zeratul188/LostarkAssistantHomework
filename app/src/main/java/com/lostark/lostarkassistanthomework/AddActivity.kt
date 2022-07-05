@@ -59,6 +59,21 @@ class AddActivity : AppCompatActivity() {
             when (rgAuto.checkedRadioButtonId) {
                 R.id.rdoAuto -> {
                     chracters = autoFragment.chracters
+                    var isNotChecked = true
+                    run {
+                        chracters.forEach { item ->
+                            if (item.isChecked) {
+                                isNotChecked = false
+                                return@run
+                            }
+                        }
+                    }
+                    if (chracters.isEmpty() || isNotChecked) {
+                        val customToast = CustomToast(this)
+                        customToast.createToast("선택한 캐릭터가 없습니다.", false)
+                        customToast.show()
+                        return@setOnClickListener
+                    }
                     chracters.forEach { item ->
                         if (item.isChecked) {
                             var daylist = ""

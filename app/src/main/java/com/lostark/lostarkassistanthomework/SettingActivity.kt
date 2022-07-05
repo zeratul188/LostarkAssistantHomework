@@ -1,5 +1,8 @@
 package com.lostark.lostarkassistanthomework
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +16,8 @@ import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SettingActivity : AppCompatActivity() {
     lateinit var btnDelete: Button
@@ -54,6 +59,44 @@ class SettingActivity : AppCompatActivity() {
         txtVersion = findViewById(R.id.txtVersion)
         swtAlarm = findViewById(R.id.swtAlarm)
         sprAlarmTime = findViewById(R.id.sprAlarmTime)
+
+        val times = ArrayList<String>()
+        for (i in 1..24) {
+            times.add("${i}시")
+        }
+        val timeAdapter = ArrayAdapter(this, R.layout.txt_item_job, times)
+        sprAlarmTime.adapter = timeAdapter
+        val time = App.prefs.getInt("alarm_time", 21)
+        sprAlarmTime.setSelection(time-1)
+        val isAlarm = App.prefs.isBoolean("isalarm", false)
+        swtAlarm.isChecked = isAlarm
+
+        sprAlarmTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                App.prefs.setInt("alarm_time", p2+1)
+                val manager = getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+                if (manager != null && swtAlarm.isChecked) {
+                    cancelManager(manager)
+                    alarmManager(manager, sprAlarmTime.selectedItemPosition+1)
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
+
+        swtAlarm.setOnClickListener {
+            val manager = this.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+            if (manager != null) {
+                if (swtAlarm.isChecked) {
+                    alarmManager(manager, sprAlarmTime.selectedItemPosition+1)
+                } else {
+                    cancelManager(manager)
+                }
+                App.prefs.setBoolean("isalarm", swtAlarm.isChecked)
+            }
+        }
 
         txtVersion.text = BuildConfig.VERSION_NAME
         val modes = resources.getStringArray(R.array.darkmode)
@@ -249,6 +292,38 @@ class SettingActivity : AppCompatActivity() {
                 familyDB.familyDao().update(family)
             }
         }
+    }
+
+    private fun alarmManager(manager: AlarmManager, time: Int) {
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val calendar = Calendar.getInstance()
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= time) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+        calendar.set(Calendar.HOUR_OF_DAY, time)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        println("day : ${calendar.get(Calendar.DAY_OF_MONTH)}, Time : ${calendar.get(Calendar.HOUR_OF_DAY)}")
+
+        if (manager != null) {
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
+        }
+    }
+
+    private fun cancelManager(manager: AlarmManager) {
+        val intent = Intent(this, ResetReceiver::class.java)
+        val pIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        manager?.cancel(pIntent)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean{

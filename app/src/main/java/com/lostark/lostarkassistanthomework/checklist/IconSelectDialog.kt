@@ -15,7 +15,7 @@ class IconSelectDialog(private val context: Context) {
     private val dialog = Dialog(context)
     private lateinit var onClickListener: OnDialogClickListener
     private lateinit var iconAdapter: IconRecyclerAdapter
-    private val ICONS_LENGTH = 21
+    private val ICONS_LENGTH = 26
 
     fun setOnClickListener(listener: OnDialogClickListener) {
         onClickListener = listener
