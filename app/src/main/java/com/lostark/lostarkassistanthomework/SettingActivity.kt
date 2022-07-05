@@ -20,6 +20,9 @@ class SettingActivity : AppCompatActivity() {
     lateinit var btnReset: Button
     lateinit var btnChangePosition: Button
 
+    lateinit var swtAlarm: Switch
+    lateinit var sprAlarmTime: Spinner
+
     lateinit var sprTheme: Spinner
     lateinit var txtVersion: TextView
 
@@ -49,6 +52,8 @@ class SettingActivity : AppCompatActivity() {
         btnChangePosition = findViewById(R.id.btnChangePosition)
         sprTheme = findViewById(R.id.sprTheme)
         txtVersion = findViewById(R.id.txtVersion)
+        swtAlarm = findViewById(R.id.swtAlarm)
+        sprAlarmTime = findViewById(R.id.sprAlarmTime)
 
         txtVersion.text = BuildConfig.VERSION_NAME
         val modes = resources.getStringArray(R.array.darkmode)
