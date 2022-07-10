@@ -58,6 +58,7 @@ class AddActivity : AppCompatActivity() {
         btnAdd.setOnClickListener {
             when (rgAuto.checkedRadioButtonId) {
                 R.id.rdoAuto -> {
+                    var overlapCount = 0
                     chracters = autoFragment.chracters
                     var isNotChecked = true
                     run {
@@ -120,9 +121,25 @@ class AddActivity : AppCompatActivity() {
                                 }
                             }
                             homeworkDBAdapter.close()
-                            val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, true, 9999)
-                            homeworkDB.homeworkDao().insertAll(homework)
+                            val datas = homeworkDB.homeworkDao().getAll()
+                            var isOverlap = false
+                            datas.forEach { data ->
+                                if (data.name == item.name) {
+                                    isOverlap = true
+                                }
+                            }
+                            if (!isOverlap) {
+                                val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, true, 9999)
+                                homeworkDB.homeworkDao().insertAll(homework)
+                            } else {
+                                overlapCount++
+                            }
                         }
+                    }
+                    if (overlapCount > 0) {
+                        val toast = CustomToast(this)
+                        toast.createToast("${overlapCount}개의 캐릭터가 이미 존재해서 중복된 캐릭터는 추가되지 않았습니다.", false)
+                        toast.show()
                     }
                     finish()
                 }
