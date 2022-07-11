@@ -78,7 +78,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
-            <android.widget.Button
+            <!--<android.widget.Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -86,9 +86,10 @@
                 android:background="@drawable/button_style"
                 android:text="골드 캐릭터 추가"
                 android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:textSize="14dp"
                 android:textColor="@color/main_font"
-                style="?android:attr/borderlessButtonStyle"/>
+                style="?android:attr/borderlessButtonStyle"/>-->
             <android.widget.Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -97,7 +98,6 @@
                 android:background="@drawable/button_style"
                 android:text="추가"
                 android:textSize="14dp"
-                android:layout_marginLeft="5dp"
                 android:textColor="@color/main_font"
                 style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>

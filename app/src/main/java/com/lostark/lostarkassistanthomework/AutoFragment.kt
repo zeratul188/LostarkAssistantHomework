@@ -109,6 +109,8 @@ class CloringThread(
     private val handler: Handler
 ) : Thread() {
     override fun run() {
+        val homeworkDB = HomeworkDatabase.getInstance(context)!!
+        val datas = homeworkDB.homeworkDao().getAll()
         try {
             var doc = Jsoup.connect("https://lostark.game.onstove.com/Profile/Character/"+edtName.text.toString()).get()
 
@@ -133,7 +135,18 @@ class CloringThread(
                     println("================================================================")*/
                     val jobs = context.resources.getStringArray(R.array.job)
                     if (jobs.indexOf(job) != -1) {
-                        chracters.add(Chracter(name, level, server, job, false))
+                        var isOverlap = false
+                        run {
+                            datas.forEach { item ->
+                                if (item.name == name) {
+                                    isOverlap = true
+                                    return@run
+                                }
+                            }
+                        }
+                        if (!isOverlap) {
+                            chracters.add(Chracter(name, level, server, job, false))
+                        }
                     }
                 }
             }
