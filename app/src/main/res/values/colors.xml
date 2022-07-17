@@ -27,6 +27,7 @@
     <color name="ok">#53C64B</color>
     <color name="ok_clicked">#529E4D</color>
     <color name="strong_stroke">#aaaaaa</color>
+    <color name="half_background">#CCaaaaaa</color>
 
     <!-- Font Colors -->
     <color name="main_font">#000000</color>

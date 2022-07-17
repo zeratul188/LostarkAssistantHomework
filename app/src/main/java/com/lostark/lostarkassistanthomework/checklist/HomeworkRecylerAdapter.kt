@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
@@ -43,8 +40,10 @@ class HomeworkRecylerAdapter(
             holder.txtCount.text = "${item.now}/${item.max}"
             if (item.now >= item.max) {
                 holder.layoutBackground.setBackgroundResource(R.drawable.item_checklist_disabled_background)
+                holder.layoutComplete.visibility = View.VISIBLE
             } else {
                 holder.layoutBackground.setBackgroundResource(R.drawable.item_checklist_background)
+                holder.layoutComplete.visibility = View.GONE
             }
 
             
@@ -143,7 +142,8 @@ class HomeworkRecylerAdapter(
         lateinit var txtName: TextView
         lateinit var txtCount: TextView
         lateinit var txtEnd: TextView
-        lateinit var layoutBackground: LinearLayout
+        lateinit var layoutBackground: FrameLayout
+        lateinit var layoutComplete: LinearLayout
         fun bind(listener: View.OnClickListener, item: Checklist, context: Context, homework: Homework) {
             imgIcon = view.findViewById(R.id.imgIcon)
             progressRest = view.findViewById(R.id.progressRest)
@@ -151,6 +151,7 @@ class HomeworkRecylerAdapter(
             txtCount = view.findViewById(R.id.txtCount)
             txtEnd = view.findViewById(R.id.txtEnd)
             layoutBackground = view.findViewById(R.id.layoutBackground)
+            layoutComplete = view.findViewById(R.id.layoutComplete)
             
             imgIcon.setImageResource(context.resources.getIdentifier(item.icon, "drawable", context.packageName))
             txtName.text = item.name
@@ -158,8 +159,10 @@ class HomeworkRecylerAdapter(
             txtEnd.text = item.end
             if (item.now >= item.max) {
                 layoutBackground.setBackgroundResource(R.drawable.item_checklist_disabled_background)
+                layoutComplete.visibility = View.VISIBLE
             } else {
                 layoutBackground.setBackgroundResource(R.drawable.item_checklist_background)
+                layoutComplete.visibility = View.GONE
             }
 
             when (item.name) {
