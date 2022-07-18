@@ -54,6 +54,7 @@ class ChracterRecylerAdapter(
         lateinit var pagerMain: ViewPager
         lateinit var txtProgress: TextView
         lateinit var progressHomework: ProgressBar
+        lateinit var imgGold: ImageView
 
         fun bind(item: Homework, context: Context) {
             imgJob = view.findViewById(R.id.imgJob)
@@ -66,6 +67,7 @@ class ChracterRecylerAdapter(
             pagerMain = view.findViewById(R.id.pagerMain)
             txtProgress = view.findViewById(R.id.txtProgress)
             progressHomework = view.findViewById(R.id.progressHomework)
+            imgGold = view.findViewById(R.id.imgGold)
 
             val jobs = context.resources.getStringArray(R.array.job)
             val pos = jobs.indexOf(item.job)+1;
@@ -74,6 +76,12 @@ class ChracterRecylerAdapter(
             txtServer.text = item.server
             txtLevel.text = "Lv.${item.level}"
             txtJob.text = item.job
+
+            if (item.isGold) {
+                imgGold.visibility = View.VISIBLE
+            } else {
+                imgGold.visibility = View.GONE
+            }
 
             val lists = ArrayList<ArrayList<Checklist>>()
             lists.add(ArrayList())

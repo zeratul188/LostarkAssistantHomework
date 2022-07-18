@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LostArkAssistantHomework">
         <activity
+            android:name=".MoneyActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangePositionActivity"
             android:exported="false" />
         <activity
@@ -38,8 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".ResetReceiver"></receiver>>
-        <receiver android:name=".AlarmReceiver"></receiver>
+
+        <receiver android:name=".ResetReceiver" />
+        <receiver android:name=".AlarmReceiver" />
     </application>
 
 </manifest>

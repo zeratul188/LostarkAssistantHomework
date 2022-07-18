@@ -24,6 +24,7 @@ class SettingActivity : AppCompatActivity() {
     lateinit var btnFamilyInit: Button
     lateinit var btnReset: Button
     lateinit var btnChangePosition: Button
+    lateinit var btnMoney: Button
 
     lateinit var swtAlarm: Switch
     lateinit var sprAlarmTime: Spinner
@@ -59,6 +60,7 @@ class SettingActivity : AppCompatActivity() {
         txtVersion = findViewById(R.id.txtVersion)
         swtAlarm = findViewById(R.id.swtAlarm)
         sprAlarmTime = findViewById(R.id.sprAlarmTime)
+        btnMoney = findViewById(R.id.btnMoney)
 
         val times = ArrayList<String>()
         for (i in 1..24) {
@@ -151,6 +153,11 @@ class SettingActivity : AppCompatActivity() {
 
         btnChangePosition.setOnClickListener {
             val intent = Intent(this, ChangePositionActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnMoney.setOnClickListener {
+            val intent = Intent(this, MoneyActivity::class.java)
             startActivity(intent)
         }
 

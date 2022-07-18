@@ -29,7 +29,8 @@ data class Homework (
     var bosslost: Int,
     var questlost: Int,
     var auto: Boolean,
-    var position: Int
+    var position: Int,
+    var isGold: Boolean
 ): Comparable<Homework>, Serializable {
     override fun compareTo(other: Homework): Int {
         val isLevel = App.prefs.isBoolean("change", true)

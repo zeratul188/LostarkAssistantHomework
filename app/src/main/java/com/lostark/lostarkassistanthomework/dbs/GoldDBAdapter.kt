@@ -3,13 +3,13 @@ package com.lostark.lostarkassistanthomework.dbs
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import com.lostark.lostarkassistanthomework.checklist.rooms.Family
+import com.lostark.lostarkassistanthomework.checklist.objects.Gold
 import com.lostark.lostarkassistanthomework.dbs.sys.LoadDBAdapter
 import java.sql.SQLException
 
-class FamilyDBAdapter {
-    val tag: String = "FamilyDBAdapter"
-    val table_name: String = "FAMILY"
+class GoldDBAdapter {
+    val tag: String = "GoldDBAdapter"
+    val table_name: String = "GOLDS"
 
     var context: Context
     lateinit var db: SQLiteDatabase
@@ -17,10 +17,10 @@ class FamilyDBAdapter {
 
     constructor(context: Context) {
         this.context = context
-        loadDBAdapter = LoadDBAdapter("family", context)
+        loadDBAdapter = LoadDBAdapter("golds", context)
     }
 
-    fun open(): FamilyDBAdapter {
+    fun open(): GoldDBAdapter {
         try {
             loadDBAdapter.open()
             loadDBAdapter.close()
@@ -35,25 +35,22 @@ class FamilyDBAdapter {
         loadDBAdapter.close()
     }
 
-    fun getItems(type: String): ArrayList<Family> {
-        val list: ArrayList<Family> = ArrayList()
+    fun getItems(): ArrayList<Gold> {
+        val list: ArrayList<Gold> = ArrayList()
         try {
-            val sql: String = "SELECT * FROM $table_name"
+            val sql = "SELECT * FROM $table_name"
 
             val cursor: Cursor = db.rawQuery(sql, null)
             if (cursor != null) {
                 while (cursor.moveToNext()) {
-                    if (cursor.getString(5) == type) {
-                        var name: String = cursor.getString(1)
-                        var max: Int = cursor.getInt(2)
-                        var end: String = cursor.getString(3)
-                        var icon_str: String = cursor.getString(4)
-                        var icon: String = icon_str
+                    var name: String = cursor.getString(1)
+                    var min: Int = cursor.getInt(2)
+                    var max: Int = cursor.getInt(3)
+                    var position: Int = cursor.getInt(4)
+                    var gold: Int = cursor.getInt(5)
 
-                        val checklist = Family(0, name, icon, 0, max, end, 0, type)
-                        list.add(checklist)
-                    }
-
+                    val golds = Gold(name, min, max, position, gold)
+                    list.add(golds)
                 }
             }
         } catch (e: SQLException) {

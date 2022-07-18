@@ -26,6 +26,7 @@ import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
+import com.lostark.lostarkassistanthomework.dbs.GoldDBAdapter
 import com.lostark.lostarkassistanthomework.objects.Chracter
 import org.jsoup.Jsoup
 
@@ -36,6 +37,10 @@ class ChecklistFragment : Fragment() {
     lateinit var weekListView: RecyclerView
     lateinit var scrollView: NestedScrollView
     lateinit var btnSetting: ImageButton
+
+    lateinit var txtAllGold: TextView
+    lateinit var txtGold: TextView
+    lateinit var btnList: ImageButton
 
     lateinit var dayAdapter: DayRecyclerAdapter
     lateinit var weekAdapter: DayRecyclerAdapter
@@ -50,6 +55,8 @@ class ChecklistFragment : Fragment() {
     lateinit var chracterAdapter: ChracterRecylerAdapter
     var homeworks: ArrayList<Homework> = ArrayList()
     lateinit var homeworkDB: HomeworkDatabase
+
+    lateinit var goldDBAdapter: GoldDBAdapter
 
     val NOTIFYED = 1
 
@@ -73,6 +80,7 @@ class ChecklistFragment : Fragment() {
         progressAll.max = max_progress
         progressAll.progress = progress
         txtAll.text = "${(progress.toDouble()/max_progress.toDouble()*100).toInt()}%"
+        syncGold()
     }
 
     override fun onCreateView(
@@ -88,6 +96,9 @@ class ChecklistFragment : Fragment() {
         weekListView = view.findViewById(R.id.weekListView)
         scrollView = view.findViewById(R.id.scrollView)
         btnSetting = view.findViewById(R.id.btnSetting)
+        txtAllGold = view.findViewById(R.id.txtAllGold)
+        txtGold = view.findViewById(R.id.txtGold)
+        btnList = view.findViewById(R.id.btnList)
 
         btnSetting.setOnClickListener {
             val intent = Intent(context, FamilyEditActivity::class.java)
@@ -95,6 +106,7 @@ class ChecklistFragment : Fragment() {
         }
 
         familyDBAdapter = FamilyDBAdapter(requireContext())
+        goldDBAdapter = GoldDBAdapter(requireContext())
         familyDB = FamilyDatabase.getInstance(requireContext())!!
 
         dayFamilys = ArrayList()
@@ -187,6 +199,53 @@ class ChecklistFragment : Fragment() {
         dayAdapter.notifyDataSetChanged()
         weekAdapter.notifyDataSetChanged()
         chracterAdapter.notifyDataSetChanged()
+        syncGold()
+        syncGoldAll()
+    }
+
+    fun syncGoldAll() {
+        var all = 0
+        goldDBAdapter.open()
+        val golds = goldDBAdapter.getItems()
+        goldDBAdapter.close()
+        homeworks.forEach { homework ->
+            if (homework.isGold) {
+                val items = homework.weeklist.split(",")
+                for (i in items.indices) {
+                    golds.forEach { gold ->
+                        if (gold.name == items[i]) {
+                            if (homework.level >= gold.min && homework.level < gold.max) {
+                                all += gold.gold
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        txtAllGold.text = all.toString()
+    }
+
+    fun syncGold() {
+        var all = 0
+        goldDBAdapter.open()
+        val golds = goldDBAdapter.getItems()
+        goldDBAdapter.close()
+        homeworks.forEach { homework ->
+            if (homework.isGold) {
+                val items = homework.weeklist.split(",")
+                val nows = homework.weeknows.split(",")
+                for (i in items.indices) {
+                    golds.forEach { gold ->
+                        if (gold.name == items[i]) {
+                            if (homework.level >= gold.min && homework.level < gold.max && nows[i].toInt() >= gold.position) {
+                                all += gold.gold
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        txtGold.text = all.toString()
     }
 
     inner class HomeworkHandler : Handler() {

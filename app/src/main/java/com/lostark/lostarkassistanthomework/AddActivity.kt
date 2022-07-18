@@ -75,6 +75,13 @@ class AddActivity : AppCompatActivity() {
                         customToast.show()
                         return@setOnClickListener
                     }
+                    var gold_count = 0
+                    val lists = homeworkDB.homeworkDao().getAll()
+                    lists.forEach { item ->
+                        if (item.isGold) {
+                            gold_count++
+                        }
+                    }
                     chracters.forEach { item ->
                         if (item.isChecked) {
                             var daylist = ""
@@ -106,16 +113,30 @@ class AddActivity : AppCompatActivity() {
                                         }
                                     } else {
                                         if (item.level >= frameHomework.min) {
-                                            if (weeklist != "") weeklist += ","
-                                            if (weeknows != "") weeknows += ","
-                                            if (weekmaxs != "") weekmaxs += ","
-                                            if (weekicons != "") weekicons += ","
-                                            if (weekends != "") weekends += ","
-                                            weeklist += frameHomework.name
-                                            weeknows += "0"
-                                            weekmaxs += frameHomework.max
-                                            weekicons += frameHomework.icon
-                                            weekends += frameHomework.end
+                                            if (!(item.level >= 1490 && frameHomework.name == "비아키스")) {
+                                                if (weeklist != "") weeklist += ","
+                                                if (weeknows != "") weeknows += ","
+                                                if (weekmaxs != "") weekmaxs += ","
+                                                if (weekicons != "") weekicons += ","
+                                                if (weekends != "") weekends += ","
+                                                weeklist += frameHomework.name
+                                                weeknows += "0"
+                                                var max = 0
+                                                if (frameHomework.name == "아브렐슈드") {
+                                                    if (item.level >= 1520) {
+                                                        max = 6
+                                                    } else if (item.level >= 1500) {
+                                                        max = 4
+                                                    } else if (item.level >= 1490) {
+                                                        max = 2
+                                                    }
+                                                    weekmaxs += max
+                                                } else {
+                                                    weekmaxs += frameHomework.max
+                                                }
+                                                weekicons += frameHomework.icon
+                                                weekends += frameHomework.end
+                                            }
                                         }
                                     }
                                 }
@@ -129,7 +150,12 @@ class AddActivity : AppCompatActivity() {
                                 }
                             }
                             if (!isOverlap) {
-                                val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, true, 9999)
+                                var isGold = false
+                                if (gold_count < 6) {
+                                    isGold = true
+                                    gold_count++
+                                }
+                                val homework = Homework(0, item.name, item.level, item.server, item.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, true, 9999, isGold)
                                 homeworkDB.homeworkDao().insertAll(homework)
                             } else {
                                 overlapCount++
@@ -186,22 +212,47 @@ class AddActivity : AppCompatActivity() {
                                 }
                             } else {
                                 if (preset.level >= frameHomework.min) {
-                                    if (weeklist != "") weeklist += ","
-                                    if (weeknows != "") weeknows += ","
-                                    if (weekmaxs != "") weekmaxs += ","
-                                    if (weekicons != "") weekicons += ","
-                                    if (weekends != "") weekends += ","
-                                    weeklist += frameHomework.name
-                                    weeknows += "0"
-                                    weekmaxs += frameHomework.max
-                                    weekicons += frameHomework.icon
-                                    weekends += frameHomework.end
+                                    if (!(preset.level >= 1490 && frameHomework.name == "비아키스")) {
+                                        if (weeklist != "") weeklist += ","
+                                        if (weeknows != "") weeknows += ","
+                                        if (weekmaxs != "") weekmaxs += ","
+                                        if (weekicons != "") weekicons += ","
+                                        if (weekends != "") weekends += ","
+                                        weeklist += frameHomework.name
+                                        weeknows += "0"
+                                        var max = 0
+                                        if (frameHomework.name == "아브렐슈드") {
+                                            if (preset.level >= 1520) {
+                                                max = 6
+                                            } else if (preset.level >= 1500) {
+                                                max = 4
+                                            } else if (preset.level >= 1490) {
+                                                max = 2
+                                            }
+                                            weekmaxs += max
+                                        } else {
+                                            weekmaxs += frameHomework.max
+                                        }
+                                        weekicons += frameHomework.icon
+                                        weekends += frameHomework.end
+                                    }
                                 }
                             }
                         }
                     }
                     homeworkDBAdapter.close()
-                    val homework = Homework(0, edtName.text.toString(), preset.level, preset.server, preset.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, false, 9999)
+                    val datas = homeworkDB.homeworkDao().getAll()
+                    var gold_count = 0
+                    datas.forEach { data ->
+                        if (data.isGold) {
+                            gold_count++
+                        }
+                    }
+                    var isGold = false
+                    if (gold_count < 6) {
+                        isGold = true
+                    }
+                    val homework = Homework(0, edtName.text.toString(), preset.level, preset.server, preset.job, daylist, daynows, daymaxs, dayicons, dayends, weeklist, weeknows, weekmaxs, weekicons, weekends, 0, 0, 0, 0, 0, 0, false, 9999, isGold)
                     homeworkDB.homeworkDao().insertAll(homework)
                     finish()
                 }

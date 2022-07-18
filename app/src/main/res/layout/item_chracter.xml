@@ -16,7 +16,7 @@
             android:id="@+id/imgJob"
             android:src="@drawable/jbi1"
             android:layout_gravity="center"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="10dp"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -40,6 +40,14 @@
                     android:text="Chracter Name"
                     android:textSize="16dp"
                     android:textColor="@color/main_font"/>
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/icon_gold"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/imgGold"/>
                 <ImageButton
                     android:layout_width="16dp"
                     android:layout_height="16dp"

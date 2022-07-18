@@ -39,6 +39,63 @@
             android:progress="50"
             android:progressDrawable="@drawable/progress_style"
             android:layout_marginTop="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_gold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAllGold"
+                android:text="0"
+                android:textSize="20dp"
+                android:textColor="@color/main_font"
+                android:layout_marginLeft="3dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주간 예상 수입"
+                android:textSize="12dp"
+                android:textColor="@color/sub_font"
+                android:layout_marginLeft="3dp"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp"/>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_gold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtGold"
+                android:text="0"
+                android:textSize="20dp"
+                android:textColor="@color/main_font"
+                android:layout_marginLeft="3dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="현재까지 수입"
+                android:textSize="12dp"
+                android:textColor="@color/sub_font"
+                android:layout_marginLeft="3dp"/>
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/btnList"
+                style="?android:attr/borderlessButtonStyle"
+                android:src="@drawable/ic_baseline_library_books_24"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
     </LinearLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
