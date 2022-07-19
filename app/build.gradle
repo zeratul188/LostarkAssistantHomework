@@ -5,6 +5,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\AS Keys\\laah key.jks')
+            storePassword 'protoss188'
+            keyAlias 'laahKey'
+            keyPassword 'protoss188'
+        }
+        LaahKey {
+            storeFile file('C:\\AS Keys\\laah key.jks')
+            storePassword 'protoss188'
+            keyAlias 'laahKey'
+            keyPassword 'protoss188'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
@@ -24,6 +38,7 @@ android {
                         "room.expandProjection":"true"]
             }
         }
+        signingConfig signingConfigs.LaahKey
     }
 
     buildTypes {

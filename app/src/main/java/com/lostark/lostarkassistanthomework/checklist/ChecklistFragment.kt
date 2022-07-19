@@ -105,6 +105,11 @@ class ChecklistFragment : Fragment() {
             requireActivity().startActivity(intent)
         }
 
+        btnList.setOnClickListener {
+            val dialog = GoldDialog(requireContext())
+            dialog.show(true)
+        }
+
         familyDBAdapter = FamilyDBAdapter(requireContext())
         goldDBAdapter = GoldDBAdapter(requireContext())
         familyDB = FamilyDatabase.getInstance(requireContext())!!
