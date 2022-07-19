@@ -60,7 +60,7 @@ class GoldDialog(
 
         val goldAdapter = GoldListAdapter(items, context)
         listView.adapter = goldAdapter
-        listView.addItemDecoration(RecyclerViewDecoration(0, 10))
+        //listView.addItemDecoration(RecyclerViewDecoration(0, 10))
 
         dialog.setCanceledOnTouchOutside(isCanceled)
         dialog.setCancelable(isCanceled)

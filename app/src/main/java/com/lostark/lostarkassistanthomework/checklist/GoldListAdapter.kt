@@ -60,7 +60,11 @@ class GoldListAdapter(
             txtServer.text = item.server
             txtLevel.text = "Lv.${item.level}"
             txtJob.text = item.job
-            txtContent.text = item.content
+            if (item.content == "") {
+                txtContent.text = "획득한 골드가 없습니다."
+            } else {
+                txtContent.text = item.content
+            }
             txtGold.text = item.gold.toString()
         }
     }
