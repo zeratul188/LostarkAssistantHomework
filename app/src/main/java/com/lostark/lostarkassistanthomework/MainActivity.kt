@@ -13,7 +13,14 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.lostark.lostarkassistanthomework.checklist.ChecklistFragment
+import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.gold.GoldFragment
 import java.util.*
 
@@ -28,6 +35,8 @@ class MainActivity : AppCompatActivity() {
     private var backkeyPressedTime: Long = 0
     private lateinit var customToast: CustomToast
 
+    private lateinit var firebase: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolBar)
 
         customToast = CustomToast(this)
+        firebase = Firebase.database.reference
 
         layoutFrame = findViewById(R.id.layoutFrame)
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
@@ -61,6 +71,50 @@ class MainActivity : AppCompatActivity() {
             if (isAlarm) {
                 alarmManager(manager, time)
             }
+        }
+
+        if (!checkGold() && App.prefs.isBoolean("check_update", true)) {
+            var version = "-1"
+            firebase.child("setting").child("version").get().addOnSuccessListener {
+                version = it.value.toString()
+                if (BuildConfig.VERSION_NAME != version) {
+                    versionCheck(version)
+                }
+            }.addOnFailureListener {
+                version = "Error"
+            }
+        }
+    }
+
+    fun versionCheck(version: String) {
+        val dialog = CheckDialog(this)
+        dialog.setOnClickListener(object : CheckDialog.OnDialogClickListener {
+            override fun onClicked() {
+                Toast.makeText(App.context(), "구글 스토어 링크가 생성시 추가예정", Toast.LENGTH_SHORT).show()
+            }
+        })
+        dialog.setData("새로운 업데이트 버전($version)이 존재합니다.\n업데이트를 하시겠습니까? (구글 스토어 링크로 이동됩니다.)", "업데이트", false)
+        dialog.show(true)
+    }
+
+    fun checkGold(): Boolean {
+        val homeworkDB = HomeworkDatabase.getInstance(this)!!
+        val list = homeworkDB.homeworkDao().getAll()
+        val isCheck = App.prefs.isBoolean("isgoldcheck", false)
+        return if (!isCheck && list.isNotEmpty()) {
+            val dialog = CheckDialog(this)
+            dialog.setOnClickListener(object : CheckDialog.OnDialogClickListener {
+                override fun onClicked() {
+                    App.prefs.setBoolean("isgoldcheck", true)
+                    val intent = Intent(App.context(), MoneyActivity::class.java)
+                    startActivity(intent)
+                }
+            })
+            dialog.setData("골드 지정 캐릭터를 지정하러 가시겠습니까?", "설정", false)
+            dialog.show(true)
+            true
+        } else {
+            false
         }
     }
 
@@ -125,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         calendar.set(Calendar.SECOND, 0)
 
         if (manager != null) {
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, 24*60*60*1000, pIntent)
         }
     }
 
@@ -144,10 +198,10 @@ class MainActivity : AppCompatActivity() {
         calendar.set(Calendar.HOUR_OF_DAY, time)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
-        println("day : ${calendar.get(Calendar.DAY_OF_MONTH)}, Time : ${calendar.get(Calendar.HOUR_OF_DAY)}")
+        //println("day : ${calendar.get(Calendar.DAY_OF_MONTH)}, Time : ${calendar.get(Calendar.HOUR_OF_DAY)}")
 
         if (manager != null) {
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, 24*60*60*1000, pIntent) // AlarmManager.INTERVAL_DAY
         }
     }
 

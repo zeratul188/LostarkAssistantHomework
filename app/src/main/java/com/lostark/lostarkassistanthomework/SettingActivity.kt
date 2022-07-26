@@ -31,6 +31,8 @@ class SettingActivity : AppCompatActivity() {
 
     lateinit var sprTheme: Spinner
     lateinit var txtVersion: TextView
+    lateinit var swtUpdate: Switch
+    lateinit var btnUpdate: Button
 
     lateinit var toolBar: Toolbar
 
@@ -61,6 +63,8 @@ class SettingActivity : AppCompatActivity() {
         swtAlarm = findViewById(R.id.swtAlarm)
         sprAlarmTime = findViewById(R.id.sprAlarmTime)
         btnMoney = findViewById(R.id.btnMoney)
+        swtUpdate = findViewById(R.id.swtUpdate)
+        btnUpdate = findViewById(R.id.btnUpdate)
 
         val times = ArrayList<String>()
         for (i in 1..24) {
@@ -100,6 +104,13 @@ class SettingActivity : AppCompatActivity() {
             }
         }
 
+        swtUpdate.isChecked = App.prefs.isBoolean("check_update", true)
+        swtUpdate.setOnClickListener {
+            App.prefs.setBoolean("check_update", swtUpdate.isChecked)
+        }
+        btnUpdate.setOnClickListener {
+            Toast.makeText(App.context(), "update playstore link", Toast.LENGTH_SHORT).show()
+        }
         txtVersion.text = BuildConfig.VERSION_NAME
         val modes = resources.getStringArray(R.array.darkmode)
         val modeAdapter = ArrayAdapter(this, R.layout.txt_item_job, modes)
@@ -319,7 +330,7 @@ class SettingActivity : AppCompatActivity() {
         println("day : ${calendar.get(Calendar.DAY_OF_MONTH)}, Time : ${calendar.get(Calendar.HOUR_OF_DAY)}")
 
         if (manager != null) {
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pIntent)
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, 24*60*60*1000, pIntent) // AlarmManager.INTERVAL_DAY
         }
     }
 

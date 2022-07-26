@@ -208,6 +208,43 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="업데이트 알림 여부"
+                        android:layout_gravity="center"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/swtUpdate"
+                        android:thumbTint="@color/checkbox"
+                        android:layout_gravity="center"
+                        android:trackTint="@color/checkbox"/>
+                </LinearLayout>
+                <android.widget.Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:id="@+id/btnUpdate"
+                    android:background="@drawable/button_setting_style"
+                    android:text="업데이트 확인"
+                    android:textSize="14dp"
+                    android:drawableLeft="@drawable/ic_baseline_update_24"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    android:textAlignment="textStart"
+                    android:drawablePadding="20dp"
+                    android:textColor="@color/main_font"
+                    style="?android:attr/borderlessButtonStyle"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp"
                     android:layout_marginLeft="10dp">
