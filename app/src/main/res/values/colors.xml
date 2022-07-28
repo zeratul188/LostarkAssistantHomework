@@ -30,6 +30,14 @@
     <color name="strong_stroke">#aaaaaa</color>
     <color name="half_background">#CCaaaaaa</color>
 
+    <!-- 품질 색 -->
+    <color name="statuelevel1">#C83E3E</color>
+    <color name="statuelevel2">#CDB619</color>
+    <color name="statuelevel3">#6BB629</color>
+    <color name="statuelevel4">#6279B6</color>
+    <color name="statuelevel5">#8526BF</color>
+    <color name="statuelevel6">#E37A1D</color>
+
     <!-- Font Colors -->
     <color name="main_font">#000000</color>
     <color name="sub_font">#444444</color>

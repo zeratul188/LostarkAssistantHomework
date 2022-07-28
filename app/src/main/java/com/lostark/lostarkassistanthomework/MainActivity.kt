@@ -90,7 +90,9 @@ class MainActivity : AppCompatActivity() {
         val dialog = CheckDialog(this)
         dialog.setOnClickListener(object : CheckDialog.OnDialogClickListener {
             override fun onClicked() {
-                Toast.makeText(App.context(), "구글 스토어 링크가 생성시 추가예정", Toast.LENGTH_SHORT).show()
+                val toast = CustomToast(this@MainActivity)
+                toast.createToast("아직 제작되지 않은 기능입니다.", false)
+                toast.show()
             }
         })
         dialog.setData("새로운 업데이트 버전($version)이 존재합니다.\n업데이트를 하시겠습니까? (구글 스토어 링크로 이동됩니다.)", "업데이트", false)

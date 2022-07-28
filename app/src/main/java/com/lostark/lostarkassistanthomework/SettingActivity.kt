@@ -109,7 +109,9 @@ class SettingActivity : AppCompatActivity() {
             App.prefs.setBoolean("check_update", swtUpdate.isChecked)
         }
         btnUpdate.setOnClickListener {
-            Toast.makeText(App.context(), "update playstore link", Toast.LENGTH_SHORT).show()
+            val toast = CustomToast(this)
+            toast.createToast("아직 제작되지 않은 기능입니다.", false)
+            toast.show()
         }
         txtVersion.text = BuildConfig.VERSION_NAME
         val modes = resources.getStringArray(R.array.darkmode)

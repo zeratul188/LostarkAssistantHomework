@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LostArkAssistantHomework">
         <activity
+            android:name=".checklist.InformationActivity"
+            android:exported="false" />
+        <activity
             android:name=".MoneyActivity"
             android:exported="false" />
         <activity
