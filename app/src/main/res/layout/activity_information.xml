@@ -244,7 +244,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/imgHead"
+                    android:id="@+id/imgEquip1"
                     android:src="@drawable/ic_baseline_error_24"
                     android:layout_marginRight="5dp"/>
                 <LinearLayout
@@ -260,7 +260,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtLevelHead"
+                            android:id="@+id/txtLevelEquip1"
                             android:text="Lv.1510"
                             android:textColor="@color/sub_font"
                             android:textSize="12dp"
@@ -274,7 +274,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtStatueHead"
+                            android:id="@+id/txtStatueEquip1"
                             android:text="51"
                             android:textColor="@color/statuelevel3"
                             android:layout_marginLeft="5dp"
@@ -282,7 +282,7 @@
                         <ProgressBar
                             android:layout_width="120dp"
                             android:layout_height="7dp"
-                            android:id="@+id/progressHead"
+                            android:id="@+id/progressEquip1"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
                             android:progress="51"
@@ -291,7 +291,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtNameHead"
+                        android:id="@+id/txtNameEquip1"
                         android:text="+12 타오르는 악몽의 그림자 머리장식"
                         android:textSize="14dp"
                         android:textColor="@color/main_font"/>
@@ -305,7 +305,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/imgSholder"
+                    android:id="@+id/imgEquip2"
                     android:src="@drawable/ic_baseline_error_24"
                     android:layout_marginRight="5dp"/>
                 <LinearLayout
@@ -321,7 +321,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtLevelSholder"
+                            android:id="@+id/txtLevelEquip2"
                             android:text="Lv.1490"
                             android:textColor="@color/sub_font"
                             android:textSize="12dp"
@@ -335,7 +335,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtStatueSholder"
+                            android:id="@+id/txtStatueEquip2"
                             android:text="58"
                             android:textColor="@color/statuelevel3"
                             android:layout_marginLeft="5dp"
@@ -343,7 +343,7 @@
                         <ProgressBar
                             android:layout_width="120dp"
                             android:layout_height="7dp"
-                            android:id="@+id/progressSholder"
+                            android:id="@+id/progressEquip2"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
                             android:progress="58"
@@ -352,7 +352,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtNameSholder"
+                        android:id="@+id/txtNameEquip2"
                         android:text="+20 추악한 악몽의 꽃 어깨장식"
                         android:textSize="14dp"
                         android:textColor="@color/main_font"/>
@@ -366,7 +366,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/imgUpper"
+                    android:id="@+id/imgEquip3"
                     android:src="@drawable/ic_baseline_error_24"
                     android:layout_marginRight="5dp"/>
                 <LinearLayout
@@ -382,7 +382,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtLevelUpper"
+                            android:id="@+id/txtLevelEquip3"
                             android:text="Lv.1520"
                             android:textColor="@color/sub_font"
                             android:textSize="12dp"
@@ -396,7 +396,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtStatueUpper"
+                            android:id="@+id/txtStatueEquip3"
                             android:text="48"
                             android:textColor="@color/statuelevel3"
                             android:layout_marginLeft="5dp"
@@ -404,7 +404,7 @@
                         <ProgressBar
                             android:layout_width="120dp"
                             android:layout_height="7dp"
-                            android:id="@+id/progressUpper"
+                            android:id="@+id/progressEquip3"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
                             android:progress="48"
@@ -413,7 +413,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtNameUpper"
+                        android:id="@+id/txtNameEquip3"
                         android:text="+13 타오르는 악몽의 그림자 상의"
                         android:textSize="14dp"
                         android:textColor="@color/main_font"/>
@@ -427,7 +427,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/imgLower"
+                    android:id="@+id/imgEquip4"
                     android:src="@drawable/ic_baseline_error_24"
                     android:layout_marginRight="5dp"/>
                 <LinearLayout
@@ -443,7 +443,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtLevelLower"
+                            android:id="@+id/txtLevelEquip4"
                             android:text="Lv.1520"
                             android:textColor="@color/sub_font"
                             android:textSize="12dp"
@@ -457,7 +457,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtStatueLower"
+                            android:id="@+id/txtStatueEquip4"
                             android:text="87"
                             android:textColor="@color/statuelevel4"
                             android:layout_marginLeft="5dp"
@@ -465,7 +465,7 @@
                         <ProgressBar
                             android:layout_width="120dp"
                             android:layout_height="7dp"
-                            android:id="@+id/progressLower"
+                            android:id="@+id/progressEquip4"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
                             android:progress="87"
@@ -474,7 +474,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtNameLower"
+                        android:id="@+id/txtNameEquip4"
                         android:text="+13 타오르는 악몽의 그림자 하의"
                         android:textSize="14dp"
                         android:textColor="@color/main_font"/>
@@ -488,7 +488,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/imgGlove"
+                    android:id="@+id/imgEquip5"
                     android:src="@drawable/ic_baseline_error_24"
                     android:layout_marginRight="5dp"/>
                 <LinearLayout
@@ -504,7 +504,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtLevelGlove"
+                            android:id="@+id/txtLevelEquip5"
                             android:text="Lv.1540"
                             android:textColor="@color/sub_font"
                             android:textSize="12dp"
@@ -518,7 +518,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtStatueGlove"
+                            android:id="@+id/txtStatueEquip5"
                             android:text="80"
                             android:textColor="@color/statuelevel4"
                             android:layout_marginLeft="5dp"
@@ -526,7 +526,7 @@
                         <ProgressBar
                             android:layout_width="120dp"
                             android:layout_height="7dp"
-                            android:id="@+id/progressGlove"
+                            android:id="@+id/progressEquip5"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
                             android:progress="80"
@@ -535,7 +535,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtNameGlove"
+                        android:id="@+id/txtNameEquip5"
                         android:text="+15 타오르는 악몽의 그림자 장갑"
                         android:textSize="14dp"
                         android:textColor="@color/main_font"/>
@@ -549,7 +549,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/imgWeapon"
+                    android:id="@+id/imgEquip6"
                     android:src="@drawable/ic_baseline_error_24"
                     android:layout_marginRight="5dp"/>
                 <LinearLayout
@@ -565,7 +565,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtLevelWeapon"
+                            android:id="@+id/txtLevelEquip6"
                             android:text="Lv.1560"
                             android:textColor="@color/sub_font"
                             android:textSize="12dp"
@@ -579,7 +579,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtStatueWeapon"
+                            android:id="@+id/txtStatueEquip6"
                             android:text="62"
                             android:textColor="@color/statuelevel3"
                             android:layout_marginLeft="5dp"
@@ -587,7 +587,7 @@
                         <ProgressBar
                             android:layout_width="120dp"
                             android:layout_height="7dp"
-                            android:id="@+id/progressWeapon"
+                            android:id="@+id/progressEquip6"
                             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:max="100"
                             android:progress="62"
@@ -596,8 +596,494 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtNameWeapon"
+                        android:id="@+id/txtNameEquip6"
                         android:text="+17 타오르는 악몽의 그림자 롱 스태프"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장신구"
+                android:textSize="14dp"
+                android:textColor="@color/sub_font"
+                android:layout_marginTop="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgItem1"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="품질"
+                            android:textSize="10dp"
+                            android:textColor="@color/main_font"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtStatueItem1"
+                            android:text="48"
+                            android:textColor="@color/statuelevel3"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+                        <ProgressBar
+                            android:layout_width="120dp"
+                            android:layout_height="7dp"
+                            android:id="@+id/progressItem1"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:max="100"
+                            android:progress="48"
+                            android:progressDrawable="@drawable/progress_statue_70undo"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtItem1"
+                        android:text="타락한 시간의 목걸이"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추가 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEffectItem1"
+                        android:text="치명 +473, 신속 +470"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="각인 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStampItem1"
+                        android:text="[바리케이드] 활성도 +5\n[원한] 활성도 +3\n[이동속도 감소] 활성도 +2"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgItem2"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="품질"
+                            android:textSize="10dp"
+                            android:textColor="@color/main_font"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtStatueItem2"
+                            android:text="48"
+                            android:textColor="@color/statuelevel3"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+                        <ProgressBar
+                            android:layout_width="120dp"
+                            android:layout_height="7dp"
+                            android:id="@+id/progressItem2"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:max="100"
+                            android:progress="48"
+                            android:progressDrawable="@drawable/progress_statue_70undo"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtItem2"
+                        android:text="타락한 시간의 목걸이"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추가 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEffectItem2"
+                        android:text="치명 +473, 신속 +470"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="각인 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStampItem2"
+                        android:text="[바리케이드] 활성도 +5\n[원한] 활성도 +3\n[이동속도 감소] 활성도 +2"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgItem3"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="품질"
+                            android:textSize="10dp"
+                            android:textColor="@color/main_font"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtStatueItem3"
+                            android:text="48"
+                            android:textColor="@color/statuelevel3"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+                        <ProgressBar
+                            android:layout_width="120dp"
+                            android:layout_height="7dp"
+                            android:id="@+id/progressItem3"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:max="100"
+                            android:progress="48"
+                            android:progressDrawable="@drawable/progress_statue_70undo"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtItem3"
+                        android:text="타락한 시간의 목걸이"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추가 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEffectItem3"
+                        android:text="치명 +473, 신속 +470"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="각인 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStampItem3"
+                        android:text="[바리케이드] 활성도 +5\n[원한] 활성도 +3\n[이동속도 감소] 활성도 +2"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgItem4"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="품질"
+                            android:textSize="10dp"
+                            android:textColor="@color/main_font"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtStatueItem4"
+                            android:text="48"
+                            android:textColor="@color/statuelevel3"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+                        <ProgressBar
+                            android:layout_width="120dp"
+                            android:layout_height="7dp"
+                            android:id="@+id/progressItem4"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:max="100"
+                            android:progress="48"
+                            android:progressDrawable="@drawable/progress_statue_70undo"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtItem4"
+                        android:text="타락한 시간의 목걸이"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추가 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEffectItem4"
+                        android:text="치명 +473, 신속 +470"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="각인 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStampItem4"
+                        android:text="[바리케이드] 활성도 +5\n[원한] 활성도 +3\n[이동속도 감소] 활성도 +2"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgItem5"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="품질"
+                            android:textSize="10dp"
+                            android:textColor="@color/main_font"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtStatueItem5"
+                            android:text="48"
+                            android:textColor="@color/statuelevel3"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"/>
+                        <ProgressBar
+                            android:layout_width="120dp"
+                            android:layout_height="7dp"
+                            android:id="@+id/progressItem5"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:max="100"
+                            android:progress="48"
+                            android:progressDrawable="@drawable/progress_statue_70undo"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtItem5"
+                        android:text="타락한 시간의 목걸이"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추가 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEffectItem5"
+                        android:text="치명 +473, 신속 +470"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="각인 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStampItem5"
+                        android:text="[바리케이드] 활성도 +5\n[원한] 활성도 +3\n[이동속도 감소] 활성도 +2"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgArm"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtArm"
+                        android:text="고귀한 영웅의 팔찌"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="팔찌 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtEffectArm"
+                        android:text="신속 +56\n특화 +76\n[열정] 자신의 생명력이 40% 이상일 경우 적에게 공격 적중 시 3초 동안 '열정' 효과를 획득한다.
+'냉정' 효과를 보유 중 일 때 '열정' 효과가 1% 추가 증가한다.
+열정 : 몬스터에게 주는 피해가 2.5% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/imgStone"
+                    android:src="@drawable/ic_baseline_error_24"
+                    android:layout_marginRight="5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStone"
+                        android:text="타락한 시간의 목걸이"
+                        android:textSize="14dp"
+                        android:textColor="@color/main_font"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="각인 효과"
+                        android:textSize="10dp"
+                        android:textColor="@color/sub_font"
+                        android:layout_marginTop="5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtStampStone"
+                        android:text="[바리케이드] 활성도 +5\n[원한] 활성도 +3\n[이동속도 감소] 활성도 +2"
                         android:textSize="14dp"
                         android:textColor="@color/main_font"/>
                 </LinearLayout>
@@ -699,6 +1185,20 @@
                 </TableRow>
             </TableLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="각인 효과"
+                android:textSize="14dp"
+                android:textColor="@color/sub_font"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtStamp"
+                android:text="stamp"
+                android:textSize="16dp"
+                android:textColor="@color/main_font"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
