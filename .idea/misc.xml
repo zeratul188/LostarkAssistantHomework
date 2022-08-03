@@ -25,6 +25,8 @@
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/background_dialog.xml" value="0.2465" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/background_spinner.xml" value="0.2465" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/background_toast.xml" value="0.1" />
+        <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/button_dialog_right_style.xml" value="0.2465" />
+        <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/button_dialog_style.xml" value="0.2465" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/button_important_style.xml" value="0.2465" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/button_ok_style.xml" value="0.2465" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/drawable/button_style.xml" value="0.2465" />
@@ -54,7 +56,7 @@
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/activity_main.xml" value="0.2692502532928065" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/activity_money.xml" value="0.31302083333333336" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/activity_setting.xml" value="0.33" />
-        <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/dialog_add_homework.xml" value="0.33" />
+        <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/dialog_add_homework.xml" value="0.25" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/dialog_gold_list.xml" value="0.31302083333333336" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/dialog_icon.xml" value="0.33" />
         <entry key="..\:/mobile workspace/LostArkAssistantHomework/app/src/main/res/layout/dialog_reset.xml" value="0.31302083333333336" />

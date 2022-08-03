@@ -33,10 +33,8 @@ class CheckDialog(private val context: Context) {
         btnOK.text = btnContent
 
         if (isImportant) {
-            btnOK.setBackgroundResource(R.drawable.button_important_style)
-            btnOK.setTextColor(context.resources.getColor(R.color.white))
+            btnOK.setTextColor(context.resources.getColor(R.color.important))
         } else {
-            btnOK.setBackgroundResource(R.drawable.button_style)
             btnOK.setTextColor(context.resources.getColor(R.color.main_font))
         }
 

@@ -68,7 +68,13 @@ class LoadDBAdapter: SQLiteOpenHelper{
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        if (oldVersion < newVersion) {
+            when (oldVersion) {
+                1 -> {
 
+                }
+            }
+        }
     }
 
     /*fun setDB(ctx: Context): Boolean {

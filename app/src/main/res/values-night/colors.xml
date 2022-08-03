@@ -10,6 +10,7 @@
 
     <!-- Design Colors -->
     <color name="background">#333333</color>
+    <color name="press_background">#666666</color>
     <color name="sub_background">#444444</color>
     <color name="inner_background">#3d3d3d</color>
     <color name="complete_background">#555555</color>

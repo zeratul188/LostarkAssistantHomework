@@ -140,6 +140,12 @@ class ChracterRecylerAdapter(
                 }
             })
 
+            /*txtName.setOnClickListener {
+                val intent = Intent(context, InformationActivity::class.java)
+                intent.putExtra("name", item.name)
+                context.startActivity(intent)
+            }*/
+
             btnSetting.setOnClickListener {
                 val intent = Intent(context, EditActivity::class.java)
                 intent.putExtra("homework", item)

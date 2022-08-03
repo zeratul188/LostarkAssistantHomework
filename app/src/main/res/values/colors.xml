@@ -10,6 +10,7 @@
 
     <!-- Design Colors -->
     <color name="background">#fafafa</color>
+    <color name="press_background">#aaaaaa</color>
     <color name="sub_background">#dddddd</color>
     <color name="inner_background">#f2f2f2</color>
     <color name="complete_background">#cccccc</color>

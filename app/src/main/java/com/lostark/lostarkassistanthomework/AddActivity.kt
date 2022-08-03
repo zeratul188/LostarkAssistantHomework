@@ -213,6 +213,7 @@ class AddActivity : AppCompatActivity() {
                             } else {
                                 if (preset.level >= frameHomework.min) {
                                     if (!(preset.level >= 1490 && frameHomework.name == "비아키스")) {
+                                        println("name : ${frameHomework.name}\nlevel : ${frameHomework.min}\nchracter level : ${preset.level}")
                                         if (weeklist != "") weeklist += ","
                                         if (weeknows != "") weeknows += ","
                                         if (weekmaxs != "") weekmaxs += ","
