@@ -31,6 +31,95 @@ class HomeworkRecylerAdapter(
 
     override fun onBindViewHolder(holder: HomeworkRecylerAdapter.ViewHolder, position: Int) {
         val item = items[position]
+        val longListener = View.OnLongClickListener { it ->
+            val diff = item.max - item.now
+            item.now = item.max
+            holder.txtCount.text = "${item.now}/${item.max}"
+            holder.layoutBackground.setBackgroundResource(R.drawable.item_checklist_disabled_background)
+            holder.layoutComplete.visibility = View.VISIBLE
+
+            for (i in 0 until diff) {
+                when (item.name) {
+                    "카오스 던전" -> {
+                        if (item.now != 0) {
+                            if (homework.dungeonrest >= 20) {
+                                homework.dungeonrest -= 20
+                                homework.dungeonlost += 20
+                            }
+                        } else {
+                            homework.dungeonrest += homework.dungeonlost
+                            homework.dungeonlost = 0
+                        }
+                    }
+                    "가디언 토벌" -> {
+                        if (item.now != 0) {
+                            if (homework.bossrest >= 20) {
+                                homework.bossrest -= 20
+                                homework.bosslost += 20
+                            }
+                        } else {
+                            homework.bossrest += homework.bosslost
+                            homework.bosslost = 0
+                        }
+                    }
+                    "에포나 의뢰" -> {
+                        if (item.now != 0) {
+                            if (homework.questrest >= 20) {
+                                homework.questrest -= 20
+                                homework.questlost += 20
+                            }
+                        } else {
+                            homework.questrest += homework.questlost
+                            homework.questlost = 0
+                        }
+                    }
+                }
+            }
+
+            var names = ""
+            var nows = ""
+            var maxs = ""
+            var icons = ""
+            var ends = ""
+            items.forEach { item ->
+                if (names != "") names += ","
+                if (nows != "") nows += ","
+                if (maxs != "") maxs += ","
+                if (icons != "") icons += ","
+                if (ends != "") ends += ","
+                names += item.name
+                nows += item.now.toString()
+                maxs += item.max.toString()
+                icons += item.icon
+                ends += item.end
+            }
+            if (type == "일일") {
+                homework.daylist = names
+                homework.daynows = nows
+                homework.daymaxs = maxs
+                homework.dayicons = icons
+                homework.dayends = ends
+            } else {
+                homework.weeklist = names
+                homework.weeknows = nows
+                homework.weekmaxs = maxs
+                homework.weekicons = icons
+                homework.weekends = ends
+            }
+            db.homeworkDao().update(homework)
+            if (type == "일일") {
+                var progress = 0
+                var max = 0
+                items.forEach { item ->
+                    progress += item.now
+                    max += item.max
+                }
+                old_holder.syncProgress(progress, max)
+            }
+            fragment.syncProgress()
+            notifyDataSetChanged()
+            return@OnLongClickListener true
+        }
         val listener = View.OnClickListener { it ->
             if (item.now < item.max) {
                 item.now++;
@@ -128,7 +217,7 @@ class HomeworkRecylerAdapter(
             notifyDataSetChanged()
         }
         holder.apply {
-            bind(listener, item, context, homework)
+            bind(longListener, listener, item, context, homework)
             itemView.tag = item
         }
     }
@@ -144,7 +233,7 @@ class HomeworkRecylerAdapter(
         lateinit var txtEnd: TextView
         lateinit var layoutBackground: FrameLayout
         lateinit var layoutComplete: LinearLayout
-        fun bind(listener: View.OnClickListener, item: Checklist, context: Context, homework: Homework) {
+        fun bind(longListener: View.OnLongClickListener, listener: View.OnClickListener, item: Checklist, context: Context, homework: Homework) {
             imgIcon = view.findViewById(R.id.imgIcon)
             progressRest = view.findViewById(R.id.progressRest)
             txtName = view.findViewById(R.id.txtName)
@@ -187,6 +276,7 @@ class HomeworkRecylerAdapter(
             }
 
             view.setOnClickListener(listener)
+            view.setOnLongClickListener(longListener)
         }
     }
 }
