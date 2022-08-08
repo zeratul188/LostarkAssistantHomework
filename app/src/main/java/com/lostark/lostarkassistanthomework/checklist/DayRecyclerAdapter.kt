@@ -22,6 +22,15 @@ class DayRecyclerAdapter(private val items : ArrayList<Family>, private val cont
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+        val longListener = View.OnLongClickListener { it ->
+            item.now = item.max
+            holder.txtCount.text = "${item.now}/${item.max}"
+            holder.layoutBackground.setBackgroundResource(R.drawable.item_checklist_disabled_background)
+            holder.layoutComplete.visibility = View.VISIBLE
+            db.familyDao().update(item)
+            notifyDataSetChanged()
+            return@OnLongClickListener true
+        }
         val listener = View.OnClickListener { it ->
             //click event
             if (item.now < item.max) {
@@ -41,7 +50,7 @@ class DayRecyclerAdapter(private val items : ArrayList<Family>, private val cont
             notifyDataSetChanged()
         }
         holder.apply {
-            bind(listener, item, context)
+            bind(longListener, listener, item, context)
             itemView.tag = item
         }
     }
@@ -56,7 +65,7 @@ class DayRecyclerAdapter(private val items : ArrayList<Family>, private val cont
         lateinit var txtEnd: TextView
         lateinit var layoutBackground: FrameLayout
         lateinit var layoutComplete: LinearLayout
-        fun bind(listener: View.OnClickListener, item: Family, context: Context) {
+        fun bind(longListener: View.OnLongClickListener, listener: View.OnClickListener, item: Family, context: Context) {
             imgIcon = view.findViewById(R.id.imgIcon)
             txtName = view.findViewById(R.id.txtName)
             txtCount = view.findViewById(R.id.txtCount)
@@ -77,6 +86,7 @@ class DayRecyclerAdapter(private val items : ArrayList<Family>, private val cont
             }
 
             view.setOnClickListener(listener)
+            view.setOnLongClickListener(longListener)
         }
     }
 }

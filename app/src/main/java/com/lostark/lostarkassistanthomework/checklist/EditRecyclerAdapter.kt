@@ -91,6 +91,10 @@ class EditRecyclerAdapter(
         var sprEnd: Spinner
         var btnDelete: ImageButton
         var imgHandle: ImageView
+        var btnMinDown: ImageButton
+        var btnMinUp: ImageButton
+        var btnMaxDown: ImageButton
+        var btnMaxUp: ImageButton
 
         init {
             imgIcon = view.findViewById(R.id.imgIcon)
@@ -100,6 +104,10 @@ class EditRecyclerAdapter(
             sprEnd = view.findViewById(R.id.sprEnd)
             btnDelete = view.findViewById(R.id.btnDelete)
             imgHandle = view.findViewById(R.id.imgHandle)
+            btnMinDown = view.findViewById(R.id.btnMinDown)
+            btnMinUp = view.findViewById(R.id.btnMinUp)
+            btnMaxDown = view.findViewById(R.id.btnMaxDown)
+            btnMaxUp = view.findViewById(R.id.btnMaxUp)
         }
 
         fun clearFocus() {
@@ -137,6 +145,31 @@ class EditRecyclerAdapter(
             edtNow.addTextChangedListener(NowTextWatcher(item))
             edtMax.addTextChangedListener(MaxTextWatcher(item))
             sprEnd.onItemSelectedListener = EndTextWatcher(item)
+
+            btnMinDown.setOnClickListener {
+                if (item.now > 0) {
+                    item.now--
+                    edtNow.setText(item.now.toString())
+                }
+            }
+            btnMinUp.setOnClickListener {
+                if (item.now < item.max) {
+                    item.now++
+                    edtNow.setText(item.now.toString())
+                }
+            }
+            btnMaxDown.setOnClickListener {
+                if (item.max > 0) {
+                    item.max--
+                    edtMax.setText(item.max.toString())
+                }
+            }
+            btnMaxUp.setOnClickListener {
+                if (item.max < 99) {
+                    item.max++
+                    edtMax.setText(item.max.toString())
+                }
+            }
         }
         /*
         fun printList(item: EditData, pos : Int) {

@@ -90,6 +90,10 @@ class EditFamilyRecyclerAdapter(
         val sprEnd: Spinner = view.findViewById(R.id.sprEnd)
         val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
         val imgHandle: ImageView = view.findViewById(R.id.imgHandle)
+        var btnMinDown: ImageButton = view.findViewById(R.id.btnMinDown)
+        var btnMinUp: ImageButton = view.findViewById(R.id.btnMinUp)
+        var btnMaxDown: ImageButton = view.findViewById(R.id.btnMaxDown)
+        var btnMaxUp: ImageButton = view.findViewById(R.id.btnMaxUp)
 
         fun clearFocus() {
             edtName.clearFocus()
@@ -124,6 +128,31 @@ class EditFamilyRecyclerAdapter(
             edtNow.addTextChangedListener(NowTextWatcher(family))
             edtMax.addTextChangedListener(MaxTextWatcher(family))
             sprEnd.onItemSelectedListener = EndTextWatcher(family)
+
+            btnMinDown.setOnClickListener {
+                if (family.now > 0) {
+                    family.now--
+                    edtNow.setText(family.now.toString())
+                }
+            }
+            btnMinUp.setOnClickListener {
+                if (family.now < family.max) {
+                    family.now++
+                    edtNow.setText(family.now.toString())
+                }
+            }
+            btnMaxDown.setOnClickListener {
+                if (family.max > 0) {
+                    family.max--
+                    edtMax.setText(family.max.toString())
+                }
+            }
+            btnMaxUp.setOnClickListener {
+                if (family.max < 99) {
+                    family.max++
+                    edtMax.setText(family.max.toString())
+                }
+            }
         }
 
         inner class NameTextWatcher(private val family: Family) : TextWatcher {
