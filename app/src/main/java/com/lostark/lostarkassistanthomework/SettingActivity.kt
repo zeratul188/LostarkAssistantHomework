@@ -20,6 +20,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class SettingActivity : AppCompatActivity() {
+    lateinit var swtShowGold: Switch
+    lateinit var sprDayWeek: Spinner
+
     lateinit var btnDelete: Button
     lateinit var btnFamilyInit: Button
     lateinit var btnReset: Button
@@ -65,6 +68,8 @@ class SettingActivity : AppCompatActivity() {
         btnMoney = findViewById(R.id.btnMoney)
         swtUpdate = findViewById(R.id.swtUpdate)
         btnUpdate = findViewById(R.id.btnUpdate)
+        swtShowGold = findViewById(R.id.swtShowGold)
+        sprDayWeek = findViewById(R.id.sprDayWeek)
 
         val times = ArrayList<String>()
         for (i in 1..24) {
@@ -76,6 +81,29 @@ class SettingActivity : AppCompatActivity() {
         sprAlarmTime.setSelection(time-1)
         val isAlarm = App.prefs.isBoolean("isalarm", false)
         swtAlarm.isChecked = isAlarm
+
+        val dayorweek = ArrayList<String>()
+        dayorweek.add("일일")
+        dayorweek.add("주간")
+        val dayweekAdapter = ArrayAdapter(this, R.layout.txt_item_job, dayorweek)
+        sprDayWeek.adapter = dayweekAdapter
+        val dw = App.prefs.getInt("dayorweek", 0)
+        sprDayWeek.setSelection(dw)
+        sprDayWeek.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                App.prefs.setInt("dayorweek", position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+        }
 
         sprAlarmTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -90,6 +118,11 @@ class SettingActivity : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
+        }
+
+        swtShowGold.isChecked = App.prefs.isBoolean("showgold", true)
+        swtShowGold.setOnClickListener {
+            App.prefs.setBoolean("showgold", swtShowGold.isChecked)
         }
 
         swtAlarm.setOnClickListener {

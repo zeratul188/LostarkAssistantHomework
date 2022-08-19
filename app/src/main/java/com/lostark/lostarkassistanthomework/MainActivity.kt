@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private val checklistFragment = ChecklistFragment()
     private val goldFragment = GoldFragment()
 
+    private var isFirst = true
+
     private var backkeyPressedTime: Long = 0
     private lateinit var customToast: CustomToast
 
@@ -122,7 +124,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        checklistFragment.resume()
+        if (isFirst) {
+            checklistFragment.resume()
+            isFirst = false
+        }
         val mode = App.prefs.getInt("darkmode", 2)
         when (mode) {
             0 -> {
