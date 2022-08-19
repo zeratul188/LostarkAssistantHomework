@@ -10,14 +10,12 @@ import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.CloringThread
 import com.lostark.lostarkassistanthomework.LoadingDialog
 import com.lostark.lostarkassistanthomework.R
@@ -37,6 +35,7 @@ class ChecklistFragment : Fragment() {
     lateinit var weekListView: RecyclerView
     lateinit var scrollView: NestedScrollView
     lateinit var btnSetting: ImageButton
+    lateinit var layoutGold: LinearLayout
 
     lateinit var txtAllGold: TextView
     lateinit var txtGold: TextView
@@ -99,6 +98,7 @@ class ChecklistFragment : Fragment() {
         txtAllGold = view.findViewById(R.id.txtAllGold)
         txtGold = view.findViewById(R.id.txtGold)
         btnList = view.findViewById(R.id.btnList)
+        layoutGold = view.findViewById(R.id.layoutGold)
 
         btnSetting.setOnClickListener {
             val intent = Intent(context, FamilyEditActivity::class.java)
@@ -149,7 +149,12 @@ class ChecklistFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        resume()
+        //resume()
+        if (App.prefs.isBoolean("showgold", true)) {
+            layoutGold.visibility = View.VISIBLE
+        } else {
+            layoutGold.visibility = View.GONE
+        }
     }
 
     fun initFamilys(list: ArrayList<Family>, type: String) {

@@ -34,10 +34,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtName"
-                    android:text="Chracter Name"
+                    android:text="일이삼사오육칠팔구십일이"
                     android:textSize="16dp"
                     android:textColor="@color/main_font"/>
                 <ImageView
@@ -115,7 +116,7 @@
                     android:textColor="@color/main_font"/>
             </LinearLayout>
             <ProgressBar
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="3dp"
                 android:id="@+id/progressHomework"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"

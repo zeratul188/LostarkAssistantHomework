@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
@@ -121,6 +122,10 @@ class ChracterRecylerAdapter(
             val pagerAdapter = HomeworkPagerAdapter(lists, item, this, fragment, pagerMain)
             pagerMain.adapter = pagerAdapter
 
+            //pagerMain.currentItem = App.prefs.getInt("dayorweek", 0)
+            //bottomNavigationView.menu.getItem(App.prefs.getInt("dayorweek", 0)).setChecked(true)
+            //resized(App.prefs.getInt("dayorweek", 0))
+
             pagerMain.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
                 override fun onPageScrolled(
                     position: Int,
@@ -172,7 +177,11 @@ class ChracterRecylerAdapter(
         }
 
         fun resized(position: Int) {
-            val view = pagerMain[position]
+            var pos = position
+            if (App.prefs.getInt("dayorweek", 0) == 1) {
+                pos = 1-position
+            }
+            val view = pagerMain[pos]
             if (view != null) {
                 view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 //val width = view.measuredWidth
