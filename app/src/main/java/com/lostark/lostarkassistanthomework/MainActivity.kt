@@ -124,10 +124,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (isFirst) {
+        /*if (isFirst) {
             checklistFragment.resume()
             isFirst = false
-        }
+        }*/
+        checklistFragment.resume()
         val mode = App.prefs.getInt("darkmode", 2)
         when (mode) {
             0 -> {
