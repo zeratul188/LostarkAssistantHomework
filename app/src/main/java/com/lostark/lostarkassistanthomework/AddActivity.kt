@@ -113,30 +113,34 @@ class AddActivity : AppCompatActivity() {
                                         }
                                     } else {
                                         if (item.level >= frameHomework.min) {
-                                            if (!(item.level >= 1490 && frameHomework.name == "비아키스")) {
-                                                if (weeklist != "") weeklist += ","
-                                                if (weeknows != "") weeknows += ","
-                                                if (weekmaxs != "") weekmaxs += ","
-                                                if (weekicons != "") weekicons += ","
-                                                if (weekends != "") weekends += ","
-                                                weeklist += frameHomework.name
-                                                weeknows += "0"
-                                                var max = 0
-                                                if (frameHomework.name == "아브렐슈드") {
-                                                    if (item.level >= 1520) {
-                                                        max = 6
-                                                    } else if (item.level >= 1500) {
-                                                        max = 4
-                                                    } else if (item.level >= 1490) {
-                                                        max = 2
-                                                    }
-                                                    weekmaxs += max
-                                                } else {
-                                                    weekmaxs += frameHomework.max
-                                                }
-                                                weekicons += frameHomework.icon
-                                                weekends += frameHomework.end
+                                            if (item.level >= 1490 && frameHomework.name == "비아키스") {
+                                                return@forEach
                                             }
+                                            if (item.level >= 1580 && frameHomework.name == "발탄") {
+                                                return@forEach
+                                            }
+                                            if (weeklist != "") weeklist += ","
+                                            if (weeknows != "") weeknows += ","
+                                            if (weekmaxs != "") weekmaxs += ","
+                                            if (weekicons != "") weekicons += ","
+                                            if (weekends != "") weekends += ","
+                                            weeklist += frameHomework.name
+                                            weeknows += "0"
+                                            var max = 0
+                                            if (frameHomework.name == "아브렐슈드") {
+                                                if (item.level >= 1520) {
+                                                    max = 6
+                                                } else if (item.level >= 1500) {
+                                                    max = 4
+                                                } else if (item.level >= 1490) {
+                                                    max = 2
+                                                }
+                                                weekmaxs += max
+                                            } else {
+                                                weekmaxs += frameHomework.max
+                                            }
+                                            weekicons += frameHomework.icon
+                                            weekends += frameHomework.end
                                         }
                                     }
                                 }
@@ -212,31 +216,34 @@ class AddActivity : AppCompatActivity() {
                                 }
                             } else {
                                 if (preset.level >= frameHomework.min) {
-                                    if (!(preset.level >= 1490 && frameHomework.name == "비아키스")) {
-                                        println("name : ${frameHomework.name}\nlevel : ${frameHomework.min}\nchracter level : ${preset.level}")
-                                        if (weeklist != "") weeklist += ","
-                                        if (weeknows != "") weeknows += ","
-                                        if (weekmaxs != "") weekmaxs += ","
-                                        if (weekicons != "") weekicons += ","
-                                        if (weekends != "") weekends += ","
-                                        weeklist += frameHomework.name
-                                        weeknows += "0"
-                                        var max = 0
-                                        if (frameHomework.name == "아브렐슈드") {
-                                            if (preset.level >= 1520) {
-                                                max = 6
-                                            } else if (preset.level >= 1500) {
-                                                max = 4
-                                            } else if (preset.level >= 1490) {
-                                                max = 2
-                                            }
-                                            weekmaxs += max
-                                        } else {
-                                            weekmaxs += frameHomework.max
-                                        }
-                                        weekicons += frameHomework.icon
-                                        weekends += frameHomework.end
+                                    if (preset.level >= 1490 && frameHomework.name == "비아키스") {
+                                        return@forEach
                                     }
+                                    if (preset.level >= 1580 && frameHomework.name == "발탄") {
+                                        return@forEach
+                                    }
+                                    if (weeklist != "") weeklist += ","
+                                    if (weeknows != "") weeknows += ","
+                                    if (weekmaxs != "") weekmaxs += ","
+                                    if (weekicons != "") weekicons += ","
+                                    if (weekends != "") weekends += ","
+                                    weeklist += frameHomework.name
+                                    weeknows += "0"
+                                    var max = 0
+                                    if (frameHomework.name == "아브렐슈드") {
+                                        if (preset.level >= 1520) {
+                                            max = 6
+                                        } else if (preset.level >= 1500) {
+                                            max = 4
+                                        } else if (preset.level >= 1490) {
+                                            max = 2
+                                        }
+                                        weekmaxs += max
+                                    } else {
+                                        weekmaxs += frameHomework.max
+                                    }
+                                    weekicons += frameHomework.icon
+                                    weekends += frameHomework.end
                                 }
                             }
                         }

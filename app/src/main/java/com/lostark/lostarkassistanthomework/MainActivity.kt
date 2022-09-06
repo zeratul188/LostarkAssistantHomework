@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -92,12 +93,12 @@ class MainActivity : AppCompatActivity() {
         val dialog = CheckDialog(this)
         dialog.setOnClickListener(object : CheckDialog.OnDialogClickListener {
             override fun onClicked() {
-                val toast = CustomToast(this@MainActivity)
-                toast.createToast("아직 제작되지 않은 기능입니다.", false)
-                toast.show()
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.lostark.lostarkassistanthomework")
+                startActivity(intent)
             }
         })
-        dialog.setData("새로운 업데이트 버전($version)이 존재합니다.\n업데이트를 하시겠습니까? (구글 스토어 링크로 이동됩니다.)", "업데이트", false)
+        dialog.setData("새로운 업데이트 버전($version)이 존재합니다.\n업데이트를 하시겠습니까?", "업데이트", false)
         dialog.show(true)
     }
 

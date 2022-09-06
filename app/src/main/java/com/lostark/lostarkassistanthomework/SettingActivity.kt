@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -142,9 +143,9 @@ class SettingActivity : AppCompatActivity() {
             App.prefs.setBoolean("check_update", swtUpdate.isChecked)
         }
         btnUpdate.setOnClickListener {
-            val toast = CustomToast(this)
-            toast.createToast("아직 제작되지 않은 기능입니다.", false)
-            toast.show()
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.lostark.lostarkassistanthomework")
+            startActivity(intent)
         }
         txtVersion.text = BuildConfig.VERSION_NAME
         val modes = resources.getStringArray(R.array.darkmode)
