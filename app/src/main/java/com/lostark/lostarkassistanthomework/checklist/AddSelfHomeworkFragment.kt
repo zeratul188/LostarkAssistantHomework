@@ -1,6 +1,8 @@
 package com.lostark.lostarkassistanthomework.checklist
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.objects.EditData
 
@@ -35,6 +38,25 @@ class AddSelfHomeworkFragment : Fragment() {
         val ends = requireActivity().resources.getStringArray(R.array.ends)
         val endAdapter = ArrayAdapter(requireContext(), R.layout.txt_item_end, ends)
         sprEnds.adapter = endAdapter
+
+        edtName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (edtName.text.toString().indexOf(",") != -1) {
+                    edtName.setText(edtName.text.toString().replace(",", ""))
+                    val toast = CustomToast(requireContext())
+                    toast.createToast("\",\"기호는 사용하실 수 없습니다.", false)
+                    toast.show()
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
 
         imgIcon.setOnClickListener {
             val iconDialog = IconSelectDialog(requireContext())

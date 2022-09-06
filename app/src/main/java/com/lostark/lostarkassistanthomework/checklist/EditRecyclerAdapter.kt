@@ -141,7 +141,7 @@ class EditRecyclerAdapter(
             btnDelete.setOnClickListener(listener)
             imgIcon.setOnClickListener(iconListener)
             imgHandle.setOnTouchListener(touchListener)
-            edtName.addTextChangedListener(NameTextWatcher(item))
+            edtName.addTextChangedListener(NameTextWatcher(item, context))
             edtNow.addTextChangedListener(NowTextWatcher(item))
             edtMax.addTextChangedListener(MaxTextWatcher(item))
             sprEnd.onItemSelectedListener = EndTextWatcher(item)
@@ -181,14 +181,21 @@ class EditRecyclerAdapter(
         }
          */
 
-        inner class NameTextWatcher(private val item: EditData) : TextWatcher {
+        inner class NameTextWatcher(private val item: EditData, private val context: Context) : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (edtName.text.toString().indexOf(",") != -1) {
+                    edtName.setText(edtName.text.toString().replace(",", ""))
+                    val toast = CustomToast(context)
+                    toast.createToast("\",\"기호는 사용하실 수 없습니다.", false)
+                    toast.show()
+                }
+
                 if (edtName.hasFocus()) {
-                    item.name = s.toString()
+                    item.name = s.toString().replace(",", "")
                 }
             }
 

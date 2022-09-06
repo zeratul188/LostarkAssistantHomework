@@ -20,11 +20,12 @@ class LoadDBAdapter: SQLiteOpenHelper{
 
     fun databaseCheck() {
         val dbFile = File("${root_dir}${name}.db")
-        if (!dbFile.exists()) {
+        /*if (!dbFile.exists()) {
             /*this.readableDatabase
             this.close()*/
             dbCopy()
-        }
+        }*/
+        dbCopy()
     }
 
     fun dbCopy() {
