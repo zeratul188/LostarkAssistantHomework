@@ -13,10 +13,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.App
-import com.lostark.lostarkassistanthomework.CloringThread
 import com.lostark.lostarkassistanthomework.LoadingDialog
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
@@ -25,7 +23,6 @@ import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
 import com.lostark.lostarkassistanthomework.dbs.GoldDBAdapter
-import com.lostark.lostarkassistanthomework.objects.Chracter
 import org.jsoup.Jsoup
 
 class ChecklistFragment : Fragment() {

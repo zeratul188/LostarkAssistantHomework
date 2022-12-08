@@ -1,4 +1,4 @@
-package com.lostark.lostarkassistanthomework.checklist
+package com.lostark.lostarkassistanthomework.checklist.edit
 
 import android.content.Context
 import android.graphics.Color

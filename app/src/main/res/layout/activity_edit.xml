@@ -1,18 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background"
-    tools:context=".checklist.EditActivity">
-    <androidx.appcompat.widget.Toolbar
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="editViewModel"
+            type="com.lostark.lostarkassistanthomework.checklist.edit.EditViewModel" />
+    </data>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolBar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/background"
+        tools:context=".checklist.edit.EditActivity">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolBar"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/edtName"
+                app:layout_constraintRight_toLeftOf="@id/txtItemLevelInfo"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtNameInfo"
+                android:text="캐릭터 이름"
+                android:textSize="14dp"
+                android:textColor="@color/main_font"/>
+            <TextView
+                android:layout_width="0dp"
+                app:layout_constraintHorizontal_weight="1"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/edtLevel"
+                android:id="@+id/txtItemLevelInfo"
+                android:text="아이템 레벨"
+                android:textSize="14dp"
+                android:textColor="@color/main_font"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/txtNameInfo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/edtLevel"
+                android:id="@+id/edtName"
+                android:textSize="14dp"
+                android:textColor="@color/main_font"
+                android:hint="0 ~ 12글자"
+                android:maxLength="12"
+                android:background="@drawable/edit_style"
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:textColorHint="@color/disabled_font"/>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/txtItemLevelInfo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/edtName"
+                android:id="@+id/edtLevel"
+                android:textSize="14dp"
+                android:textColor="@color/main_font"
+                android:hint="0 ~ 9999.99"
+                android:maxLength="7"
+                android:background="@drawable/edit_style"
+                android:padding="10dp"
+                android:inputType="numberDecimal"
+                android:textColorHint="@color/disabled_font"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,18 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TableRow>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="캐릭터 이름"
-                        android:textSize="14dp"
-                        android:textColor="@color/main_font"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:text="아이템 레벨"
-                        android:textSize="14dp"
-                        android:textColor="@color/main_font"/>
+
                 </TableRow>
                 <TableRow
                     android:layout_marginTop="5dp">
@@ -47,30 +102,9 @@
                         android:layout_weight="1"
                         android:orientation="horizontal"
                         android:paddingRight="10dp">
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/edtName"
-                            android:textSize="14dp"
-                            android:textColor="@color/main_font"
-                            android:hint="0 ~ 12글자"
-                            android:maxLength="12"
-                            android:background="@drawable/edit_style"
-                            android:padding="10dp"
-                            android:textColorHint="@color/disabled_font"/>
+
                     </LinearLayout>
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:id="@+id/edtLevel"
-                        android:textSize="14dp"
-                        android:textColor="@color/main_font"
-                        android:hint="0 ~ 9999.99"
-                        android:maxLength="7"
-                        android:background="@drawable/edit_style"
-                        android:padding="10dp"
-                        android:inputType="numberDecimal"
-                        android:textColorHint="@color/disabled_font"/>
+
                 </TableRow>
                 <TableRow
                     android:layout_marginTop="10dp">
@@ -175,4 +209,4 @@
                 style="?android:attr/borderlessButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

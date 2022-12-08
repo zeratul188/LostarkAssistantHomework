@@ -14,12 +14,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.lostark.lostarkassistanthomework.add.AddActivity
 import com.lostark.lostarkassistanthomework.checklist.ChecklistFragment
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.gold.GoldFragment

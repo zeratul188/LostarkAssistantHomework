@@ -19,19 +19,19 @@
             android:name=".MoneyActivity"
             android:exported="false" />
         <activity
-            android:name=".ChangePositionActivity"
+            android:name=".changeposition.ChangePositionActivity"
             android:exported="false" />
         <activity
             android:name=".checklist.FamilyEditActivity"
             android:exported="false" />
         <activity
-            android:name=".checklist.EditActivity"
+            android:name=".checklist.edit.EditActivity"
             android:exported="false" />
         <activity
             android:name=".SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".AddActivity"
+            android:name=".add.AddActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false" />
         <activity

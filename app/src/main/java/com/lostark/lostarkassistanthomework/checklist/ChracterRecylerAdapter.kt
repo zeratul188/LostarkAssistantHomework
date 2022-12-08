@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.checklist.edit.EditActivity
 import com.lostark.lostarkassistanthomework.checklist.objects.Checklist
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 
