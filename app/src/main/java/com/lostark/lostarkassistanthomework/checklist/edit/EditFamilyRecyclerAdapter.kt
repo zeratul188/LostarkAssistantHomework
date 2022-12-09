@@ -11,7 +11,7 @@ import android.widget.*
 import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.App
-import com.lostark.lostarkassistanthomework.CheckDialog
+import com.lostark.lostarkassistanthomework.settings.CheckDialog
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.IconSelectDialog

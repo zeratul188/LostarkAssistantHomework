@@ -1,4 +1,4 @@
-package com.lostark.lostarkassistanthomework
+package com.lostark.lostarkassistanthomework.settings
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,39 +9,51 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lostark.lostarkassistanthomework.objects.Chracter
+import com.lostark.lostarkassistanthomework.CustomToast
+import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 
-class ChracterRecylerAdapter(
-    private val list: ArrayList<Chracter>,
+class GoldRecylerAdapter(
+    private val list: ArrayList<Homework>,
     private val context: Context,
     private val txtContent: TextView
-) : RecyclerView.Adapter<ChracterRecylerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<GoldRecylerAdapter.ViewHolder>() {
+    var goldcount = 0
+
+    fun syncGold() {
+        list.forEach { item ->
+            if (item.isGold) {
+                goldcount++
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chracter_list, parent, false)
-        return ChracterRecylerAdapter.ViewHolder(view, list, txtContent)
+        return ViewHolder(view, list)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         val listener = View.OnClickListener { it ->
-            if (item.isChecked) {
-                item.isChecked = false
+            if (item.isGold) {
+                item.isGold = false
                 holder.chkCheck.isChecked = false
+                goldcount--
                 holder.layoutBackground.setBackgroundResource(R.drawable.unselected_style)
             } else {
-                item.isChecked = true
+                if (goldcount >= 6) {
+                    val toast = CustomToast(context)
+                    toast.createToast("이미 지정할 수 있는 횟수를 초과하였습니다.", false)
+                    toast.show()
+                    return@OnClickListener
+                }
+                item.isGold = true
                 holder.chkCheck.isChecked = true
+                goldcount++
                 holder.layoutBackground.setBackgroundResource(R.drawable.selected_style)
             }
-            var count = 0
-            list.forEach { it ->
-                if (it.isChecked) {
-                    count++
-                }
-            }
-            txtContent.text = "총 ${list.size}개 중 ${count}개의 캐릭터를 선택하였습니다"
-            notifyDataSetChanged()
+            txtContent.text = "최대 6개 캐릭터 중 ${goldcount}개 캐릭터 지정됨"
         }
         holder.apply {
             bind(listener, item, context)
@@ -51,7 +63,7 @@ class ChracterRecylerAdapter(
 
     override fun getItemCount(): Int = list.size
 
-    class ViewHolder(v : View, private val list: ArrayList<Chracter>, private val txtContent: TextView) : RecyclerView.ViewHolder(v) {
+    class ViewHolder(v: View, private val list: ArrayList<Homework>): RecyclerView.ViewHolder(v) {
         private var view: View = v
         lateinit var imgJob: ImageView
         lateinit var txtName: TextView
@@ -60,7 +72,8 @@ class ChracterRecylerAdapter(
         lateinit var txtJob: TextView
         lateinit var chkCheck: CheckBox
         lateinit var layoutBackground: LinearLayout
-        fun bind(listener: View.OnClickListener, item: Chracter, context: Context) {
+
+        fun bind(listener: View.OnClickListener, item: Homework, context: Context) {
             imgJob = view.findViewById(R.id.imgJob)
             txtName = view.findViewById(R.id.txtName)
             txtServer = view.findViewById(R.id.txtServer)
@@ -76,32 +89,14 @@ class ChracterRecylerAdapter(
             txtServer.text = item.server
             txtLevel.text = "Lv.${item.level.toString()}"
             txtJob.text = item.job
-            chkCheck.isChecked = item.isChecked
+            chkCheck.isChecked = item.isGold
             if (chkCheck.isChecked) {
                 layoutBackground.setBackgroundResource(R.drawable.selected_style)
             } else {
                 layoutBackground.setBackgroundResource(R.drawable.unselected_style)
             }
 
-            chkCheck.setOnClickListener {
-                if (item.isChecked) {
-                    item.isChecked = false
-                    chkCheck.isChecked = false
-                    layoutBackground.setBackgroundResource(R.drawable.unselected_style)
-                } else {
-                    item.isChecked = true
-                    chkCheck.isChecked = true
-                    layoutBackground.setBackgroundResource(R.drawable.selected_style)
-                }
-                var count = 0
-                list.forEach { it ->
-                    if (it.isChecked) {
-                        count++
-                    }
-                }
-                txtContent.text = "총 ${list.size}개 중 ${count}개의 캐릭터를 선택하였습니다"
-            }
-
+            chkCheck.setOnClickListener(listener)
             view.setOnClickListener(listener)
         }
     }

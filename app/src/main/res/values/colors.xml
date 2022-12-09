@@ -16,7 +16,7 @@
     <color name="complete_background">#cccccc</color>
     <color name="stroke">#80aaaaaa</color>
     <color name="actionbar">#fafafa</color>
-    <color name="progress_background">#CCCCCC</color>
+    <color name="progress_background">#aaaaaa</color>
     <color name="progress">#788FE4</color>
     <color name="line_style">#dddddd</color>
     <color name="disabled">#FF8888</color>

@@ -13,7 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.lostark.lostarkassistanthomework.ChracterRecylerAdapter
+import com.lostark.lostarkassistanthomework.settings.ChracterRecylerAdapter
 import com.lostark.lostarkassistanthomework.LoadingDialog
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration

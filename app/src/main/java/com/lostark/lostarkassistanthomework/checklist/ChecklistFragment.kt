@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.LoadingDialog
 import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.checklist.edit.FamilyEditActivity
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework

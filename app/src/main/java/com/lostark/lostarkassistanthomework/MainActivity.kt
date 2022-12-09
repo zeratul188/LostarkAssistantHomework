@@ -21,6 +21,9 @@ import com.lostark.lostarkassistanthomework.add.AddActivity
 import com.lostark.lostarkassistanthomework.checklist.ChecklistFragment
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.gold.GoldFragment
+import com.lostark.lostarkassistanthomework.settings.CheckDialog
+import com.lostark.lostarkassistanthomework.settings.MoneyActivity
+import com.lostark.lostarkassistanthomework.settings.SettingActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity() {

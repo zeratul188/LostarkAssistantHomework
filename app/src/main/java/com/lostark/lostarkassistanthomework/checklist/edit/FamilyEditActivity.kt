@@ -1,4 +1,4 @@
-package com.lostark.lostarkassistanthomework.checklist
+package com.lostark.lostarkassistanthomework.checklist.edit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,8 +11,8 @@ import com.google.android.material.button.MaterialButton
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
-import com.lostark.lostarkassistanthomework.checklist.edit.EditFamilyRecyclerAdapter
-import com.lostark.lostarkassistanthomework.checklist.edit.EditItemTouchHelperCallback
+import com.lostark.lostarkassistanthomework.checklist.AddFamilyDialog
+import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 
