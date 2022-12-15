@@ -96,7 +96,7 @@ class ChecklistFragment : Fragment() {
         txtAllGold = view.findViewById(R.id.txtAllGold)
         txtGold = view.findViewById(R.id.txtGold)
         btnList = view.findViewById(R.id.btnList)
-        layoutGold = view.findViewById(R.id.layoutGold)
+        //layoutGold = view.findViewById(R.id.layoutGold)
 
         btnSetting.setOnClickListener {
             val intent = Intent(context, FamilyEditActivity::class.java)
@@ -148,11 +148,11 @@ class ChecklistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         //resume()
-        if (App.prefs.isBoolean("showgold", true)) {
+        /*if (App.prefs.isBoolean("showgold", true)) {
             layoutGold.visibility = View.VISIBLE
         } else {
             layoutGold.visibility = View.GONE
-        }
+        }*/
     }
 
     fun initFamilys(list: ArrayList<Family>, type: String) {

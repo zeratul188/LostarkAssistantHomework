@@ -10,7 +10,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btnAll"
-        android:drawableRight="10dp"
         android:id="@+id/btnSearch"
         android:background="@drawable/button_style"
         android:text="캐릭터 정보 불러오기"
