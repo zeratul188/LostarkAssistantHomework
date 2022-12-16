@@ -11,13 +11,13 @@
     <!-- Design Colors -->
     <color name="background">#fafafa</color>
     <color name="press_background">#aaaaaa</color>
-    <color name="sub_background">#dddddd</color>
+    <color name="sub_background">#f0f0f0</color>
     <color name="inner_background">#f2f2f2</color>
     <color name="complete_background">#cccccc</color>
     <color name="stroke">#80aaaaaa</color>
     <color name="actionbar">#fafafa</color>
-    <color name="progress_background">#aaaaaa</color>
-    <color name="progress">#788FE4</color>
+    <color name="progress_background">#cccccc</color>
+    <color name="progress">#4E71F0</color>
     <color name="line_style">#dddddd</color>
     <color name="disabled">#FF8888</color>
     <color name="button">#f0f0f0</color>

@@ -24,6 +24,7 @@ import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
 import com.lostark.lostarkassistanthomework.dbs.GoldDBAdapter
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.jsoup.Jsoup
 
 class ChecklistFragment : Fragment() {
@@ -54,6 +55,7 @@ class ChecklistFragment : Fragment() {
     lateinit var homeworkDB: HomeworkDatabase
 
     lateinit var goldDBAdapter: GoldDBAdapter
+    private var myCompositeDisposable = CompositeDisposable()
 
     val NOTIFYED = 1
 
@@ -254,6 +256,11 @@ class ChecklistFragment : Fragment() {
             }
         }
         txtGold.text = all.toString()
+    }
+
+    override fun onDestroy() {
+        myCompositeDisposable.clear()
+        super.onDestroy()
     }
 
     inner class HomeworkHandler : Handler() {

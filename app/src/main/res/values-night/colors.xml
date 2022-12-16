@@ -16,8 +16,8 @@
     <color name="complete_background">#555555</color>
     <color name="stroke">#80777777</color>
     <color name="actionbar">#333333</color>
-    <color name="progress_background">#777777</color>
-    <color name="progress">#788FE4</color>
+    <color name="progress_background">#555555</color>
+    <color name="progress">#9AACED</color>
     <color name="line_style">#444444</color>
     <color name="disabled">#FF8888</color>
     <color name="button">#3f3f3f</color>
