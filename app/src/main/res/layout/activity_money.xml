@@ -48,7 +48,8 @@
                 app:layout_constraintTop_toBottomOf="@id/txtContent"
                 app:layout_constraintBottom_toTopOf="@id/btnApply"
                 android:id="@+id/listView"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
             <android.widget.Button
                 android:layout_width="match_parent"

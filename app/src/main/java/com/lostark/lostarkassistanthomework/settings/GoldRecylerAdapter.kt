@@ -8,6 +8,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
@@ -71,7 +72,7 @@ class GoldRecylerAdapter(
         lateinit var txtLevel: TextView
         lateinit var txtJob: TextView
         lateinit var chkCheck: CheckBox
-        lateinit var layoutBackground: LinearLayout
+        lateinit var layoutBackground: ConstraintLayout
 
         fun bind(listener: View.OnClickListener, item: Homework, context: Context) {
             imgJob = view.findViewById(R.id.imgJob)
