@@ -11,12 +11,14 @@ import com.google.android.material.button.MaterialButton
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
-import com.lostark.lostarkassistanthomework.checklist.AddFamilyDialog
+import com.lostark.lostarkassistanthomework.checklist.edit.add.AddFamilyDialog
 import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStartDragListener {
+    private var myCompositeDisposable = CompositeDisposable()
     lateinit var listDays: RecyclerView
     lateinit var listWeeks: RecyclerView
     lateinit var btnApply: Button
@@ -80,7 +82,7 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
         listWeeks.adapter = weekAdapter
 
         btnAddDay.setOnClickListener {
-            val addDialog = AddFamilyDialog(this, "일일")
+            val addDialog = AddFamilyDialog(this, "일일", myCompositeDisposable)
             addDialog.setOnClickListener(object : AddFamilyDialog.OnDialogClickListener {
                 override fun onClicked() {
                     val customToast = CustomToast(this@FamilyEditActivity)
@@ -110,7 +112,7 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
         }
 
         btnAddWeek.setOnClickListener {
-            val addDialog = AddFamilyDialog(this, "주간")
+            val addDialog = AddFamilyDialog(this, "주간", myCompositeDisposable)
             addDialog.setOnClickListener(object : AddFamilyDialog.OnDialogClickListener {
                 override fun onClicked() {
                     val customToast = CustomToast(this@FamilyEditActivity)
@@ -172,5 +174,10 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
     override fun onStartDrag(holder: EditFamilyRecyclerAdapter.ViewHolder) {
         dayHelper.startDrag(holder)
         weekHelper.startDrag(holder)
+    }
+
+    override fun onDestroy() {
+        myCompositeDisposable.clear()
+        super.onDestroy()
     }
 }

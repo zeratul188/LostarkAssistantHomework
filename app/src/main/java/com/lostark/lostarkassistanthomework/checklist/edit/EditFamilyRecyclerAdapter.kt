@@ -16,6 +16,8 @@ import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.IconSelectDialog
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
+import com.lostark.lostarkassistanthomework.databinding.ItemAddPresetBinding
+import com.lostark.lostarkassistanthomework.databinding.ItemEditBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -30,8 +32,10 @@ class EditFamilyRecyclerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_edit, parent, false)
-        val holder = ViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemEditBinding.inflate(inflater, parent, false)
+        //val view = LayoutInflater.from(parent.context).inflate(R.layout.item_edit, parent, false)
+        val holder = ViewHolder(binding)
         holder.clearFocus()
         return holder
     }
@@ -83,24 +87,16 @@ class EditFamilyRecyclerAdapter(
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    class ViewHolder(v: View): RecyclerView.ViewHolder(v) {
-        private val view = v
-        val imgIcon: ImageView = view.findViewById(R.id.imgIcon)
-        val edtName: EditText = view.findViewById(R.id.edtName)
-        val edtNow: EditText = view.findViewById(R.id.edtNow)
-        val edtMax: EditText = view.findViewById(R.id.edtMax)
-        val sprEnd: Spinner = view.findViewById(R.id.sprEnd)
-        val btnDelete: ImageButton = view.findViewById(R.id.btnDelete)
-        val imgHandle: ImageView = view.findViewById(R.id.imgHandle)
-        var btnMinDown: ImageButton = view.findViewById(R.id.btnMinDown)
-        var btnMinUp: ImageButton = view.findViewById(R.id.btnMinUp)
-        var btnMaxDown: ImageButton = view.findViewById(R.id.btnMaxDown)
-        var btnMaxUp: ImageButton = view.findViewById(R.id.btnMaxUp)
+    class ViewHolder(
+        private val binding: ItemEditBinding
+    ): RecyclerView.ViewHolder(binding.root) {
 
         fun clearFocus() {
-            edtName.clearFocus()
-            edtNow.clearFocus()
-            edtMax.clearFocus()
+            with(binding) {
+                edtName.clearFocus()
+                edtNow.clearFocus()
+                edtMax.clearFocus()
+            }
         }
 
         fun bind(
@@ -112,47 +108,49 @@ class EditFamilyRecyclerAdapter(
         ) {
             val ends = context.resources.getStringArray(R.array.ends)
             val endAdapter = ArrayAdapter(context, R.layout.txt_item_end, ends)
-            sprEnd.adapter = endAdapter
-            val pos = ends.indexOf(family.end)
-            if (pos != -1) {
-                sprEnd.setSelection(pos)
-            }
-
-            imgIcon.setImageResource(context.resources.getIdentifier(family.icon, "drawable", context.packageName))
-            edtName.setText(family.name)
-            edtNow.setText(family.now.toString())
-            edtMax.setText(family.max.toString())
-
-            btnDelete.setOnClickListener(listener)
-            imgIcon.setOnClickListener(iconListener)
-            imgHandle.setOnTouchListener(touchListener)
-            edtName.addTextChangedListener(NameTextWatcher(family))
-            edtNow.addTextChangedListener(NowTextWatcher(family))
-            edtMax.addTextChangedListener(MaxTextWatcher(family))
-            sprEnd.onItemSelectedListener = EndTextWatcher(family)
-
-            btnMinDown.setOnClickListener {
-                if (family.now > 0) {
-                    family.now--
-                    edtNow.setText(family.now.toString())
+            with(binding) {
+                sprEnd.adapter = endAdapter
+                val pos = ends.indexOf(family.end)
+                if (pos != -1) {
+                    sprEnd.setSelection(pos)
                 }
-            }
-            btnMinUp.setOnClickListener {
-                if (family.now < family.max) {
-                    family.now++
-                    edtNow.setText(family.now.toString())
+
+                imgIcon.setImageResource(context.resources.getIdentifier(family.icon, "drawable", context.packageName))
+                edtName.setText(family.name)
+                edtNow.setText(family.now.toString())
+                edtMax.setText(family.max.toString())
+
+                btnDelete.setOnClickListener(listener)
+                imgIcon.setOnClickListener(iconListener)
+                imgHandle.setOnTouchListener(touchListener)
+                edtName.addTextChangedListener(NameTextWatcher(family))
+                edtNow.addTextChangedListener(NowTextWatcher(family))
+                edtMax.addTextChangedListener(MaxTextWatcher(family))
+                sprEnd.onItemSelectedListener = EndTextWatcher(family)
+
+                btnMinDown.setOnClickListener {
+                    if (family.now > 0) {
+                        family.now--
+                        edtNow.setText(family.now.toString())
+                    }
                 }
-            }
-            btnMaxDown.setOnClickListener {
-                if (family.max > 0) {
-                    family.max--
-                    edtMax.setText(family.max.toString())
+                btnMinUp.setOnClickListener {
+                    if (family.now < family.max) {
+                        family.now++
+                        edtNow.setText(family.now.toString())
+                    }
                 }
-            }
-            btnMaxUp.setOnClickListener {
-                if (family.max < 99) {
-                    family.max++
-                    edtMax.setText(family.max.toString())
+                btnMaxDown.setOnClickListener {
+                    if (family.max > 0) {
+                        family.max--
+                        edtMax.setText(family.max.toString())
+                    }
+                }
+                btnMaxUp.setOnClickListener {
+                    if (family.max < 99) {
+                        family.max++
+                        edtMax.setText(family.max.toString())
+                    }
                 }
             }
         }
@@ -163,7 +161,7 @@ class EditFamilyRecyclerAdapter(
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edtName.hasFocus()) {
+                if (binding.edtName.hasFocus()) {
                     family.name = s.toString()
                 }
             }
@@ -178,7 +176,7 @@ class EditFamilyRecyclerAdapter(
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edtNow.hasFocus()) {
+                if (binding.edtNow.hasFocus()) {
                     if (s.toString() == "") {
                         family.now = 0
                     } else {
@@ -201,13 +199,13 @@ class EditFamilyRecyclerAdapter(
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edtMax.hasFocus()) {
+                if (binding.edtMax.hasFocus()) {
                     if (s.toString() == "") {
                         family.max = 1
                     } else {
                         var value = s.toString().toInt()
                         if (value == 0) {
-                            edtMax.setText("1")
+                            binding.edtMax.setText("1")
                             value = 1
                         }
                         family.max = value

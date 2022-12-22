@@ -61,6 +61,7 @@ android {
 }
 
 dependencies {
+    def activity_version = "1.5.1"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -104,4 +105,7 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
+    //viewModels에 사용
+    implementation "androidx.activity:activity-ktx:$activity_version"
 }

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="dialog"
-            type="com.lostark.lostarkassistanthomework.checklist.edit.add.AddDialog" />
+            type="com.lostark.lostarkassistanthomework.checklist.edit.add.AddFamilyDialog" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

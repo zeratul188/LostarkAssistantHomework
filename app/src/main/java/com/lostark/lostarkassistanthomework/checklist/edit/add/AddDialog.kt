@@ -1,29 +1,35 @@
-package com.lostark.lostarkassistanthomework.checklist
+package com.lostark.lostarkassistanthomework.checklist.edit.add
 
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
+import android.view.*
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.databinding.DialogAddHomeworkBinding
 import com.lostark.lostarkassistanthomework.objects.EditData
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-class AddFamilyDialog(context: Context, type: String): DialogFragment() {
+class AddDialog(
+    context: Context,
+    type: String,
+    private val myCompositeDisposable: CompositeDisposable
+) : DialogFragment(){
     private lateinit var onClickListener: OnDialogClickListener
 
-    private val selfFragment = AddSelfHomeworkFragment()
-    private val presetFragment = AddPresetFamilyFragment(type)
+    private val selfFragment = AddSelfHomeworkFragment(myCompositeDisposable)
+    private val presetFragment = AddPresetHomeworkFragment(type)
 
-    lateinit var navigationView: BottomNavigationView
+    private lateinit var binding: DialogAddHomeworkBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /*activity?.window!!.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT)*/
+        //activity?.window!!.setGravity(Gravity.CENTER)
         isCancelable = true
     }
 
@@ -33,16 +39,12 @@ class AddFamilyDialog(context: Context, type: String): DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val view : View = inflater.inflate(R.layout.dialog_add_homework, container, false)
 
-        navigationView = view.findViewById(R.id.bottomNavigationView)
-        val layoutFrame = view.findViewById<FrameLayout>(R.id.layoutFrame)
-        val btnCancel = view.findViewById<Button>(R.id.btnCancel)
-        val btnAdd = view.findViewById<Button>(R.id.btnAdd)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_add_homework, null, false)
 
-        AddFamilyDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, selfFragment)?.commit()
+        AddDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, selfFragment)?.commit()
 
-        navigationView.setOnItemSelectedListener {
+        binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_self -> AddDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, selfFragment).commit()
                 R.id.action_preset -> AddDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, presetFragment).commit()
@@ -50,11 +52,11 @@ class AddFamilyDialog(context: Context, type: String): DialogFragment() {
             return@setOnItemSelectedListener true
         }
 
-        btnCancel.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             dismiss()
         }
 
-        btnAdd.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             onClickListener.onClicked()
         }
 
@@ -67,8 +69,10 @@ class AddFamilyDialog(context: Context, type: String): DialogFragment() {
         onClickListener = listener
     }
 
+    //fun isNameEmpty(): Boolean = selfFragment.isEmpty()
+
     fun getItem(): EditData {
-        return when (navigationView.selectedItemId) {
+        return when (binding.bottomNavigationView.selectedItemId) {
             R.id.action_self -> selfFragment.getItem()
             else -> presetFragment.getItem()
         }

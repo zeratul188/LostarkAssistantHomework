@@ -16,15 +16,17 @@ import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.button.MaterialButton
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
-import com.lostark.lostarkassistanthomework.checklist.AddDialog
+import com.lostark.lostarkassistanthomework.checklist.edit.add.AddDialog
 import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.objects.EditData
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class EditPagerAdapter(
     private val homework: Homework,
     private val context: Context,
-    private val fm: FragmentManager
+    private val fm: FragmentManager,
+    private val myCompositeDisposable: CompositeDisposable
 ) : PagerAdapter(), EditRecyclerAdapter.OnStartDragListener {
     //var homeworkDB: HomeworkDatabase = HomeworkDatabase.getInstance(App.context())!!
     var dayAdapter: EditRecyclerAdapter
@@ -91,7 +93,7 @@ class EditPagerAdapter(
                     0 -> type = "일일"
                     1 -> type = "주간"
                 }
-                val addDialog = AddDialog(context, type)
+                val addDialog = AddDialog(context, type, myCompositeDisposable)
                 addDialog.setOnClickListener(object : AddDialog.OnDialogClickListener {
                     override fun onClicked() {
                         val customToast = CustomToast(context)
