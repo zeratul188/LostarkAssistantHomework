@@ -40,6 +40,7 @@ class EditActivity : AppCompatActivity() {
         binding.editViewModel = viewModel
 
         homework = intent.getSerializableExtra("homework") as Homework
+        viewModel.homework.value = homework
 
         val jobs = resources.getStringArray(R.array.job)
         val jobAdapter = ArrayAdapter(this, R.layout.txt_item_job, jobs)

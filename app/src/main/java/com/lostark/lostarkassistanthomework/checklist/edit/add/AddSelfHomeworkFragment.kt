@@ -37,7 +37,7 @@ class AddSelfHomeworkFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_add_homework, null, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_add_self, null, false)
         //val view : View = inflater.inflate(R.layout.fragment_add_self, container, false)
 
         val ends = requireActivity().resources.getStringArray(R.array.ends)

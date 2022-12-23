@@ -56,6 +56,7 @@ class PresetRecyclerAdapter (
 
         fun bind(item: Preset, context: Context, listener: View.OnClickListener) {
             with(binding) {
+                preset = item
                 imgIcon.setImageResource(context.resources.getIdentifier(item.icon, "drawable", context.packageName))
                 /*txtName.text = item.name
                 txtMax.text = item.max.toString()
@@ -68,6 +69,7 @@ class PresetRecyclerAdapter (
                 }
 
                 root.setOnClickListener(listener)
+                executePendingBindings()
             }
         }
     }

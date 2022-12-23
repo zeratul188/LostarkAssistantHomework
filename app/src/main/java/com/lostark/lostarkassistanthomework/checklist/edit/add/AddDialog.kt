@@ -46,8 +46,8 @@ class AddDialog(
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.action_self -> AddDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, selfFragment).commit()
-                R.id.action_preset -> AddDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, presetFragment).commit()
+                R.id.action_self -> AddDialog@this.childFragmentManager.beginTransaction().replace(binding.layoutFrame.id, selfFragment).commit()
+                R.id.action_preset -> AddDialog@this.childFragmentManager.beginTransaction().replace(binding.layoutFrame.id, presetFragment).commit()
             }
             return@setOnItemSelectedListener true
         }
@@ -60,7 +60,7 @@ class AddDialog(
             onClickListener.onClicked()
         }
 
-        return view
+        return binding.root
     }
 
     fun dialogDismiss() = dismiss()

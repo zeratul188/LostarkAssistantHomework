@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <data>
+        <variable
+            name="homework"
+            type="com.lostark.lostarkassistanthomework.checklist.rooms.Homework" />
+    </data>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/txtDungeonMax"
                 android:id="@+id/txtDungeon"
-                android:text="0"
+                android:text="@{homework.dungeonrest+&quot;&quot;}"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 android:textColor="@color/progress"/>
@@ -60,7 +64,7 @@
                 app:layout_constraintTop_toBottomOf="@id/seekDungeon"
                 app:layout_constraintRight_toLeftOf="@id/txtBossMax"
                 android:id="@+id/txtBoss"
-                android:text="0"
+                android:text="@{homework.bossrest+&quot;&quot;}"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"
@@ -99,7 +103,7 @@
                 app:layout_constraintTop_toBottomOf="@id/seekBoss"
                 app:layout_constraintRight_toLeftOf="@id/txtQuestMax"
                 android:id="@+id/txtQuest"
-                android:text="0"
+                android:text="@{homework.questrest+&quot;&quot;}"
                 android:textSize="14dp"
                 android:textStyle="bold"
                 android:layout_marginTop="5dp"

@@ -3,24 +3,30 @@ package com.lostark.lostarkassistanthomework.checklist.edit
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.SeekBar
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
-import com.google.android.material.button.MaterialButton
+import com.jakewharton.rxbinding4.widget.changeEvents
+import com.jakewharton.rxbinding4.widget.textChanges
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.edit.add.AddDialog
 import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
+import com.lostark.lostarkassistanthomework.databinding.FragmentEditHomeworkBinding
+import com.lostark.lostarkassistanthomework.databinding.FragmentEditRestBinding
 import com.lostark.lostarkassistanthomework.objects.EditData
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class EditPagerAdapter(
     private val homework: Homework,
@@ -79,246 +85,234 @@ class EditPagerAdapter(
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        var view: View? = null
-
         if (position != 2) {
-            view = LayoutInflater.from(container.context).inflate(R.layout.fragment_edit_homework, container, false)
+            val binding: FragmentEditHomeworkBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_edit_homework, null, false)
+            //view = LayoutInflater.from(container.context).inflate(R.layout.fragment_edit_homework, container, false)
 
-            val listView = view.findViewById<RecyclerView>(R.id.listView)
-            listView.addItemDecoration(RecyclerViewDecoration(0, 10))
-            val btnAdd = view.findViewById<MaterialButton>(R.id.btnAdd)
-            btnAdd.setOnClickListener {
-                var type = ""
-                when (position) {
-                    0 -> type = "일일"
-                    1 -> type = "주간"
-                }
-                val addDialog = AddDialog(context, type, myCompositeDisposable)
-                addDialog.setOnClickListener(object : AddDialog.OnDialogClickListener {
-                    override fun onClicked() {
-                        val customToast = CustomToast(context)
-                        val data = addDialog.getItem()
-                        if (data.name != "") {
-                            var isFind = false
-                            when (position) {
-                                0 -> {
-                                    days.forEach { day ->
-                                        if (day.name == data.name) {
-                                            isFind = true
+            with(binding) {
+                listView.addItemDecoration(RecyclerViewDecoration(0, 10))
+                btnAdd.setOnClickListener {
+                    var type = ""
+                    when (position) {
+                        0 -> type = "일일"
+                        1 -> type = "주간"
+                    }
+                    val addDialog = AddDialog(context, type, myCompositeDisposable)
+                    addDialog.setOnClickListener(object : AddDialog.OnDialogClickListener {
+                        override fun onClicked() {
+                            val customToast = CustomToast(context)
+                            val data = addDialog.getItem()
+                            if (data.name != "") {
+                                var isFind = false
+                                when (position) {
+                                    0 -> {
+                                        days.forEach { day ->
+                                            if (day.name == data.name) {
+                                                isFind = true
+                                            }
                                         }
+                                        if (isFind) {
+                                            customToast.createToast("이미 같은 이름의 숙제가 존재합니다.", false)
+                                        } else {
+                                            days.add(data)
+                                            customToast.createToast("${data.name} 숙제를 추가하였습니다.", false)
+                                            addDialog.dialogDismiss()
+                                        }
+                                        dayAdapter.notifyDataSetChanged()
                                     }
-                                    if (isFind) {
-                                        customToast.createToast("이미 같은 이름의 숙제가 존재합니다.", false)
-                                    } else {
-                                        days.add(data)
-                                        customToast.createToast("${data.name} 숙제를 추가하였습니다.", false)
-                                        addDialog.dialogDismiss()
+                                    1 -> {
+                                        weeks.forEach { week ->
+                                            if (week.name == data.name) {
+                                                isFind = true
+                                            }
+                                        }
+                                        if (isFind) {
+                                            customToast.createToast("이미 같은 이름의 숙제가 존재합니다.", false)
+                                        } else {
+                                            weeks.add(data)
+                                            customToast.createToast("${data.name} 숙제를 추가하였습니다.", false)
+                                            addDialog.dialogDismiss()
+                                        }
+                                        weekAdapter.notifyDataSetChanged()
+                                        printList(weeks)
                                     }
-                                    dayAdapter.notifyDataSetChanged()
                                 }
-                                1 -> {
-                                    weeks.forEach { week ->
-                                        if (week.name == data.name) {
-                                            isFind = true
-                                        }
-                                    }
-                                    if (isFind) {
-                                        customToast.createToast("이미 같은 이름의 숙제가 존재합니다.", false)
-                                    } else {
-                                        weeks.add(data)
-                                        customToast.createToast("${data.name} 숙제를 추가하였습니다.", false)
-                                        addDialog.dialogDismiss()
-                                    }
-                                    weekAdapter.notifyDataSetChanged()
-                                    printList(weeks)
+                            } else {
+                                customToast.createToast("이름이 비어있습니다.", false)
+                            }
+                            customToast.show()
+                        }
+                    })
+                    addDialog.show(fm, "addDialog")
+                }
+
+                val callback = EditItemTouchHelperCallback()
+
+                when (position) {
+                    0 -> {
+                        callback.setOnItemMoveListener(dayAdapter)
+                        dayHelper = ItemTouchHelper(callback)
+                        dayHelper.attachToRecyclerView(listView)
+                        listView.adapter = dayAdapter
+                    }
+                    1 -> {
+                        callback.setOnItemMoveListener(weekAdapter)
+                        weekHelper = ItemTouchHelper(callback)
+                        weekHelper.attachToRecyclerView(listView)
+                        listView.adapter = weekAdapter
+                    }
+                }
+            }
+
+            container.addView(binding.root)
+            return binding.root
+        } else {
+            val binding: FragmentEditRestBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_edit_rest, null, false)
+            //view = LayoutInflater.from(container.context).inflate(R.layout.fragment_edit_rest, container, false)
+
+            with(binding) {
+                seekDungeon.progress = homework!!.dungeonrest/10
+                seekBoss.progress = homework!!.bossrest/10
+                seekQuest.progress = homework!!.questrest/10
+                dungeon = homework!!.dungeonrest
+                boss = homework!!.bossrest
+                quest = homework!!.questrest
+
+                lostDungeon =  homework!!.dungeonlost
+                lostBoss = homework!!.bosslost
+                lostQuest = homework!!.questlost
+
+                edtDungeon.setText(lostDungeon.toString())
+                edtBoss.setText(lostBoss.toString())
+                edtQuest.setText(lostQuest.toString())
+
+                val edtDungeonChangeObservable = edtDungeon.textChanges()
+                val edtDungeonSubscription: Disposable? = edtDungeonChangeObservable
+                    .subscribeOn(Schedulers.io())
+                    .subscribeBy(
+                        onNext = {
+                            lostDungeon = if (edtDungeon.text.toString() == "") {
+                                0
+                            } else {
+                                if (edtDungeon.text.toString().toInt() > 100) {
+                                    edtDungeon.setText("100")
+                                    100
+                                } else {
+                                    edtDungeon.text.toString().toInt()
                                 }
                             }
-                        } else {
-                            customToast.createToast("이름이 비어있습니다.", false)
+                        },
+                        onComplete = {
+
+                        },
+                        onError = {
+                            Log.d("RXError(edtDungeon)", "Error : $it")
                         }
-                        customToast.show()
-                    }
-                })
-                addDialog.show(fm, "addDialog")
+                    )
+                myCompositeDisposable.add(edtDungeonSubscription)
+
+                val edtBossObservable = edtBoss.textChanges()
+                val edtBossSubscription: Disposable? = edtBossObservable
+                    .subscribeOn(Schedulers.io())
+                    .subscribeBy(
+                        onNext = {
+                            lostBoss = if (edtBoss.text.toString() == "") {
+                                0
+                            } else {
+                                if (edtBoss.text.toString().toInt() > 100) {
+                                    edtBoss.setText("100")
+                                    100
+                                } else {
+                                    edtBoss.text.toString().toInt()
+                                }
+                            }
+                        },
+                        onComplete = {
+
+                        },
+                        onError = {
+                            Log.d("RXError(edtBoss)", "Error : $it")
+                        }
+                    )
+                myCompositeDisposable.add(edtBossSubscription)
+
+                val edtQuestObservable = edtQuest.textChanges()
+                val edtQuestSubscription: Disposable? = edtQuestObservable
+                    .subscribeOn(Schedulers.io())
+                    .subscribeBy(
+                        onNext = {
+                            lostQuest = if (edtQuest.text.toString() == "") {
+                                0
+                            } else {
+                                if (edtQuest.text.toString().toInt() > 100) {
+                                    edtQuest.setText("100")
+                                    100
+                                } else {
+                                    edtQuest.text.toString().toInt()
+                                }
+                            }
+                        },
+                        onComplete = {
+
+                        },
+                        onError = {
+                                Log.d("RXError(edtQeust)", "Error : $it")
+                        }
+                    )
+                myCompositeDisposable.add(edtQuestSubscription)
+
+                val seekDungeonObservable = seekDungeon.changeEvents()
+                val seekDungeonSubscription = seekDungeonObservable
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onNext = {
+                            txtDungeon.text = (seekDungeon.progress*10).toString()
+                            dungeon = seekDungeon.progress*10
+                        },
+                        onComplete = {
+
+                        },
+                        onError = {
+                            Log.d("RXError(seekDungeon)", "Error : $it")
+                        }
+                    )
+                myCompositeDisposable.add(seekDungeonSubscription)
+                val seekBossObservable = seekBoss.changeEvents()
+                val seekBossSubscription: Disposable = seekBossObservable
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onNext = {
+                            txtBoss.text = (seekBoss.progress*10).toString()
+                            boss = seekBoss.progress*10
+                        },
+                        onComplete = {
+
+                        },
+                        onError = {
+                            Log.d("RXError(edtQeust)", "Error : $it")
+                        }
+                    )
+                myCompositeDisposable.add(seekBossSubscription)
+                val seekQuestObservable = seekQuest.changeEvents()
+                val seekQuestSubscription = seekQuestObservable
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribeBy(
+                        onNext = {
+                            txtQuest.text = (seekQuest.progress*10).toString()
+                            quest= seekQuest.progress*10
+                        },
+                        onComplete = {
+
+                        },
+                        onError = {
+                            Log.d("RXError(edtQeust)", "Error : $it")
+                        }
+                    )
+                myCompositeDisposable.add(seekQuestSubscription)
             }
-
-            val callback = EditItemTouchHelperCallback()
-            
-            when (position) {
-                0 -> {
-                    callback.setOnItemMoveListener(dayAdapter)
-                    dayHelper = ItemTouchHelper(callback)
-                    dayHelper.attachToRecyclerView(listView)
-                    listView.adapter = dayAdapter
-                }
-                1 -> {
-                    callback.setOnItemMoveListener(weekAdapter)
-                    weekHelper = ItemTouchHelper(callback)
-                    weekHelper.attachToRecyclerView(listView)
-                    listView.adapter = weekAdapter
-                }
-            }
-        } else {
-            view = LayoutInflater.from(container.context).inflate(R.layout.fragment_edit_rest, container, false)
-
-            val txtDungeon = view.findViewById<TextView>(R.id.txtDungeon)
-            val seekDungeon = view.findViewById<SeekBar>(R.id.seekDungeon)
-            val txtBoss = view.findViewById<TextView>(R.id.txtBoss)
-            val seekBoss = view.findViewById<SeekBar>(R.id.seekBoss)
-            val txtQuest = view.findViewById<TextView>(R.id.txtQuest)
-            val seekQuest = view.findViewById<SeekBar>(R.id.seekQuest)
-            val edtDungeon = view.findViewById<EditText>(R.id.edtDungeon)
-            val edtBoss = view.findViewById<EditText>(R.id.edtBoss)
-            val edtQuest = view.findViewById<EditText>(R.id.edtQuest)
-
-            txtDungeon.text = homework.dungeonrest.toString()
-            txtBoss.text = homework.bossrest.toString()
-            txtQuest.text = homework.questrest.toString()
-            seekDungeon.progress = homework.dungeonrest/10
-            seekBoss.progress = homework.bossrest/10
-            seekQuest.progress = homework.questrest/10
-
-            dungeon = homework.dungeonrest
-            boss = homework.bossrest
-            quest = homework.questrest
-            
-            lostDungeon =  homework.dungeonlost
-            lostBoss = homework.bosslost
-            lostQuest = homework.questlost
-            edtDungeon.setText(lostDungeon.toString())
-            edtBoss.setText(lostBoss.toString())
-            edtQuest.setText(lostQuest.toString())
-            
-            edtDungeon.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                    
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    lostDungeon = if (edtDungeon.text.toString() == "") {
-                        0
-                    } else {
-                        if (edtDungeon.text.toString().toInt() > 100) {
-                            edtDungeon.setText("100")
-                            100
-                        } else {
-                            edtDungeon.text.toString().toInt()
-                        }
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                    
-                }
-            })
-            
-            edtBoss.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                    
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    lostBoss = if (edtBoss.text.toString() == "") {
-                        0
-                    } else {
-                        if (edtBoss.text.toString().toInt() > 100) {
-                            edtBoss.setText("100")
-                            100
-                        } else {
-                            edtBoss.text.toString().toInt()
-                        }
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                    
-                }
-            })
-            
-            edtQuest.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                    
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    lostQuest = if (edtQuest.text.toString() == "") {
-                        0
-                    } else {
-                        if (edtQuest.text.toString().toInt() > 100) {
-                            edtQuest.setText("100")
-                            100
-                        } else {
-                            edtQuest.text.toString().toInt()
-                        }
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                    
-                }
-            })
-
-            seekDungeon.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    txtDungeon.text = (p1*10).toString()
-                    dungeon = p1*10
-                }
-
-                override fun onStartTrackingTouch(p0: SeekBar?) {
-
-                }
-
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-
-                }
-            })
-            seekBoss.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    txtBoss.text = (p1*10).toString()
-                    boss = p1*10
-                }
-
-                override fun onStartTrackingTouch(p0: SeekBar?) {
-
-                }
-
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-
-                }
-            })
-            seekQuest.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    txtQuest.text = (p1*10).toString()
-                    quest = p1*10
-                }
-
-                override fun onStartTrackingTouch(p0: SeekBar?) {
-
-                }
-
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-
-                }
-            })
+            container.addView(binding.root)
+            return binding.root
         }
-
-        container.addView(view)
-        return view
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

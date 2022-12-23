@@ -49,7 +49,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="@{preset.max}"
+            android:text="@{preset.max+&quot;&quot;}"
             android:textSize="20dp"
             android:id="@+id/txtMax"
             android:textColor="@color/sub_font"/>
