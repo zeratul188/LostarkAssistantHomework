@@ -23,8 +23,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/progressAll"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:max="100"
-                android:progress="50"
+                android:max="@{checklistViewModel.maxProgress}"
+                android:progress="@{checklistViewModel.progress}"
                 android:progressDrawable="@drawable/progress_style"
                 android:layout_marginTop="5dp"/>
             <TextView
@@ -44,7 +44,7 @@
                 app:layout_constraintTop_toBottomOf="@id/progressAll"
                 android:layout_marginTop="10dp"
                 android:id="@+id/txtAll"
-                android:text="100%"
+                android:text="@{checklistViewModel.percent+&quot;%&quot;}"
                 android:textColor="@color/main_font"
                 android:textSize="24dp"/>
             <TextView
@@ -89,7 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txtAllGoldInfo"
                 app:layout_constraintBottom_toBottomOf="@id/imgAllGoldIcon"
                 android:id="@+id/txtAllGold"
-                android:text="0"
+                android:text="@{checklistViewModel.allGold+&quot;&quot;}"
                 android:textSize="14dp"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/main_font"/>
@@ -108,7 +108,7 @@
                 app:layout_constraintLeft_toRightOf="@id/imgGoldIcon"
                 app:layout_constraintBottom_toBottomOf="@id/imgGoldIcon"
                 android:id="@+id/txtGold"
-                android:text="0"
+                android:text="@{checklistViewModel.gold+&quot;&quot;}"
                 android:textSize="14dp"
                 android:textColor="@color/main_font"
                 android:layout_marginLeft="5dp"/>

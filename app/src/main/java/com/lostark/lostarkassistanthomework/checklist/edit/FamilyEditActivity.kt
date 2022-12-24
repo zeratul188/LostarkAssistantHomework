@@ -3,11 +3,9 @@ package com.lostark.lostarkassistanthomework.checklist.edit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
-import androidx.appcompat.widget.Toolbar
+import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
 import com.lostark.lostarkassistanthomework.App
 import com.lostark.lostarkassistanthomework.CustomToast
 import com.lostark.lostarkassistanthomework.R
@@ -15,17 +13,13 @@ import com.lostark.lostarkassistanthomework.checklist.edit.add.AddFamilyDialog
 import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
+import com.lostark.lostarkassistanthomework.databinding.ActivityFamilyEditBinding
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStartDragListener {
+    private val viewModel: FamilyEditViewModel by viewModels()
+    private lateinit var binding: ActivityFamilyEditBinding
     private var myCompositeDisposable = CompositeDisposable()
-    lateinit var listDays: RecyclerView
-    lateinit var listWeeks: RecyclerView
-    lateinit var btnApply: Button
-    lateinit var btnAddDay: MaterialButton
-    lateinit var btnAddWeek: MaterialButton
-
-    lateinit var toolBar: Toolbar
 
     private val days = ArrayList<Family>()
     private val weeks = ArrayList<Family>()
@@ -38,20 +32,17 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_family_edit)
+        //setContentView(R.layout.activity_family_edit)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_family_edit)
+        binding.familyViewModel = viewModel
 
-        toolBar = findViewById(R.id.toolBar)
-        toolBar.setTitle("원정대 체크리스트 편집")
-        toolBar.setTitleTextColor(resources.getColor(R.color.main_font))
-        //toolBar.setNavigationIcon(R.drawable.icon_resize)
-        setSupportActionBar(toolBar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        listDays = findViewById(R.id.listDays)
-        listWeeks = findViewById(R.id.listWeeks)
-        btnApply = findViewById(R.id.btnApply)
-        btnAddDay = findViewById(R.id.btnAddDay)
-        btnAddWeek = findViewById(R.id.btnAddWeek)
+        with(binding) {
+            toolBar.setTitle("원정대 체크리스트 편집")
+            toolBar.setTitleTextColor(resources.getColor(R.color.main_font))
+            //toolBar.setNavigationIcon(R.drawable.icon_resize)
+            setSupportActionBar(toolBar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
 
         val list = familyDB.familyDao().getAll()
         list.forEach { item ->
@@ -64,8 +55,8 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
         days.sort()
         weeks.sort()
 
-        listWeeks.addItemDecoration(RecyclerViewDecoration(0, 10))
-        listDays.addItemDecoration(RecyclerViewDecoration(0, 10))
+        binding.listWeeks.addItemDecoration(RecyclerViewDecoration(0, 10))
+        binding.listDays.addItemDecoration(RecyclerViewDecoration(0, 10))
         dayAdapter = EditFamilyRecyclerAdapter(days, this, this)
         weekAdapter = EditFamilyRecyclerAdapter(weeks, this, this)
 
@@ -75,13 +66,13 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
         weekCallback.setOnItemMoveListener(weekAdapter)
         dayHelper = ItemTouchHelper(dayCallback)
         weekHelper = ItemTouchHelper(weekCallback)
-        dayHelper.attachToRecyclerView(listDays)
-        weekHelper.attachToRecyclerView(listWeeks)
+        dayHelper.attachToRecyclerView(binding.listDays)
+        weekHelper.attachToRecyclerView(binding.listWeeks)
 
-        listDays.adapter = dayAdapter
-        listWeeks.adapter = weekAdapter
+        binding.listDays.adapter = dayAdapter
+        binding.listWeeks.adapter = weekAdapter
 
-        btnAddDay.setOnClickListener {
+        binding.btnAddDay.setOnClickListener {
             val addDialog = AddFamilyDialog(this, "일일", myCompositeDisposable)
             addDialog.setOnClickListener(object : AddFamilyDialog.OnDialogClickListener {
                 override fun onClicked() {
@@ -111,7 +102,7 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
             addDialog.show(supportFragmentManager, "addDialog")
         }
 
-        btnAddWeek.setOnClickListener {
+        binding.btnAddWeek.setOnClickListener {
             val addDialog = AddFamilyDialog(this, "주간", myCompositeDisposable)
             addDialog.setOnClickListener(object : AddFamilyDialog.OnDialogClickListener {
                 override fun onClicked() {
@@ -141,7 +132,7 @@ class FamilyEditActivity : AppCompatActivity(), EditFamilyRecyclerAdapter.OnStar
             addDialog.show(supportFragmentManager, "addDialog")
         }
 
-        btnApply.setOnClickListener {
+        binding.btnApply.setOnClickListener {
             val list = familyDB.familyDao().getAll()
             list.forEach { item ->
                 familyDB.familyDao().delete(item)

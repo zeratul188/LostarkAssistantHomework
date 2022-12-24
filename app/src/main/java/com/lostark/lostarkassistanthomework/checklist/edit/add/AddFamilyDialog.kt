@@ -40,7 +40,7 @@ class AddFamilyDialog(
         savedInstanceState: Bundle?
     ): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_add_homework, null, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_add_family_homework, null, false)
 
         AddFamilyDialog@this.childFragmentManager.beginTransaction().replace(R.id.layoutFrame, selfFragment)?.commit()
 

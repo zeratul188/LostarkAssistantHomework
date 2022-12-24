@@ -127,31 +127,6 @@ class EditFamilyRecyclerAdapter(
                 edtNow.addTextChangedListener(NowTextWatcher(family))
                 edtMax.addTextChangedListener(MaxTextWatcher(family))
                 sprEnd.onItemSelectedListener = EndTextWatcher(family)
-
-                btnMinDown.setOnClickListener {
-                    if (family.now > 0) {
-                        family.now--
-                        edtNow.setText(family.now.toString())
-                    }
-                }
-                btnMinUp.setOnClickListener {
-                    if (family.now < family.max) {
-                        family.now++
-                        edtNow.setText(family.now.toString())
-                    }
-                }
-                btnMaxDown.setOnClickListener {
-                    if (family.max > 0) {
-                        family.max--
-                        edtMax.setText(family.max.toString())
-                    }
-                }
-                btnMaxUp.setOnClickListener {
-                    if (family.max < 99) {
-                        family.max++
-                        edtMax.setText(family.max.toString())
-                    }
-                }
             }
         }
 

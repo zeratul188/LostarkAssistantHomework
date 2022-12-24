@@ -126,31 +126,6 @@ class EditRecyclerAdapter(
                 edtNow.addTextChangedListener(NowTextWatcher(item))
                 edtMax.addTextChangedListener(MaxTextWatcher(item))
                 sprEnd.onItemSelectedListener = EndTextWatcher(item)
-
-                btnMinDown.setOnClickListener {
-                    if (item.now > 0) {
-                        item.now--
-                        edtNow.setText(item.now.toString())
-                    }
-                }
-                btnMinUp.setOnClickListener {
-                    if (item.now < item.max) {
-                        item.now++
-                        edtNow.setText(item.now.toString())
-                    }
-                }
-                btnMaxDown.setOnClickListener {
-                    if (item.max > 0) {
-                        item.max--
-                        edtMax.setText(item.max.toString())
-                    }
-                }
-                btnMaxUp.setOnClickListener {
-                    if (item.max < 99) {
-                        item.max++
-                        edtMax.setText(item.max.toString())
-                    }
-                }
             }
         }
 

@@ -169,19 +169,17 @@ class EditPagerAdapter(
         } else {
             val binding: FragmentEditRestBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_edit_rest, null, false)
             //view = LayoutInflater.from(container.context).inflate(R.layout.fragment_edit_rest, container, false)
+            binding.seekDungeon.progress = homework.dungeonrest/10
+            binding.seekBoss.progress = homework.bossrest/10
+            binding.seekQuest.progress = homework.questrest/10
+            dungeon = homework.dungeonrest
+            boss = homework.bossrest
+            quest = homework.questrest
 
+            lostDungeon =  homework.dungeonlost
+            lostBoss = homework.bosslost
+            lostQuest = homework.questlost
             with(binding) {
-                seekDungeon.progress = homework!!.dungeonrest/10
-                seekBoss.progress = homework!!.bossrest/10
-                seekQuest.progress = homework!!.questrest/10
-                dungeon = homework!!.dungeonrest
-                boss = homework!!.bossrest
-                quest = homework!!.questrest
-
-                lostDungeon =  homework!!.dungeonlost
-                lostBoss = homework!!.bosslost
-                lostQuest = homework!!.questlost
-
                 edtDungeon.setText(lostDungeon.toString())
                 edtBoss.setText(lostBoss.toString())
                 edtQuest.setText(lostQuest.toString())
