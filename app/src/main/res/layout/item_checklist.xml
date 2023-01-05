@@ -75,7 +75,8 @@
             android:layout_height="wrap_content"
             android:text="체크 완료"
             android:textSize="14dp"
-            android:textColor="@color/white"/>
+            android:textStyle="bold"
+            android:textColor="@color/important_font"/>
     </LinearLayout>
     <ProgressBar
         android:id="@+id/progressRest"

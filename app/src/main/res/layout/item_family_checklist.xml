@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="family"
+            type="com.lostark.lostarkassistanthomework.checklist.rooms.Family" />
+    </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -33,7 +38,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/txtName"
-                    android:text="숙제 이름"
+                    android:text="@{family.name}"
                     android:layout_gravity="center"
                     android:textColor="@color/main_font"
                     android:layout_marginBottom="-2dp"
@@ -44,7 +49,7 @@
                     app:layout_constraintTop_toBottomOf="@id/txtName"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/txtCount"
-                    android:text="1/2"
+                    android:text="@{family.now+&quot;/&quot;+family.max}"
                     android:textSize="14dp"
                     android:textColor="@color/main_font"/>
                 <TextView
@@ -53,7 +58,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/txtCount"
                     app:layout_constraintLeft_toRightOf="@id/txtCount"
                     android:id="@+id/txtEnd"
-                    android:text="회"
+                    android:text="@{family.end}"
                     android:textSize="10dp"
                     android:layout_marginLeft="2dp"
                     android:textColor="@color/main_font"/>
@@ -76,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:text="체크 완료"
                 android:textSize="14dp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/important_font"/>
         </LinearLayout>
     </FrameLayout>
 </layout>

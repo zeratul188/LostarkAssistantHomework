@@ -30,7 +30,7 @@
     <color name="ok_clicked">#529E4D</color>
     <color name="strong_stroke">#777777</color>
     <color name="half_background">#CC777777</color>
-    <color name="half_check_background">#aa5E74C3</color>
+    <color name="half_check_background">#cc5E74C3</color>
 
     <!-- 품질 색 -->
     <color name="statuelevel1">#C83E3E</color>
@@ -44,4 +44,5 @@
     <color name="main_font">#FFFFFF</color>
     <color name="sub_font">#aaaaaa</color>
     <color name="disabled_font">#666666</color>
+    <color name="important_font">#FE6E0E</color>
 </resources>

@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.GoldList
+import com.lostark.lostarkassistanthomework.databinding.ItemFamilyChecklistBinding
+import com.lostark.lostarkassistanthomework.databinding.ItemGoldChracterBinding
 import de.hdodenhof.circleimageview.CircleImageView
 
 class GoldListAdapter(
@@ -16,8 +18,11 @@ class GoldListAdapter(
 ) : RecyclerView.Adapter<GoldListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_gold_chracter, parent, false)
-        return GoldListAdapter.ViewHolder(view)
+        /*val view = LayoutInflater.from(parent.context).inflate(R.layout.item_gold_chracter, parent, false)
+        return GoldListAdapter.ViewHolder(view)*/
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemGoldChracterBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,41 +36,27 @@ class GoldListAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private val view = v
-        lateinit var imgJob: CircleImageView
-        lateinit var txtServer: TextView
-        lateinit var txtName: TextView
-        lateinit var txtLevel: TextView
-        lateinit var txtJob: TextView
-        lateinit var txtContent: TextView
-        lateinit var txtGold: TextView
-
+    class ViewHolder(val binding: ItemGoldChracterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(
             item: GoldList,
             context: Context
         ) {
-            imgJob = view.findViewById(R.id.imgJob)
-            txtName = view.findViewById(R.id.txtName)
-            txtServer = view.findViewById(R.id.txtServer)
-            txtLevel = view.findViewById(R.id.txtLevel)
-            txtJob = view.findViewById(R.id.txtJob)
-            txtContent = view.findViewById(R.id.txtContent)
-            txtGold = view.findViewById(R.id.txtGold)
-
             val jobs = context.resources.getStringArray(R.array.job)
             val pos = jobs.indexOf(item.job)+1;
-            imgJob.setImageResource(context.resources.getIdentifier("jbi${pos}", "drawable", context.packageName))
-            txtName.text = item.name
-            txtServer.text = item.server
-            txtLevel.text = "Lv.${item.level}"
-            txtJob.text = item.job
-            if (item.content == "") {
-                txtContent.text = "획득한 골드가 없습니다."
-            } else {
-                txtContent.text = item.content
+            with(binding) {
+                goldlist = item
+                imgJob.setImageResource(context.resources.getIdentifier("jbi${pos}", "drawable", context.packageName))
+                /*txtName.text = item.name
+                txtServer.text = item.server
+                txtLevel.text = "Lv.${item.level}"
+                txtJob.text = item.job*/
+                if (item.content == "") {
+                    txtContent.text = "획득한 골드가 없습니다."
+                } else {
+                    txtContent.text = item.content
+                }
+                //txtGold.text = item.gold.toString()
             }
-            txtGold.text = item.gold.toString()
         }
     }
 }

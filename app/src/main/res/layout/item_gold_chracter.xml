@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="goldlist"
+            type="com.lostark.lostarkassistanthomework.checklist.objects.GoldList" />
+    </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,7 +19,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/txtContent"
-                android:text="content"
+                android:text=""
                 android:textSize="14dp"
                 android:padding="5dp"
                 android:background="@color/sub_background"
@@ -44,7 +49,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/txtServer"
-                    android:text="Server"
+                    android:text="@{goldlist.server}"
                     android:textSize="12dp"
                     android:textColor="@color/sub_font"/>
                 <TextView
@@ -53,7 +58,7 @@
                     app:layout_constraintTop_toBottomOf="@id/txtServer"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/txtName"
-                    android:text="Chracter Name"
+                    android:text="@{goldlist.name}"
                     android:textSize="16dp"
                     android:textColor="@color/main_font"/>
                 <TextView
@@ -62,7 +67,7 @@
                     app:layout_constraintTop_toBottomOf="@id/txtName"
                     app:layout_constraintLeft_toLeftOf="parent"
                     android:id="@+id/txtLevel"
-                    android:text="Lv.0"
+                    android:text="@{&quot;Lv.&quot;+goldlist.level}"
                     android:textSize="12dp"
                     android:textColor="@color/sub_font"/>
                 <ImageView
@@ -81,7 +86,7 @@
                     app:layout_constraintTop_toBottomOf="@id/txtName"
                     app:layout_constraintLeft_toRightOf="@id/imgDot"
                     android:id="@+id/txtJob"
-                    android:text="Job"
+                    android:text="@{goldlist.job}"
                     android:textSize="12dp"
                     android:textColor="@color/sub_font"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -109,7 +114,7 @@
                 app:layout_constraintTop_toBottomOf="@id/txtGoldInfo"
                 app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/txtGold"
-                android:text="0"
+                android:text="@{goldlist.gold+&quot;&quot;}"
                 android:textSize="16dp"
                 android:textColor="@color/main_font"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -60,7 +60,7 @@
                 app:layout_constraintLeft_toLeftOf="@id/layoutName"
                 app:layout_constraintBottom_toTopOf="@id/layoutName"
                 android:id="@+id/txtServer"
-                android:text="Server"
+                android:text="@{homework.server}"
                 android:textSize="12dp"
                 android:textColor="@color/sub_font"/>
             <LinearLayout
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtName"
-                    android:text="일이삼사오육칠팔구십일이"
+                    android:text="@{homework.name}"
                     android:textSize="16dp"
                     android:textColor="@color/main_font"/>
                 <ImageView
@@ -101,7 +101,7 @@
                 app:layout_constraintTop_toBottomOf="@id/layoutName"
                 app:layout_constraintLeft_toLeftOf="@id/layoutName"
                 android:id="@+id/txtLevel"
-                android:text="Lv.0"
+                android:text="@{&quot;Lv.&quot;+homework.level}"
                 android:textSize="12dp"
                 android:textColor="@color/sub_font"/>
             <ImageView
@@ -120,7 +120,7 @@
                 app:layout_constraintLeft_toRightOf="@id/imgDot"
                 app:layout_constraintTop_toBottomOf="@id/layoutName"
                 android:id="@+id/txtJob"
-                android:text="Job"
+                android:text="@{homework.job}"
                 android:textSize="12dp"
                 android:textColor="@color/sub_font"/>
             <TextView
