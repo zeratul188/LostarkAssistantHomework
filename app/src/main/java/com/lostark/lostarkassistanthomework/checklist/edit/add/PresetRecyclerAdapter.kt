@@ -1,15 +1,16 @@
-package com.lostark.lostarkassistanthomework.checklist
+package com.lostark.lostarkassistanthomework.checklist.edit.add
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
 import com.lostark.lostarkassistanthomework.checklist.objects.Preset
+import com.lostark.lostarkassistanthomework.databinding.ItemAddPresetBinding
 import com.lostark.lostarkassistanthomework.objects.EditData
 
 class PresetRecyclerAdapter (
@@ -18,8 +19,9 @@ class PresetRecyclerAdapter (
 ) : RecyclerView.Adapter<PresetRecyclerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_preset, parent, false)
-        return PresetRecyclerAdapter.ViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemAddPresetBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -48,33 +50,27 @@ class PresetRecyclerAdapter (
         return EditData(preset.name, 0, preset.max, preset.icon, preset.end)
     }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private val view = v
-        lateinit var imgIcon: ImageView
-        lateinit var txtName: TextView
-        lateinit var txtMax: TextView
-        lateinit var txtEnd: TextView
-        lateinit var layoutBackground: LinearLayout
+    class ViewHolder(
+        private val binding: ItemAddPresetBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Preset, context: Context, listener: View.OnClickListener) {
-            imgIcon = view.findViewById(R.id.imgIcon)
-            txtName = view.findViewById(R.id.txtName)
-            txtMax = view.findViewById(R.id.txtMax)
-            txtEnd = view.findViewById(R.id.txtEnd)
-            layoutBackground = view.findViewById(R.id.layoutBackground)
+            with(binding) {
+                preset = item
+                imgIcon.setImageResource(context.resources.getIdentifier(item.icon, "drawable", context.packageName))
+                /*txtName.text = item.name
+                txtMax.text = item.max.toString()
+                txtEnd.text = item.end*/
 
-            imgIcon.setImageResource(context.resources.getIdentifier(item.icon, "drawable", context.packageName))
-            txtName.text = item.name
-            txtMax.text = item.max.toString()
-            txtEnd.text = item.end
+                if (item.isChecked) {
+                    layoutBackground.setBackgroundResource(R.drawable.selected_style)
+                } else {
+                    layoutBackground.setBackgroundResource(R.drawable.unselected_style)
+                }
 
-            if (item.isChecked) {
-                layoutBackground.setBackgroundResource(R.drawable.selected_style)
-            } else {
-                layoutBackground.setBackgroundResource(R.drawable.unselected_style)
+                root.setOnClickListener(listener)
+                executePendingBindings()
             }
-
-            view.setOnClickListener(listener)
         }
     }
 }

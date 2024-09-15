@@ -1,20 +1,23 @@
-package com.lostark.lostarkassistanthomework.checklist
+package com.lostark.lostarkassistanthomework.checklist.edit.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.checklist.RecyclerViewDecoration
 import com.lostark.lostarkassistanthomework.checklist.objects.Preset
+import com.lostark.lostarkassistanthomework.databinding.FragmentAddPresetBinding
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
 import com.lostark.lostarkassistanthomework.objects.EditData
 
 class AddPresetFamilyFragment(private val type: String): Fragment() {
-    private lateinit var listPresets: RecyclerView
-    private lateinit var presetAdapter: PresetRecyclerAdapter
+    private lateinit var binding: FragmentAddPresetBinding
 
+    private lateinit var presetAdapter: PresetRecyclerAdapter
     lateinit var familyDBAdapter: FamilyDBAdapter
 
     override fun onCreateView(
@@ -22,9 +25,9 @@ class AddPresetFamilyFragment(private val type: String): Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view : View = inflater.inflate(R.layout.fragment_add_preset, container, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_add_preset, null, false)
+        //val view : View = inflater.inflate(R.layout.fragment_add_preset, container, false)
 
-        listPresets = view.findViewById(R.id.listPresets)
         familyDBAdapter = FamilyDBAdapter(requireContext())
 
         val presets = ArrayList<Preset>()
@@ -39,10 +42,12 @@ class AddPresetFamilyFragment(private val type: String): Fragment() {
         presets[0].isChecked = true
 
         presetAdapter = PresetRecyclerAdapter(presets, requireContext())
-        listPresets.adapter = presetAdapter
-        listPresets.addItemDecoration(RecyclerViewDecoration(0, 10))
+        with(binding) {
+            listPresets.adapter = presetAdapter
+            listPresets.addItemDecoration(RecyclerViewDecoration(0, 10))
+        }
 
-        return view
+        return binding.root
     }
 
     fun getItem(): EditData {

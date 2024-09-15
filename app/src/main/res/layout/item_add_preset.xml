@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/layoutBackground"
-    android:padding="10dp">
-    <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="5dp"
-        android:src="@drawable/hw1"
-        android:id="@+id/imgIcon"
-        android:layout_gravity="center"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="preset"
+            type="com.lostark.lostarkassistanthomework.checklist.objects.Preset" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtName"
-        android:layout_gravity="center"
-        android:text="Homework Name"
-        android:layout_marginLeft="5dp"
-        android:textSize="16dp"
-        android:textColor="@color/main_font"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:id="@+id/layoutBackground"
+        android:padding="10dp">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:padding="5dp"
+            android:src="@drawable/hw1"
+            android:id="@+id/imgIcon"
+            android:layout_gravity="center"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/imgIcon"
+            android:id="@+id/txtName"
+            android:layout_gravity="center"
+            android:text="@{preset.name}"
+            android:layout_marginLeft="5dp"
+            android:textSize="16dp"
+            android:textColor="@color/main_font"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txtMax"
+            app:layout_constraintRight_toLeftOf="@id/txtMax"
+            android:id="@+id/txtMaxInfo"
             android:text="최대치"
             android:layout_marginRight="5dp"
             android:textSize="10dp"
@@ -37,20 +46,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="99"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="@{preset.max+&quot;&quot;}"
             android:textSize="20dp"
             android:id="@+id/txtMax"
             android:textColor="@color/sub_font"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/txtEnd"
+            app:layout_constraintRight_toLeftOf="@id/txtEnd"
             android:text="단위"
             android:layout_marginRight="5dp"
             android:textSize="10dp"
@@ -58,9 +65,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/txtMaxInfo"
+            android:layout_marginRight="10dp"
+            android:text="@{preset.end}"
             android:textSize="20dp"
             android:id="@+id/txtEnd"
             android:textColor="@color/sub_font"/>
-    </LinearLayout>
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

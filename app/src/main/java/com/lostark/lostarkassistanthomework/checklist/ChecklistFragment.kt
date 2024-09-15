@@ -10,36 +10,27 @@ import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.widget.NestedScrollView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.lostark.lostarkassistanthomework.App
-import com.lostark.lostarkassistanthomework.CloringThread
 import com.lostark.lostarkassistanthomework.LoadingDialog
 import com.lostark.lostarkassistanthomework.R
+import com.lostark.lostarkassistanthomework.checklist.edit.FamilyEditActivity
 import com.lostark.lostarkassistanthomework.checklist.rooms.Family
 import com.lostark.lostarkassistanthomework.checklist.rooms.FamilyDatabase
 import com.lostark.lostarkassistanthomework.checklist.rooms.Homework
 import com.lostark.lostarkassistanthomework.checklist.rooms.HomeworkDatabase
+import com.lostark.lostarkassistanthomework.databinding.FragmentChecklistBinding
 import com.lostark.lostarkassistanthomework.dbs.FamilyDBAdapter
 import com.lostark.lostarkassistanthomework.dbs.GoldDBAdapter
-import com.lostark.lostarkassistanthomework.objects.Chracter
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.jsoup.Jsoup
 
 class ChecklistFragment : Fragment() {
-    lateinit var txtAll: TextView
-    lateinit var progressAll: ProgressBar
-    lateinit var dayListView: RecyclerView
-    lateinit var weekListView: RecyclerView
-    lateinit var scrollView: NestedScrollView
-    lateinit var btnSetting: ImageButton
-    lateinit var layoutGold: LinearLayout
-
-    lateinit var txtAllGold: TextView
-    lateinit var txtGold: TextView
-    lateinit var btnList: ImageButton
+    private lateinit var viewModel: ChecklistViewModel
+    private lateinit var binding: FragmentChecklistBinding
 
     lateinit var dayAdapter: DayRecyclerAdapter
     lateinit var weekAdapter: DayRecyclerAdapter
@@ -50,12 +41,12 @@ class ChecklistFragment : Fragment() {
 
     lateinit var familyDB: FamilyDatabase
 
-    lateinit var chracterListView: RecyclerView
     lateinit var chracterAdapter: ChracterRecylerAdapter
     var homeworks: ArrayList<Homework> = ArrayList()
     lateinit var homeworkDB: HomeworkDatabase
 
     lateinit var goldDBAdapter: GoldDBAdapter
+    private var myCompositeDisposable = CompositeDisposable()
 
     val NOTIFYED = 1
 
@@ -76,9 +67,14 @@ class ChecklistFragment : Fragment() {
                 }
             }
         }
-        progressAll.max = max_progress
-        progressAll.progress = progress
-        txtAll.text = "${(progress.toDouble()/max_progress.toDouble()*100).toInt()}%"
+        with(binding) {
+            viewModel.maxProgress.value = max_progress
+            viewModel.progress.value = progress
+            viewModel.percent.value = (progress.toDouble()/max_progress.toDouble()*100).toInt()
+            //progressAll.max = max_progress
+            //progressAll.progress = progress
+            //txtAll.text = "${(progress.toDouble()/max_progress.toDouble()*100).toInt()}%"
+        }
         syncGold()
     }
 
@@ -87,28 +83,41 @@ class ChecklistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view : View = inflater.inflate(R.layout.fragment_checklist, container, false)
+        //val view : View = inflater.inflate(R.layout.fragment_checklist, container, false)
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_checklist, null, false)
+        viewModel = ViewModelProvider(this).get(ChecklistViewModel::class.java)
+        binding.checklistViewModel = viewModel
 
-        txtAll = view.findViewById(R.id.txtAll)
-        progressAll = view.findViewById(R.id.progressAll)
-        dayListView = view.findViewById(R.id.dayListView)
-        weekListView = view.findViewById(R.id.weekListView)
-        scrollView = view.findViewById(R.id.scrollView)
-        btnSetting = view.findViewById(R.id.btnSetting)
-        txtAllGold = view.findViewById(R.id.txtAllGold)
-        txtGold = view.findViewById(R.id.txtGold)
-        btnList = view.findViewById(R.id.btnList)
-        layoutGold = view.findViewById(R.id.layoutGold)
-
-        btnSetting.setOnClickListener {
+        binding.btnSetting.setOnClickListener {
             val intent = Intent(context, FamilyEditActivity::class.java)
             requireActivity().startActivity(intent)
         }
 
-        btnList.setOnClickListener {
+        binding.btnList.setOnClickListener {
             val dialog = GoldDialog(requireContext())
             dialog.show(true)
         }
+
+        val goldObserver = Observer<Int> { data ->
+            binding.txtGold.text = data.toString()
+        }
+        val allGoldObserver = Observer<Int> { data ->
+            binding.txtAllGold.text = data.toString()
+        }
+        val progressObserver = Observer<Int> { data ->
+            binding.progressAll.progress = data
+        }
+        val maxProgressObserver = Observer<Int> { data ->
+            binding.progressAll.max = data
+        }
+        val percentObserver = Observer<Int> { data ->
+            binding.txtAll.text = "$data%"
+        }
+        viewModel.gold.observe(viewLifecycleOwner, goldObserver)
+        viewModel.allGold.observe(viewLifecycleOwner, allGoldObserver)
+        viewModel.progress.observe(viewLifecycleOwner, progressObserver)
+        viewModel.maxProgress.observe(viewLifecycleOwner, maxProgressObserver)
+        viewModel.percent.observe(viewLifecycleOwner, percentObserver)
 
         familyDBAdapter = FamilyDBAdapter(requireContext())
         goldDBAdapter = GoldDBAdapter(requireContext())
@@ -130,31 +139,32 @@ class ChecklistFragment : Fragment() {
             asyncFamilyData(saveFamilyData)
         }
 
-        dayListView.adapter = dayAdapter
-        //dayListView.layoutManager = GridLayoutManager(requireContext(), 2)
-        dayListView.addItemDecoration(RecyclerViewDecoration(10, 10))
+        with(binding) {
+            dayListView.adapter = dayAdapter
+            //dayListView.layoutManager = GridLayoutManager(requireContext(), 2)
+            dayListView.addItemDecoration(RecyclerViewDecoration(10, 10))
 
-        weekListView.adapter = weekAdapter
-        //weekListView.layoutManager = GridLayoutManager(requireContext(), 2)
-        weekListView.addItemDecoration(RecyclerViewDecoration(10, 10))
+            weekListView.adapter = weekAdapter
+            //weekListView.layoutManager = GridLayoutManager(requireContext(), 2)
+            weekListView.addItemDecoration(RecyclerViewDecoration(10, 10))
+        }
 
         homeworkDB = HomeworkDatabase.getInstance(requireContext())!!
-        chracterListView = view.findViewById(R.id.chracterListView)
         chracterAdapter = ChracterRecylerAdapter(homeworks, requireContext(), requireActivity(), this)
-        chracterListView.adapter = chracterAdapter
-        chracterListView.addItemDecoration(RecyclerViewDecoration(0, 30))
+        binding.chracterListView.adapter = chracterAdapter
+        binding.chracterListView.addItemDecoration(RecyclerViewDecoration(0, 30))
 
-        return view
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         //resume()
-        if (App.prefs.isBoolean("showgold", true)) {
+        /*if (App.prefs.isBoolean("showgold", true)) {
             layoutGold.visibility = View.VISIBLE
         } else {
             layoutGold.visibility = View.GONE
-        }
+        }*/
     }
 
     fun initFamilys(list: ArrayList<Family>, type: String) {
@@ -232,7 +242,8 @@ class ChecklistFragment : Fragment() {
                 }
             }
         }
-        txtAllGold.text = all.toString()
+        viewModel.allGold.value = all
+        //binding.txtAllGold.text = all.toString()
     }
 
     fun syncGold() {
@@ -255,7 +266,13 @@ class ChecklistFragment : Fragment() {
                 }
             }
         }
-        txtGold.text = all.toString()
+        viewModel.gold.value = all
+        //binding.txtGold.text = all.toString()
+    }
+
+    override fun onDestroy() {
+        myCompositeDisposable.clear()
+        super.onDestroy()
     }
 
     inner class HomeworkHandler : Handler() {

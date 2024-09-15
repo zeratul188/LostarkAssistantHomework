@@ -2,13 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
         <shape>
-            <solid android:color="@color/button"/>
+            <solid android:color="@color/progress"/>
         </shape>
     </item>
     <item android:state_checked="false">
         <shape>
             <solid android:color="@color/background"/>
-            <stroke android:width="2dp" android:color="@color/button"/>
+            <stroke android:width="2dp" android:color="@color/progress"/>
         </shape>
     </item>
 </selector>
